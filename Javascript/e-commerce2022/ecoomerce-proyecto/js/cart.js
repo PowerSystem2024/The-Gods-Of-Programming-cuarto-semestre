@@ -27,53 +27,53 @@ const displayCart = () => {
 
     modalContainer.append(modalHeader);
 
-    // modal body
-    cart.forEach((product) => {
-        const modalBody = document.createElement("div");
-        modalBody.className = "modal-body";
+    // modal body (un solo bloque)
+    const modalBody = document.createElement("div");
+    modalBody.className = "modal-body";
 
-        modalBody.innerHTML = `
-            <div class="product">
-                <img class="product-img" src="${product.img}" />
-                
-                <div class="product-info">
-                    <h4>${product.productName}</h4>
-                </div>
-
-                <div class="quanty">
-                    <span class="quantity-btn-decrease">-</span>
-                    <span class="quantity-input">${product.quanty}</span>
-                    <span class="quantity-btn-increase">+</span>
-                </div>
-
-                <div class="price">${product.price * product.quanty} $</div>
-                <div class="delete-product">❌</div>
+    cart.forEach((product, idx) => {
+        const productDiv = document.createElement("div");
+        productDiv.className = "product";
+        productDiv.innerHTML = `
+            <img class="product-img" src="${product.img}" />
+            <div class="product-info">
+                <h4>${product.productName}</h4>
             </div>
-            `;
+            <div class="quanty">
+                <span class="quantity-btn-decrease">-</span>
+                <span class="quantity-input">${product.quanty}</span>
+                <span class="quantity-btn-increase">+</span>
+            </div>
+            <div class="price">${product.price * product.quanty} $</div>
+            <div class="delete-product">❌</div>
+        `;
 
-       modalContainer.append(modalBody);
+        // Eventos para cada producto
+        const decrease = productDiv.querySelector(".quantity-btn-decrease");
+        decrease.addEventListener("click", ()=>{
+            if(product.quanty !== 1 ){
+                product.quanty--;
+                displayCart();
+            }
+        });
 
-       const decrease = modalBody.querySelector(".quantity-btn-decrease");
-       decrease.addEventListener("click", ()=>{
-        if(product.quanty !== 1 ){
-           product.quanty--;
-           displayCart();
-        }
-       });
+        const increase = productDiv.querySelector(".quantity-btn-increase");
+        increase.addEventListener("click",()=>{
+            product.quanty++;
+            displayCart();
+        });
 
-       const increase = modalBody.querySelector(".quantity-btn-increase");
-       increase.addEventListener("click",()=>{
-        product.quanty++;
-        displayCart();
-       });
+        //delete
+        const deleteProduct = productDiv.querySelector(".delete-product");
+        deleteProduct.addEventListener("click", ()=>{
+            cart.splice(idx, 1);
+            displayCart();
+        });
 
-
-       //delete
-       const deleteProduct = modalBody.querySelector("delete-product");
-       deleteProduct.addEventListener("click", ()=>{
-        deleteCardProduct(product.Id)
-       });
+        modalBody.append(productDiv);
     });
+
+    modalContainer.append(modalBody);
 
     // modal footer
 

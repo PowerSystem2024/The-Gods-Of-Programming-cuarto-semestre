@@ -154,8 +154,9 @@ header {
 /* Productos dentro del modal */
 .modal-body {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
     margin: 15px 0;
     padding: 10px;
     background: #f9f9f9;
