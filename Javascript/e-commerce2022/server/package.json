@@ -1,0 +1,15 @@
+{
+  "name": "e-commerce-server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.17.1",
+    "mercadopago": "^1.5.8",
+    "nodemon": "^2.0.7"
+  }
+}

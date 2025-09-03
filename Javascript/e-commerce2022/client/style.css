@@ -77,6 +77,37 @@ header {
 }
 
 .buy-button {
+/* Estilos para el contador de productos */
+.cart-counter {
+    display: none;
+    position: fixed;
+    top: 89vh;
+    right: 27px;
+    background-color: #f00;
+    color: #fff;
+    padding: 4px;
+    border-radius: 50%;
+    height: 17px;
+    width: 17px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 17px;
+}
+
+/* Estilos para el botón de checkout */
+.checkout-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.checkout-btn:hover {
+    background-color: #0062cc;
+}
     background-color: #27ae60;
     color: white;
     border: none;
