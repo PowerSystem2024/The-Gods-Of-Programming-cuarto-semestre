@@ -13,6 +13,7 @@ productos.forEach((product) => {
         <h3>${product.productName}</h3>
         <p>$${product.price}</p>
     `;
+    shopContent.append(content);
 
 
     // Crear botón de compra
