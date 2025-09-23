@@ -126,23 +126,25 @@ header #logo {
     line-height: 60px;
 }
 
-header center p {
+header p {
     width: 42px;
     line-height: 42px;
     border-radius: 100%;
     background: #ccc;
     color: white;
+    text-align: center;
+    margin: 0 auto;
 }
 
-header center#icono1 p {
+header p#icono1 {
     background: blue;
 }
 
-header center#icono2 p {
+header p#icono2 {
     background: green;
 }
 
-header center#icono3 p {
+header p#icono3 {
     background: red;
 }
 
@@ -169,8 +171,9 @@ nav ul li a:active {
 }
 
 /* ESTILOS SECCIÓN 3 - IMÁGENES */
-#seccion3 center {
+#seccion3 div {
     padding: 20px;
+    text-align: center;
 }
 
 #seccion3 img {
@@ -178,6 +181,8 @@ nav ul li a:active {
     width: 200px;
     height: 200px;
     padding: 10px;
+    display: block;
+    margin: 0 auto;
 }
 
 #seccion3 h1 {
