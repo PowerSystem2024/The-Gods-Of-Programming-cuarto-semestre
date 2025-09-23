@@ -24,7 +24,6 @@
 /* Sistema de columnas base */
 [class*="col-"] {
     float: left;
-    border: 1px solid black;
     padding: 20px;
 }
 
@@ -48,6 +47,19 @@
     .col-lg-11 { width: 91.66667%; }
     .col-lg-12 { width: 100%; }
     
+    /* Offset para lg */
+    .col-lg-offset-1 { margin-left: 8.33333%; }
+    .col-lg-offset-2 { margin-left: 16.66667%; }
+    .col-lg-offset-3 { margin-left: 25%; }
+    .col-lg-offset-4 { margin-left: 33.33333%; }
+    .col-lg-offset-5 { margin-left: 41.66667%; }
+    .col-lg-offset-6 { margin-left: 50%; }
+    .col-lg-offset-7 { margin-left: 58.33333%; }
+    .col-lg-offset-8 { margin-left: 66.66667%; }
+    .col-lg-offset-9 { margin-left: 75%; }
+    .col-lg-offset-10 { margin-left: 83.33333%; }
+    .col-lg-offset-11 { margin-left: 91.66667%; }
+    
     /* Media query específica para imagen del artículo */
     #seccion4 article p img {
         width: 50%;
@@ -69,6 +81,19 @@
     .col-md-11 { width: 91.66667%; }
     .col-md-12 { width: 100%; }
     
+    /* Offset para md */
+    .col-md-offset-1 { margin-left: 8.33333%; }
+    .col-md-offset-2 { margin-left: 16.66667%; }
+    .col-md-offset-3 { margin-left: 25%; }
+    .col-md-offset-4 { margin-left: 33.33333%; }
+    .col-md-offset-5 { margin-left: 41.66667%; }
+    .col-md-offset-6 { margin-left: 50%; }
+    .col-md-offset-7 { margin-left: 58.33333%; }
+    .col-md-offset-8 { margin-left: 66.66667%; }
+    .col-md-offset-9 { margin-left: 75%; }
+    .col-md-offset-10 { margin-left: 83.33333%; }
+    .col-md-offset-11 { margin-left: 91.66667%; }
+    
     /* Media query específica para imagen del artículo */
     #seccion4 article p img {
         width: 60%;
@@ -89,6 +114,19 @@
     .col-sm-10 { width: 83.33333%; }
     .col-sm-11 { width: 91.66667%; }
     .col-sm-12 { width: 100%; }
+    
+    /* Offset para sm */
+    .col-sm-offset-1 { margin-left: 8.33333%; }
+    .col-sm-offset-2 { margin-left: 16.66667%; }
+    .col-sm-offset-3 { margin-left: 25%; }
+    .col-sm-offset-4 { margin-left: 33.33333%; }
+    .col-sm-offset-5 { margin-left: 41.66667%; }
+    .col-sm-offset-6 { margin-left: 50%; }
+    .col-sm-offset-7 { margin-left: 58.33333%; }
+    .col-sm-offset-8 { margin-left: 66.66667%; }
+    .col-sm-offset-9 { margin-left: 75%; }
+    .col-sm-offset-10 { margin-left: 83.33333%; }
+    .col-sm-offset-11 { margin-left: 91.66667%; }
     
     /* Media query específica para imagen del artículo */
     #seccion4 article p img {
@@ -124,6 +162,14 @@ header #logo {
     font-size: 50px;
     text-align: center;
     line-height: 60px;
+}
+
+header #logo img {
+    max-width: 100%;
+    height: auto;
+    max-height: 60px;
+    display: block;
+    margin: 0 auto;
 }
 
 header p {
