@@ -1,39 +1,27 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { cartAPI } from '../services/api';
+import { useCart } from '../context/CartContext';
 
 const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState(null);
-  const [cartCount, setCartCount] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const { totalItems } = useCart();
 
   useEffect(() => {
     // Verificar si hay usuario logueado
     const userData = localStorage.getItem('user');
     if (userData) {
       setUser(JSON.parse(userData));
-      loadCartCount();
     }
   }, []);
-
-  const loadCartCount = async () => {
-    try {
-      const response = await cartAPI.getCart();
-      const totalItems = response.data.items.reduce((sum, item) => sum + item.quantity, 0);
-      setCartCount(totalItems);
-    } catch (error) {
-      console.error('Error cargando carrito:', error);
-    }
-  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
-    setCartCount(0);
     navigate('/', { replace: true });
   };
 
@@ -107,8 +95,8 @@ const Layout = ({ children }) => {
               {/* Carrito */}
               <Link to="/cart" className="cart-button">
                 <span className="cart-icon">🛒</span>
-                {cartCount > 0 && (
-                  <span className="cart-badge">{cartCount}</span>
+                {totalItems > 0 && (
+                  <span className="cart-badge">{totalItems}</span>
                 )}
                 <span className="cart-text desktop-only">Carrito</span>
               </Link>
