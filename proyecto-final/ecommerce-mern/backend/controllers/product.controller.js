@@ -19,7 +19,7 @@ export const getAllProducts = async (req, res) => {
     } = req.query;
 
     // Construir filtro de búsqueda
-    const filter = { isActive: true };
+    const filter = { status: 'active' };
 
     if (category) {
       filter.category = { $regex: category, $options: 'i' };

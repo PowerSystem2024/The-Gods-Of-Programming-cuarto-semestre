@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { productAPI } from '../services/api';
+import ProductList from '../components/ProductList';
+import SearchFilters from '../components/SearchFilters';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -16,7 +18,10 @@ const Home = () => {
 
   // Cargar productos al montar el componente
   useEffect(() => {
+    console.log('Home component mounted, loading products...');
+    console.log('API Base URL:', import.meta.env.VITE_API_URL);
     loadProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const loadProducts = async () => {
@@ -30,11 +35,22 @@ const Home = () => {
       };
       
       const response = await productAPI.getAll(params);
-      setProducts(response.data.products || []);
+      console.log('Home - API Response:', response); // Debug
+      console.log('Products array:', response.data?.products); // Debug
+      setProducts(response.data?.products || []);
       setError(null);
     } catch (err) {
-      setError('Error cargando productos');
       console.error('Error loading products:', err);
+      console.error('Error details:', err.message, err.status);
+      
+      let errorMsg = 'Error cargando productos';
+      if (err.message && err.message !== 'Error desconocido') {
+        errorMsg = err.message;
+      } else if (err.originalError?.code === 'ERR_NETWORK') {
+        errorMsg = 'Error de conexión - Verifica que el servidor esté funcionando';
+      }
+      
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -79,63 +95,13 @@ const Home = () => {
       {/* Search and Filters */}
       <section className="search-section">
         <div className="container">
-          <form onSubmit={handleSearch} className="search-form">
-            <div className="search-input-group">
-              <input
-                type="text"
-                placeholder="Buscar productos..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
-              />
-              <button type="submit" className="search-button">
-                Buscar
-              </button>
-            </div>
-          </form>
-
-          <div className="filters">
-            <select 
-              value={filters.category}
-              onChange={(e) => handleFilterChange('category', e.target.value)}
-              className="filter-select"
-            >
-              <option value="">Todas las categorías</option>
-              <option value="Electrónicos">Electrónicos</option>
-              <option value="Ropa">Ropa</option>
-              <option value="Hogar">Hogar</option>
-              <option value="Deportes">Deportes</option>
-            </select>
-
-            <select
-              value={filters.sort}
-              onChange={(e) => handleFilterChange('sort', e.target.value)}
-              className="filter-select"
-            >
-              <option value="-createdAt">Más recientes</option>
-              <option value="price">Precio: menor a mayor</option>
-              <option value="-price">Precio: mayor a menor</option>
-              <option value="name">Nombre A-Z</option>
-              <option value="-name">Nombre Z-A</option>
-            </select>
-
-            <div className="price-filters">
-              <input
-                type="number"
-                placeholder="Precio mín"
-                value={filters.minPrice}
-                onChange={(e) => handleFilterChange('minPrice', e.target.value)}
-                className="price-input"
-              />
-              <input
-                type="number"
-                placeholder="Precio máx"
-                value={filters.maxPrice}
-                onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
-                className="price-input"
-              />
-            </div>
-          </div>
+          <SearchFilters 
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            filters={filters}
+            onFilterChange={handleFilterChange}
+            onSearch={handleSearch}
+          />
         </div>
       </section>
 
@@ -143,65 +109,12 @@ const Home = () => {
       <section className="products-section">
         <div className="container">
           <h2>Productos Destacados</h2>
-          
-          {error && (
-            <div className="error-message">
-              <p>{error}</p>
-              <button onClick={loadProducts} className="retry-button">
-                Reintentar
-              </button>
-            </div>
-          )}
-
-          {products.length === 0 && !loading && !error && (
-            <div className="no-products">
-              <p>No se encontraron productos</p>
-            </div>
-          )}
-
-          <div className="products-grid">
-            {products.map((product) => (
-              <div key={product._id} className="product-card">
-                <Link to={`/products/${product._id}`} className="product-link">
-                  <div className="product-image">
-                    <img 
-                      src={product.images?.[0] || '/placeholder-image.jpg'} 
-                      alt={product.name}
-                      onError={(e) => {
-                        e.target.src = '/placeholder-image.jpg';
-                      }}
-                    />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">{product.name}</h3>
-                    <p className="product-category">{product.category}</p>
-                    <p className="product-price">
-                      ${product.price?.toLocaleString('es-AR')}
-                    </p>
-                    <div className="product-meta">
-                      <span className="product-stock">
-                        {product.stock > 0 ? `Stock: ${product.stock}` : 'Sin stock'}
-                      </span>
-                      {product.rating && (
-                        <span className="product-rating">
-                          ⭐ {product.rating.toFixed(1)}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </Link>
-                
-                <div className="product-actions">
-                  <Link 
-                    to={`/products/${product._id}`} 
-                    className="btn btn-primary"
-                  >
-                    Ver Detalles
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ProductList 
+            products={products}
+            loading={loading}
+            error={error}
+            onRetry={loadProducts}
+          />
         </div>
       </section>
 

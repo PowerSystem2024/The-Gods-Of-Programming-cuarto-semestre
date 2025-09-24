@@ -26,9 +26,14 @@ API.interceptors.request.use(
 // Interceptor para manejar respuestas y errores
 API.interceptors.response.use(
   (response) => {
+    console.log('API Response:', response.data); // Debug
     return response.data;
   },
   (error) => {
+    console.error('API Error:', error);
+    console.error('Error Response:', error.response);
+    console.error('Error Request:', error.request);
+    
     // Manejar errores de autenticación
     if (error.response?.status === 401) {
       // Token expirado o inválido
@@ -44,6 +49,7 @@ API.interceptors.response.use(
       message: errorMessage,
       status: error.response?.status,
       errors: error.response?.data?.errors,
+      originalError: error
     });
   }
 );

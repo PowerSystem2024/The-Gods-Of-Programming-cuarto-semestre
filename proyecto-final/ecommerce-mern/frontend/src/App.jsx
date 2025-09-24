@@ -3,6 +3,7 @@ import { CartProvider } from './context/CartContext';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
+import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
@@ -50,13 +51,10 @@ function App() {
             </ProtectedRoute>
           } />
 
-          {/* Rutas futuras - placeholder pages */}
+          {/* Página de productos */}
           <Route path="/products" element={
             <Layout>
-              <div className="container">
-                <h1>Todos los Productos</h1>
-                <p>Página en construcción...</p>
-              </div>
+              <Products />
             </Layout>
           } />
 
