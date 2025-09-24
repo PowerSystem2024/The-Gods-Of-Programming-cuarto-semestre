@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 const Cart = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate(); // Comentado hasta que se use
   const {
     items,
     loading,
@@ -135,7 +135,7 @@ const Cart = () => {
           {!isEmpty && (
             <button 
               onClick={handleClearCart}
-              disabled={updating}
+              disabled={loading}
               className="btn btn-secondary clear-cart-btn"
             >
               Vaciar Carrito
