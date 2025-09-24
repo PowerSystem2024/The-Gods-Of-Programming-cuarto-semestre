@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import './Layout.css';
 
 const Layout = ({ children }) => {
   const navigate = useNavigate();
