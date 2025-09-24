@@ -11,9 +11,14 @@
 
 <body>
     <header>
-        <h1>Mi Tienda</h1>
-        <div class="cart-icon">
-            🛒 <span id="cart-count">0</span>
+        <div class="header-flex">
+            <div class="logo-container">
+                <img src="media/logo.jpg" alt="Logo" class="logo-img">
+            </div>
+            <h1 class="main-title">E-commerce 2025</h1>
+            <div class="cart-icon">
+                🛒 <span id="cart-count">0</span>
+            </div>
         </div>
     </header>
 
@@ -22,7 +27,9 @@
     </div>
 
     <!-- Botón del carrito -->
-    <button class="cart-btn" id="cart-btn">🛒 Ver Carrito</button>
+    <div class="cart-btn-container">
+        <button class="cart-btn" id="cart-btn">🛒 Ver Carrito</button>
+    </div>
 
     <!-- Overlay y modal -->
     <div class="modal-overlay" id="modal-overlay"></div>
@@ -30,7 +37,6 @@
         <div id="button-checkout"></div>
     </div>
 
-    <span class="cart-counter" id="cart-counter">0</span>
 
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="js/products.js"></script>

@@ -1,15 +1,16 @@
 // Declaración de variables para Mercado Pago y elementos nuevos
-const cartCounter = document.getElementById("cart-counter");
 const checkoutButton = document.querySelector("#button-checkout");
 
 // Función para mostrar el contador de productos
 const displayCartCounter = () => {
     const cartLength = cart.reduce((acc, el) => acc + el.quanty, 0);
-    if (cartLength > 0) {
-        cartCounter.style.display = "block";
-        cartCounter.innerText = cartLength;
-    } else {
-        cartCounter.style.display = "none";
+    if (cartCount) {
+        if (cartLength > 0) {
+            cartCount.style.display = "block";
+            cartCount.innerText = cartLength;
+        } else {
+            cartCount.style.display = "none";
+        }
     }
 };
 const modalContainer = document.getElementById("modal-container");
@@ -103,12 +104,23 @@ const displayCart = () => {
 };
 // Lógica para el checkout y Mercado Pago
 const createCheckoutButton = (preferenceId) => {
+    // Ocultar el botón de checkout y mostrar loader
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) checkoutBtn.style.display = 'none';
+    const buttonCheckout = document.getElementById('button-checkout');
+    if (buttonCheckout) {
+        buttonCheckout.innerHTML = '<div class="loader-mp" style="display:flex;justify-content:center;align-items:center;height:48px;"><span style="padding:8px 16px;border-radius:8px;background:#eee;color:#660000;font-weight:bold;box-shadow:0 2px 8px rgba(42,0,0,0.10);font-size:1rem;">Cargando pago...</span></div>';
+    }
     const mercadopago = new window.MercadoPago('TEST-7d3c639a-36f0-4207-9c66-1a405002ee49');
     const bricksBuilder = mercadopago.bricks();
     bricksBuilder.create("wallet", "button-checkout", {
         initialization: {
             preferenceId: preferenceId,
         },
+        onReady: () => {
+            // Cuando el Brick esté listo, ocultar el loader
+            if (buttonCheckout) buttonCheckout.innerHTML = '';
+        }
     });
 };
 
