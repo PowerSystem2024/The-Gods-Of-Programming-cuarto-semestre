@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
@@ -10,9 +11,10 @@ import './App.css';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Routes>
+    <CartProvider>
+      <Router>
+        <div className="App">
+          <Routes>
           {/* Rutas públicas con layout */}
           <Route path="/" element={
             <Layout>
@@ -187,8 +189,9 @@ function App() {
             </Layout>
           } />
         </Routes>
-      </div>
-    </Router>
+        </div>
+      </Router>
+    </CartProvider>
   );
 }
 

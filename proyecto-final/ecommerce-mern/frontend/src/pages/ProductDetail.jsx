@@ -1,10 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { productAPI, cartAPI } from '../services/api';
+import { productAPI } from '../services/api';
+import { useCart } from '../context/CartContext';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToCart, getItemQuantity, isInCart } = useCart();
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -49,25 +51,22 @@ const ProductDetail = () => {
     try {
       setAddingToCart(true);
       
-      // Verificar si el usuario está autenticado
-      const token = localStorage.getItem('token');
-      if (!token) {
-        navigate('/login', { state: { from: `/products/${id}` } });
-        return;
-      }
+      if (!product) return;
 
-      await cartAPI.add(product._id, quantity);
+      // El Context maneja tanto usuarios autenticados como no autenticados
+      const success = await addToCart(product, quantity);
       
-      // Mostrar mensaje de éxito (puedes implementar un toast o notificación)
-      alert('Producto agregado al carrito exitosamente!');
+      if (success) {
+        alert(`${quantity} ${product.name} agregado${quantity > 1 ? 's' : ''} al carrito exitosamente!`);
+        // Resetear cantidad después de agregar
+        setQuantity(1);
+      } else {
+        alert('Error agregando al carrito. Inténtalo de nuevo.');
+      }
       
     } catch (err) {
       console.error('Error adding to cart:', err);
-      if (err.status === 401) {
-        navigate('/login', { state: { from: `/products/${id}` } });
-      } else {
-        alert('Error agregando al carrito: ' + (err.message || 'Error desconocido'));
-      }
+      alert('Error agregando al carrito: ' + (err.message || 'Error desconocido'));
     } finally {
       setAddingToCart(false);
     }
@@ -220,13 +219,34 @@ const ProductDetail = () => {
                   </div>
                 </div>
 
-                <button
-                  onClick={handleAddToCart}
-                  disabled={addingToCart || product.stock === 0}
-                  className="add-to-cart-btn"
-                >
-                  {addingToCart ? 'Agregando...' : 'Agregar al Carrito'}
-                </button>
+                <div className="cart-actions">
+                  {isInCart(product._id) && (
+                    <div className="cart-info">
+                      <span className="in-cart-indicator">
+                        ✅ Ya tienes {getItemQuantity(product._id)} en tu carrito
+                      </span>
+                    </div>
+                  )}
+                  
+                  <button
+                    onClick={handleAddToCart}
+                    disabled={addingToCart || product.stock === 0}
+                    className="add-to-cart-btn"
+                  >
+                    {addingToCart ? 'Agregando...' : (
+                      isInCart(product._id) ? 'Agregar Más' : 'Agregar al Carrito'
+                    )}
+                  </button>
+                  
+                  {isInCart(product._id) && (
+                    <button
+                      onClick={() => navigate('/cart')}
+                      className="view-cart-btn"
+                    >
+                      Ver Carrito
+                    </button>
+                  )}
+                </div>
               </div>
             )}
 

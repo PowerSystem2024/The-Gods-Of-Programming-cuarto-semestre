@@ -1,112 +1,102 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { cartAPI } from '../services/api';
+import { useCart } from '../context/CartContext';
 
 const Cart = () => {
   const navigate = useNavigate();
-  const [cart, setCart] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [updating, setUpdating] = useState(false);
+  const {
+    items,
+    loading,
+    error,
+    totalPrice,
+    totalItems,
+    isEmpty,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+    incrementItem,
+    decrementItem
+  } = useCart();
+  const [updatingItems, setUpdatingItems] = useState(new Set());
 
-  const loadCart = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const response = await cartAPI.get();
-      setCart(response.data.cart || []);
-    } catch (err) {
-      console.error('Error loading cart:', err);
-      if (err.status === 401) {
-        navigate('/login', { state: { from: '/cart' } });
-      } else {
-        setError('Error cargando el carrito');
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [navigate]);
-
-  useEffect(() => {
-    // Verificar autenticación
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login', { state: { from: '/cart' } });
-      return;
-    }
-
-    loadCart();
-  }, [navigate, loadCart]);
-
-  const updateQuantity = async (productId, newQuantity) => {
+  const handleUpdateQuantity = async (productId, newQuantity) => {
     if (newQuantity < 1) return;
 
-    try {
-      setUpdating(true);
-      await cartAPI.update(productId, newQuantity);
-      
-      // Actualizar estado local
-      setCart(prevCart => 
-        prevCart.map(item => 
-          item.product._id === productId 
-            ? { ...item, quantity: newQuantity }
-            : item
-        )
-      );
-    } catch (err) {
-      console.error('Error updating quantity:', err);
-      alert('Error actualizando la cantidad: ' + (err.message || 'Error desconocido'));
-    } finally {
-      setUpdating(false);
+    setUpdatingItems(prev => new Set([...prev, productId]));
+    
+    const success = await updateQuantity(productId, newQuantity);
+    if (!success) {
+      alert('Error actualizando la cantidad. Inténtalo de nuevo.');
     }
+    
+    setUpdatingItems(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(productId);
+      return newSet;
+    });
   };
 
-  const removeItem = async (productId) => {
+  const handleRemoveItem = async (productId) => {
     if (!window.confirm('¿Estás seguro de eliminar este producto del carrito?')) {
       return;
     }
 
-    try {
-      setUpdating(true);
-      await cartAPI.remove(productId);
-      
-      // Actualizar estado local
-      setCart(prevCart => prevCart.filter(item => item.product._id !== productId));
-    } catch (err) {
-      console.error('Error removing item:', err);
-      alert('Error eliminando el producto: ' + (err.message || 'Error desconocido'));
-    } finally {
-      setUpdating(false);
+    setUpdatingItems(prev => new Set([...prev, productId]));
+    
+    const success = await removeFromCart(productId);
+    if (!success) {
+      alert('Error eliminando el producto. Inténtalo de nuevo.');
     }
+    
+    setUpdatingItems(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(productId);
+      return newSet;
+    });
   };
 
-  const clearCart = async () => {
+  const handleClearCart = async () => {
     if (!window.confirm('¿Estás seguro de vaciar todo el carrito?')) {
       return;
     }
 
-    try {
-      setUpdating(true);
-      await cartAPI.clear();
-      setCart([]);
-    } catch (err) {
-      console.error('Error clearing cart:', err);
-      alert('Error vaciando el carrito: ' + (err.message || 'Error desconocido'));
-    } finally {
-      setUpdating(false);
+    const success = await clearCart();
+    if (!success) {
+      alert('Error vaciando el carrito. Inténtalo de nuevo.');
     }
   };
 
-  const calculateTotal = () => {
-    return cart.reduce((total, item) => {
-      return total + (item.product.price * item.quantity);
-    }, 0);
+  const handleIncrementItem = async (productId) => {
+    setUpdatingItems(prev => new Set([...prev, productId]));
+    
+    const success = await incrementItem(productId);
+    if (!success) {
+      alert('Error actualizando la cantidad. Inténtalo de nuevo.');
+    }
+    
+    setUpdatingItems(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(productId);
+      return newSet;
+    });
   };
 
-  const calculateItemsCount = () => {
-    return cart.reduce((total, item) => total + item.quantity, 0);
+  const handleDecrementItem = async (productId) => {
+    setUpdatingItems(prev => new Set([...prev, productId]));
+    
+    const success = await decrementItem(productId);
+    if (!success) {
+      alert('Error actualizando la cantidad. Inténtalo de nuevo.');
+    }
+    
+    setUpdatingItems(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(productId);
+      return newSet;
+    });
   };
+
+  // Los cálculos se realizan en el contexto (totalPrice, totalItems)
 
   if (loading) {
     return (
@@ -128,7 +118,7 @@ const Cart = () => {
           <div className="error-container">
             <h2>Error</h2>
             <p>{error}</p>
-            <button onClick={loadCart} className="btn btn-primary">
+            <button onClick={() => window.location.reload()} className="btn btn-primary">
               Reintentar
             </button>
           </div>
@@ -142,9 +132,9 @@ const Cart = () => {
       <div className="container">
         <div className="cart-header">
           <h1>Mi Carrito</h1>
-          {cart.length > 0 && (
+          {!isEmpty && (
             <button 
-              onClick={clearCart}
+              onClick={handleClearCart}
               disabled={updating}
               className="btn btn-secondary clear-cart-btn"
             >
@@ -153,7 +143,7 @@ const Cart = () => {
           )}
         </div>
 
-        {cart.length === 0 ? (
+        {isEmpty ? (
           <div className="empty-cart">
             <div className="empty-cart-icon">🛒</div>
             <h2>Tu carrito está vacío</h2>
@@ -173,7 +163,7 @@ const Cart = () => {
                 <span>Acciones</span>
               </div>
 
-              {cart.map((item) => (
+              {items.map((item) => (
                 <div key={`${item.product._id}-${item.variantId || 'default'}`} className="cart-item">
                   <div className="item-info">
                     <Link to={`/products/${item.product._id}`} className="item-image">
@@ -207,8 +197,8 @@ const Cart = () => {
                     <div className="quantity-controls">
                       <button
                         type="button"
-                        onClick={() => updateQuantity(item.product._id, item.quantity - 1)}
-                        disabled={updating || item.quantity <= 1}
+                        onClick={() => handleDecrementItem(item.product._id)}
+                        disabled={updatingItems.has(item.product._id) || item.quantity <= 1}
                         className="quantity-btn"
                       >
                         -
@@ -221,16 +211,16 @@ const Cart = () => {
                         onChange={(e) => {
                           const newQuantity = parseInt(e.target.value) || 1;
                           if (newQuantity >= 1 && newQuantity <= item.product.stock) {
-                            updateQuantity(item.product._id, newQuantity);
+                            handleUpdateQuantity(item.product._id, newQuantity);
                           }
                         }}
-                        disabled={updating}
+                        disabled={updatingItems.has(item.product._id)}
                         className="quantity-input"
                       />
                       <button
                         type="button"
-                        onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
-                        disabled={updating || item.quantity >= item.product.stock}
+                        onClick={() => handleIncrementItem(item.product._id)}
+                        disabled={updatingItems.has(item.product._id) || item.quantity >= item.product.stock}
                         className="quantity-btn"
                       >
                         +
@@ -250,8 +240,8 @@ const Cart = () => {
 
                   <div className="item-actions">
                     <button
-                      onClick={() => removeItem(item.product._id)}
-                      disabled={updating}
+                      onClick={() => handleRemoveItem(item.product._id)}
+                      disabled={updatingItems.has(item.product._id)}
                       className="btn btn-danger remove-btn"
                       title="Eliminar producto"
                     >
@@ -267,18 +257,18 @@ const Cart = () => {
                 <h3>Resumen del Pedido</h3>
                 
                 <div className="summary-line">
-                  <span>Productos ({calculateItemsCount()}):</span>
-                  <span>${calculateTotal().toLocaleString('es-AR')}</span>
+                  <span>Productos ({totalItems}):</span>
+                  <span>${totalPrice.toLocaleString('es-AR')}</span>
                 </div>
 
                 <div className="summary-line">
                   <span>Envío:</span>
                   <span>
-                    {calculateTotal() >= 10000 ? 'Gratis' : '$500'}
+                    {totalPrice >= 10000 ? 'Gratis' : '$500'}
                   </span>
                 </div>
 
-                {calculateTotal() >= 10000 && (
+                {totalPrice >= 10000 && (
                   <div className="free-shipping-notice">
                     🚚 ¡Envío gratis por compras superiores a $10,000!
                   </div>
@@ -289,7 +279,7 @@ const Cart = () => {
                 <div className="summary-total">
                   <span>Total:</span>
                   <span>
-                    ${(calculateTotal() + (calculateTotal() >= 10000 ? 0 : 500)).toLocaleString('es-AR')}
+                    ${(totalPrice + (totalPrice >= 10000 ? 0 : 500)).toLocaleString('es-AR')}
                   </span>
                 </div>
 
