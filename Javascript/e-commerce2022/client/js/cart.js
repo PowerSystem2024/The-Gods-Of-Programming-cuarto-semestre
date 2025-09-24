@@ -80,11 +80,15 @@ const displayCart = () => {
         const total = cart.reduce((acc, el)=> acc + el.price * el.quanty, 0);
         const modalFooter = document.createElement("div");
         modalFooter.className = "modalFooter";
-        modalFooter.innerHTML = `
-          <div class="total-price">Total: ${total} :)</div>
-          <button id="checkout-btn" class="checkout-btn">Ir al checkout</button>
-        `;
-        modalContainer.append(modalFooter);
+                modalFooter.innerHTML = `
+                    <div class="total-price">Total: ${total} :)</div>
+                    <button id="checkout-btn" class="checkout-btn">Ir al checkout</button>
+                `;
+                // Agregar el div para el Brick de Mercado Pago
+                const buttonCheckout = document.createElement("div");
+                buttonCheckout.id = "button-checkout";
+                modalFooter.appendChild(buttonCheckout);
+                modalContainer.append(modalFooter);
     } else {
         const modalText = document.createElement("div");
         modalText.innerText = "Your cart is empty";
