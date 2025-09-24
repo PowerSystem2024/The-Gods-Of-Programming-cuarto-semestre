@@ -119,7 +119,7 @@ document.addEventListener('click', function(e) {
             description: "Compra de E-commerce",
             price: cart.reduce((acc, el) => acc + el.price * el.quanty, 0)
         };
-        fetch("http://localhost:8080/create_preference", {
+    fetch("https://the-gods-of-programming-cuarto-semestre.onrender.com/create_preference", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(orderData),
