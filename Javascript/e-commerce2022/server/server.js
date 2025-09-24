@@ -1,20 +1,4 @@
-// Endpoint para recibir feedback de Mercado Pago
-app.get('/feedback', (req, res) => {
-    // Puedes personalizar la respuesta según el estado del pago
-    const { payment_id, status, merchant_order_id } = req.query;
-    res.send(`
-        <html>
-            <head><title>Estado del pago</title></head>
-            <body style="font-family:sans-serif;text-align:center;margin-top:50px;">
-                <h1>¡Gracias por tu compra!</h1>
-                <p><b>Estado:</b> ${status || 'desconocido'}</p>
-                <p><b>ID de pago:</b> ${payment_id || 'N/A'}</p>
-                <p><b>Orden:</b> ${merchant_order_id || 'N/A'}</p>
-                <a href="https://powersystem2024.github.io/The-Gods-Of-Programming-cuarto-semestre/Javascript/e-commerce2022/client/">Volver a la tienda</a>
-            </body>
-        </html>
-    `);
-});
+
 
 import 'dotenv/config';
 import express from 'express';
@@ -38,6 +22,24 @@ const preference = new Preference(client);
 app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../client')));
+
+// Endpoint para recibir feedback de Mercado Pago
+app.get('/feedback', (req, res) => {
+    // Puedes personalizar la respuesta según el estado del pago
+    const { payment_id, status, merchant_order_id } = req.query;
+    res.send(`
+        <html>
+            <head><title>Estado del pago</title></head>
+            <body style="font-family:sans-serif;text-align:center;margin-top:50px;">
+                <h1>¡Gracias por tu compra!</h1>
+                <p><b>Estado:</b> ${status || 'desconocido'}</p>
+                <p><b>ID de pago:</b> ${payment_id || 'N/A'}</p>
+                <p><b>Orden:</b> ${merchant_order_id || 'N/A'}</p>
+                <a href="https://powersystem2024.github.io/The-Gods-Of-Programming-cuarto-semestre/Javascript/e-commerce2022/client/">Volver a la tienda</a>
+            </body>
+        </html>
+    `);
+});
 
 app.post('/create_preference', async (req, res) => {
     try {
