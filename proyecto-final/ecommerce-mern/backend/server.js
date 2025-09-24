@@ -12,6 +12,16 @@ dotenv.config();
 // Importar configuración de la base de datos
 import connectDB from './config/database.config.js';
 
+// Importar configuración de Passport
+import './config/auth.config.js';
+
+// Importar modelos para registrarlos
+import './models/user.model.js';
+import './models/product.model.js';
+
+// Importar rutas
+import authRoutes from './routes/auth.routes.js';
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -55,6 +65,9 @@ app.get('/', (req, res) => {
   });
 });
 
+// Rutas de la API
+app.use('/api/auth', authRoutes);
+
 // Ruta de prueba para verificar la conexión a la base de datos
 app.get('/api/health', async (req, res) => {
   try {
@@ -69,7 +82,8 @@ app.get('/api/health', async (req, res) => {
     res.json({
       status: 'OK',
       database: states[dbState],
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      version: '1.0.0'
     });
   } catch (error) {
     res.status(500).json({

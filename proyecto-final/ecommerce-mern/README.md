@@ -103,8 +103,16 @@ Ver \`.env.example\` para la lista completa de variables necesarias.
 - [x] Estructura básica del proyecto
 - [x] Migración completa a sintaxis ES6 import/export
 
+### ✅ Commit 2 - Sistema de autenticación (COMPLETADO)
+- [x] Configuración completa de Passport.js (auth.config.js)
+- [x] Estrategias de autenticación: Local y JWT
+- [x] Controlador de autenticación (auth.controller.js)
+- [x] Rutas de registro y login (/api/auth/*)
+- [x] Middlewares de autenticación y validación
+- [x] Encriptación de contraseñas con bcryptjs
+- [x] Manejo de sesiones y tokens JWT
+
 ### 📋 Próximos Commits
-- [ ] Commit 2: Rutas de autenticación
 - [ ] Commit 3: CRUD de productos
 - [ ] Commit 4: Sistema de carrito
 - [ ] Commit 5: Frontend con React
