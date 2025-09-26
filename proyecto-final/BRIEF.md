@@ -1,33 +1,33 @@
-# 🍰 SweetCommerce – Brief de Branding
+# 🍰 SweetCommerce – Brief
 
-## 1. ✨ Visión de Marca
+## 1. ✨ Visión de marca
 SweetCommerce busca posicionarse como la tienda online líder en postres artesanales y gourmet, combinando tradición culinaria con innovación digital. Su objetivo es transmitir calidad, frescura, pasión por la repostería y crear experiencias memorables a través de sabores únicos.
 
-## 2. 🎭 Personalidad de Marca
+## 2. 🎭 Personalidad de marca
 🧁 **Ícono**: El cupcake como símbolo de celebración, dulzura y momentos especiales.
 🎯 **Tono**: Cálido, acogedor, elegante pero accesible.
 🍯 **Valores**: Calidad artesanal, ingredientes premium, atención personalizada, momentos especiales.
 
-## 3. 🎯 Público Objetivo
+## 3. 🎯 Público objetivo
 - **Amantes de los postres gourmet** que buscan calidad superior
 - **Organizadores de eventos** que necesitan postres para celebraciones especiales
 - **Personas que buscan regalos únicos** y experiencias gastronómicas memorables
 - **Familias** que quieren compartir momentos dulces de calidad
 - **Empresas** que buscan catering de postres para eventos corporativos
 
-## 4. 🎨 Identidad Visual
+## 4. 🎨 Identidad visual
 
-### Paleta de Colores:
+### Paleta de colores:
 - **Primarios**: Tonos cálidos (cremas, dorados suaves, rosas pastel, marrones)
 - **Acentos**: Chocolates ricos, verdes menta, rojos cereza
 - **Neutros**: Blancos puros y grises elegantes
 
-### Estilo Gráfico:
+### Estilo gráfico:
 - Minimalista con toques elegantes
 - Fotografía gastronómica de alta calidad
 - Ilustraciones delicadas tipo acuarela
 
-### Tipografías Sugeridas:
+### Tipografías principales:
 **Para títulos y marca:**
 - Playfair Display (elegante y sofisticada)
 - Dancing Script (cálida y personal)
@@ -36,24 +36,24 @@ SweetCommerce busca posicionarse como la tienda online líder en postres artesan
 - Open Sans (clara y legible)
 - Lato (moderna y friendly)
 
-## 5. 📦 Aplicaciones de Marca
+## 5. 📦 Aplicaciones de marca
 - Logo adaptable para web, packaging y redes sociales
 - Plantillas para contenido en Instagram, Facebook y TikTok
 - Diseño de packaging elegante y eco-friendly
 - Elementos gráficos para interfaz web y materiales promocionales
 - Certificados de calidad y origen artesanal
 
-## 6. 🔍 Referencias Visuales
+## 6. 🔍 Referencias visuales
 - **Marcas similares**: Ladurée, Pierre Hermé, Magnolia Bakery
 - **Inspiración estética**: Pastelerías parisinas + diseño escandinavo moderno
 - **Mood**: Elegancia artesanal, calidez hogareña, sofisticación accesible
 
-## 7. 🥊 Competencia Directa
+## 7. 🥊 Competencia directa
 - Pastelerías locales tradicionales
 - Tiendas online de repostería
 - Supermercados con sección de panadería
 
-## ❓ Preguntas Clave para Definir el Branding
+## ❓ Preguntas clave para definir el Branding
 
 ### 1. ¿Cuál es la necesidad, desafío o problema que se busca resolver?
 El mercado de postres online carece de opciones que combinen calidad artesanal con conveniencia digital. SweetCommerce busca llenar este vacío ofreciendo postres gourmet con la comodidad de compra online, entrega a domicilio y personalización de pedidos.
@@ -83,10 +83,10 @@ El mercado de postres online carece de opciones que combinen calidad artesanal c
 - **Testimoniales** de clientes satisfechos y eventos exitosos
 - **Blog de recetas** y tips de repostería para generar engagement
 
-## 🚀 Propuesta de Valor Única
+## 🚀 Propuesta de valor única
 *"Endulzamos tus momentos especiales con postres artesanales premium, creados con pasión y entregados con amor directamente en tu puerta."*
 
-## 📊 Métricas de Éxito
+## 📊 Métricas de éxito
 - Reconocimiento de marca en el segmento premium
 - Índice de satisfacción del cliente > 95%
 - Crecimiento mensual de ventas del 15%
