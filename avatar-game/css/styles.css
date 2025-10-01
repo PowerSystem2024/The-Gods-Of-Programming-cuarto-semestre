@@ -1,448 +1,393 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Henny+Penny&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Klee+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Overlock+SC&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
 }
 
 body {
-    background-color: #f0f8ff;
-    color: #333;
-    line-height: 1.6;
+    font-family: 'Overlock SC', 'Merriweather', 'Nunito Sans', 'Inter', sans-serif;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #5d2e2e;
+    font-size: clamp(14px, 2vw, 20px);
+    position: relative;
+    color: #000000;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    text-align: center;
 }
 
 h1 {
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-    color: #2c3e50;
+    background-color: #2a0000;
+    padding: 15px;
+    width: 90%;
+    max-width: 1000px;
+    border-radius: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1.5);
+    margin: 20px auto;
+    color: white;
+    font-size: clamp(28px, 6vw, 50px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
-h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #3498db;
+.icon {
+    border-radius: 50%;
+    border: 3px solid white;
 }
 
 .game-section {
-    background-color: white;
+    background-color: #2a0000;
+    padding: 15px;
+    width: 90%;
+    max-width: 1000px;
+    border-radius: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1.5);
+    margin: 20px auto;
+    color: white;
+    font-size: 26px;
+}
+
+h2 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+span {
+    text-shadow: rgb(0, 0, 0) 0 5px;
+}
+
+/* Estilos para el botón de reglas */
+#boton-reglas {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: rgba(73, 45, 2, 0.887);
+    color: white;
+    border: 2px solid white;
     border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.personajes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.personaje-option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.personaje-label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     cursor: pointer;
-    transition: transform 0.3s;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
 }
 
-.personaje-label:hover {
+#boton-reglas:hover {
+    background-color: white;
+    color: rgba(73, 45, 2, 0.887);
     transform: scale(1.05);
 }
 
-.personaje-label img {
+/* Estilos para el modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-contenido {
+    background-color: rgba(73, 45, 2, 0.95);
+    color: white;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+    border: 3px solid white;
+    box-shadow: 0 0 20px rgba(255, 224, 144, 0.5);
+}
+
+.cerrar-modal {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.cerrar-modal:hover {
+    color: #ff6b6b;
+    transform: scale(1.2);
+}
+
+.modal-contenido h4 {
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.modal-contenido ol, .modal-contenido ul {
+    text-align: left;
+    margin: 10px 0;
+}
+
+.modal-contenido li {
+    margin-bottom: 5px;
+}
+
+/* Contenedor de personajes */
+.contenedor-principal {
+    padding: 20px;
+}
+
+.personajes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+    padding: 20px;
+}
+
+.personaje {
+    background-color: rgba(255, 224, 144, 0.2);
+    border: 2px solid white;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.personaje:hover {
+    transform: scale(1.05);
+    background-color: rgba(255, 224, 144, 0.4);
+    box-shadow: 0 0 15px rgba(255, 224, 144, 0.5);
+}
+
+.personaje img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid white;
+    margin-bottom: 10px;
+}
+
+.personaje input[type="radio"] {
+    margin: 10px 0;
+    transform: scale(1.5);
+}
+
+.personaje label {
+    display: block;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+/* Visualización de combate */
+.visual-combate {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 30px 0;
+    padding: 20px;
+}
+
+.personaje-visual {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 224, 144, 0.1);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.personaje-visual img {
     width: 100px;
     height: 100px;
     object-fit: cover;
     border-radius: 50%;
-    border: 3px solid transparent;
-    margin-bottom: 5px;
 }
 
-input[type="radio"]:checked+.personaje-label img {
-    border-color: #3498db;
+.personaje-visual.aparecer {
+    animation: aparecer 0.5s ease-in-out;
 }
 
-.btn {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s;
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-.btn:hover {
-    background-color: #2980b9;
+/* Efectos de ganador */
+.ganador-efecto-brillo {
+    animation: brillo-ganador 2s infinite;
+    border-color: #ffd700 !important;
+    box-shadow: 0 0 30px #ffd700 !important;
 }
 
-.vidas-container {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
+@keyframes brillo-ganador {
+    0%, 100% {
+        box-shadow: 0 0 20px #ffd700;
+    }
+    50% {
+        box-shadow: 0 0 40px #ffd700, 0 0 60px #ffd700;
+    }
 }
 
-.nombre-personaje {
+.emoji-resultado {
+    position: absolute;
+    font-size: 30px;
+    top: -20px;
+    right: -20px;
+    animation: bounce 0.5s ease-in-out;
+}
+
+.ganador-emoji {
+    animation: pulso-ganador 1s infinite;
+}
+
+@keyframes pulso-ganador {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Botones */
+.btn, .btn-ataque {
+    padding: 15px 30px;
+    font-size: 18px;
     font-weight: bold;
-    color: #e74c3c;
+    background-color: rgba(255, 224, 144, 0.9);
+    color: rgba(73, 45, 2, 1);
+    border: 2px solid rgba(73, 45, 2, 1);
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover, .btn-ataque:hover {
+    background-color: rgba(73, 45, 2, 1);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 224, 144, 0.5);
+}
+
+.btn:disabled, .btn-ataque:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
 }
 
 .ataques {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
     flex-wrap: wrap;
+    margin-top: 20px;
 }
 
-.btn-ataque {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s;
-}
-
-.btn-ataque:hover {
-    background-color: #c0392b;
-    transform: translateY(-3px);
-}
-
-#resultado {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-.ataque {
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f8f9fa;
-}
-
-.hidden {
+/* Secciones ocultas */
+#seleccionar-ataque,
+#mensajes,
+#reiniciar {
     display: none;
 }
 
-@media (max-width: 600px) {
-    .personajes {
-        flex-direction: column;
-    }
-
-    .vidas-container {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .ataques {
-        flex-direction: column;
-    }
-}
-
-.personajes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    margin: 30px 0;
-}
-
-/* Cada opción de personaje */
-.personaje-option {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Estilo para el nombre del personaje */
-.personaje-label span {
-    font-weight: bold;
-    color: #2c3e50;
-    margin-top: 5px;
-    font-size: 1.1rem;
-}
-
-/* Efecto hover */
-.personaje-label:hover img {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px rgba(52, 152, 219, 0.3);
-}
-
-/* Estilos para la sección de reglas */
-#reglas-juego {
-    background-color: #fff3cd;
-    border-left: 4px solid #ffc107;
-}
-
-.reglas-content {
-    text-align: left;
-    padding: 10px;
-}
-
-.reglas-content p {
-    margin: 8px 0;
-    font-weight: 500;
-}
-
-/* Estilos para el detalle de ataque */
-.detalle-ataque {
-    margin: 15px 0;
-    padding: 12px;
-    border-radius: 8px;
-    background-color: #e8f4fc;
-    border-left: 4px solid #3498db;
-    font-style: italic;
-}
-
-/* Mejoras para los mensajes de ataque */
-#ataque-del-jugador,
-#ataque-del-enemigo {
-    margin: 15px 0;
-    padding: 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 1.1em;
-}
-
-#ataque-del-jugador {
-    background-color: #d4edda;
-    border-left: 4px solid #28a745;
-    color: #155724;
-}
-
-#ataque-del-enemigo {
-    background-color: #f8d7da;
-    border-left: 4px solid #dc3545;
-    color: #721c24;
-}
-
-.detalle-ataque {
-    margin: 20px 0;
-    padding: 15px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #e8f4fc, #d6eaf8);
-    border-left: 4px solid #3498db;
-    font-style: italic;
-    font-weight: 500;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Animaciones para los resultados */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-#resultado {
-    animation: fadeIn 0.5s ease-in;
-    font-size: 1.4em;
-    margin: 20px 0;
-    padding: 15px;
-    border-radius: 8px;
-    background-color: #fff3cd;
-}
-
-/* Efectos hover para los botones de ataque */
-.btn-ataque {
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-ataque:hover::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: 0.5s;
-}
-
-.btn-ataque:hover::before {
-    left: 100%;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-
-    #ataque-del-jugador,
-    #ataque-del-enemigo {
-        font-size: 1em;
-        padding: 12px;
-    }
-
-    .detalle-ataque {
-        font-size: 0.9em;
-        padding: 12px;
-    }
-
-    #resultado {
-        font-size: 1.2em;
-        padding: 12px;
-    }
-}
-
-/* Estilos para el historial de combates */
-#mensajes {
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-}
-
-.combate-actual {
-    margin-bottom: 20px;
-    padding: 15px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.5s ease-in;
-}
-
-.accion-jugador {
-    color: #155724;
-    background-color: #d4edda;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 8px;
-    border-left: 4px solid #28a745;
-    font-weight: bold;
-}
-
-.accion-enemigo {
-    color: #721c24;
-    background-color: #f8d7da;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 8px;
-    border-left: 4px solid #dc3545;
-    font-weight: bold;
-}
-
-.interaccion {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 8px;
-    border-left: 4px solid #17a2b8;
-    font-style: italic;
-}
-
-.resultado-ronda {
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 8px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.victoria {
-    background-color: #d4edda;
-    color: #155724;
-    border-left: 4px solid #28a745;
-}
-
-.derrota {
-    background-color: #f8d7da;
-    color: #721c24;
-    border-left: 4px solid #dc3545;
-}
-
-.empate {
-    background-color: #fff3cd;
-    color: #856404;
-    border-left: 4px solid #ffc107;
-}
-
-.vidas-actuales {
-    text-align: center;
-    font-weight: bold;
-    color: #6c757d;
+/* Mensajes */
+#mensajes p {
+    font-size: 20px;
+    line-height: 1.8;
     margin: 10px 0;
 }
 
-.separador-combate {
-    border: none;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #dee2e6, transparent);
-    margin: 15px 0;
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
+/* Responsividad */
+@media (max-width: 768px) {
+    .visual-combate {
+        flex-direction: column;
+        gap: 20px;
     }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    
+    .personaje-visual {
+        width: 120px;
+        height: 120px;
     }
-}
-
-/* Scrollbar personalizado */
-#mensajes::-webkit-scrollbar {
-    width: 8px;
-}
-
-#mensajes::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-}
-
-#mensajes::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 4px;
-}
-
-#mensajes::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-    .combate-actual {
+    
+    .personaje-visual img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .personajes-container {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
+    
+    .ataques {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    h1 {
+        font-size: clamp(20px, 5vw, 35px);
         padding: 10px;
     }
-
-    .accion-jugador,
-    .accion-enemigo,
-    .interaccion,
-    .resultado-ronda {
-        padding: 8px;
-        font-size: 0.9em;
+    
+    .game-section {
+        font-size: 20px;
+        padding: 10px;
     }
+}
+
+.border-left, .border-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #ffd700, #ff6b6b, #4ecdc4, #45b7d1);
+}
+
+.border-left {
+    left: 0;
+}
+
+.border-right {
+    right: 0;
 }
