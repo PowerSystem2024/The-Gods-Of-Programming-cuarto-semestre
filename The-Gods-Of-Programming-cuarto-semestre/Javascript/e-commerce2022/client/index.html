@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Mi Ecommerce</title>
+</head>
+
+<body>
+    <header>
+        <div class="header-flex">
+            <div class="logo-container">
+                <img src="media/logo.jpg" alt="Logo" class="logo-img">
+            </div>
+            <h1 class="main-title">E-commerce 2025</h1>
+            <div class="cart-icon">
+                🛒 <span id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="card-products-container">
+        <div class="card-products" id="shopContent"></div>
+    </div>
+
+    <!-- Botón del carrito -->
+    <div class="cart-btn-container">
+        <button class="cart-btn" id="cart-btn">🛒 Ver Carrito</button>
+    </div>
+
+    <!-- Overlay y modal -->
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal-container" id="modal-container">
+        <div id="button-checkout"></div>
+    </div>
+
+
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script src="js/products.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+
+</html>
+

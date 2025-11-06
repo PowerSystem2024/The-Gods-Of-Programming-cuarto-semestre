@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVATAR - FUEGO</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Henny+Penny&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Klee+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1>
+            <img class="icon" src="img/Zuko.png" alt="Fuego" width="50">
+            <img class="icon" src="img/Mai.png" alt="Aire" width="50">
+            🔥 AVATAR - FUEGO🔥
+            <img class="icon" src="img/Ursa.png" alt="Tierra" width="50">
+            <img class="icon" src="img/Izumi.png" alt="Agua" width="50">
+        </h1>
+
+        <!-- Sección de selección de personaje -->
+        <section id="seleccionar-personaje" class="game-section">
+            <div class="contenedor-principal">
+                <h2>Selecciona tu Personaje</h2>
+                <div id="personajes-container" class="personajes-container"></div>
+                <div class="boton-container">
+                    <button id="boton-personaje" class="btn">Seleccionar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de ataque -->
+        <section id="seleccionar-ataque" class="game-section">
+            <p>Tu personaje <span id="personaje-jugador"></span> tiene <span id="vida-jugador">3</span> vidas</p>
+            <p>El personaje <span id="personaje-enemigo"></span> de tu enemigo tiene <span id="vida-enemigo">3</span> vidas</p>
+            
+            <!-- Visualización de combate -->
+            <div class="visual-combate">
+                <div id="jugador-visual" class="personaje-visual"></div>
+                <div id="enemigo-visual" class="personaje-visual"></div>
+            </div>
+            
+            <h2>Elige tu ataque:</h2>
+            <div class="ataques">
+                <button id="boton-punio" class="btn-ataque">Puño</button>
+                <button id="boton-patada" class="btn-ataque">Patada</button>
+                <button id="boton-barrida" class="btn-ataque">Barrida</button>
+            </div>
+        </section>
+
+        <!-- Sección de mensajes -->
+        <section id="mensajes" class="game-section">
+            <p></p>
+        </section>
+
+        <!-- Sección de reinicio -->
+        <section id="reiniciar" class="game-section">
+            <button id="boton-reiniciar" class="btn">Reiniciar</button>
+        </section>
+    </div>
+
+<!-- Botón de reglas y modal -->
+        <button id="boton-reglas" class="btn">Reglas del Juego</button>
+        
+        <!-- Modal de reglas -->
+        <div id="modal-reglas" class="modal">
+            <div class="modal-contenido">
+                <span class="cerrar-modal" id="cerrar-reglas">&times;</span>
+                <h4>Reglas del Juego</h4>
+                <ol>
+                    <li>Selección de Personaje:
+                        <ul>
+                            <li>El jugador elige entre los personajes disponibles</li>
+                            <li>El enemigo se asigna aleatoriamente</li>
+                        </ul>
+                    </li>
+                    <li>Ataques:
+                        <ul>
+                            <li>El jugador elige entre Puño, Patada o Barrida</li>
+                            <li>El enemigo elige aleatoriamente</li>
+                        </ul>
+                    </li>
+                    <li>Vidas:
+                        <ul>
+                            <li>Ambos tienen 3 vidas</li>
+                            <li>Perder un combate resta una vida</li>
+                        </ul>
+                    </li>
+                    <li>Reglas de Combate:
+                        <ul>
+                            <li>✊ PUÑO vence a 👣 BARRIDA</li>
+                            <li>🦶 PATADA vence a ✊ PUÑO</li>
+                            <li>👣 BARRIDA vence a 🦶 PATADA</li>
+                        </ul>
+                    </li>
+                </ol>
+                <div class="border-left"></div>
+                <div class="border-right"></div>
+            </div>
+        </div>
+
+    <!-- Scripts en orden de dependencia -->
+    <script src="js/personajes.js"></script>  <!-- Primero: clases y datos -->
+    <script src="js/juego.js"></script>       <!-- Segundo: lógica del juego -->
+    <script src="js/main.js"></script>        <!-- Último: inicialización -->
+</body>
+
+</html>
