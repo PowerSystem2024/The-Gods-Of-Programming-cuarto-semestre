@@ -1,0 +1,393 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Henny+Penny&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Klee+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Overlock+SC&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Overlock SC', 'Merriweather', 'Nunito Sans', 'Inter', sans-serif;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #5d2e2e;
+    font-size: clamp(14px, 2vw, 20px);
+    position: relative;
+    color: #000000;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    background-color: #2a0000;
+    padding: 15px;
+    width: 90%;
+    max-width: 1000px;
+    border-radius: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1.5);
+    margin: 20px auto;
+    color: white;
+    font-size: clamp(28px, 6vw, 50px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.icon {
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+.game-section {
+    background-color: #2a0000;
+    padding: 15px;
+    width: 90%;
+    max-width: 1000px;
+    border-radius: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1.5);
+    margin: 20px auto;
+    color: white;
+    font-size: 26px;
+}
+
+h2 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+span {
+    text-shadow: rgb(0, 0, 0) 0 5px;
+}
+
+/* Estilos para el botón de reglas */
+#boton-reglas {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: rgba(73, 45, 2, 0.887);
+    color: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+#boton-reglas:hover {
+    background-color: white;
+    color: rgba(73, 45, 2, 0.887);
+    transform: scale(1.05);
+}
+
+/* Estilos para el modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-contenido {
+    background-color: rgba(73, 45, 2, 0.95);
+    color: white;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+    border: 3px solid white;
+    box-shadow: 0 0 20px rgba(255, 224, 144, 0.5);
+}
+
+.cerrar-modal {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.cerrar-modal:hover {
+    color: #ff6b6b;
+    transform: scale(1.2);
+}
+
+.modal-contenido h4 {
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.modal-contenido ol, .modal-contenido ul {
+    text-align: left;
+    margin: 10px 0;
+}
+
+.modal-contenido li {
+    margin-bottom: 5px;
+}
+
+/* Contenedor de personajes */
+.contenedor-principal {
+    padding: 20px;
+}
+
+.personajes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+    padding: 20px;
+}
+
+.personaje {
+    background-color: rgba(255, 224, 144, 0.2);
+    border: 2px solid white;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.personaje:hover {
+    transform: scale(1.05);
+    background-color: rgba(255, 224, 144, 0.4);
+    box-shadow: 0 0 15px rgba(255, 224, 144, 0.5);
+}
+
+.personaje img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid white;
+    margin-bottom: 10px;
+}
+
+.personaje input[type="radio"] {
+    margin: 10px 0;
+    transform: scale(1.5);
+}
+
+.personaje label {
+    display: block;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+/* Visualización de combate */
+.visual-combate {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 30px 0;
+    padding: 20px;
+}
+
+.personaje-visual {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 224, 144, 0.1);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.personaje-visual img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.personaje-visual.aparecer {
+    animation: aparecer 0.5s ease-in-out;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Efectos de ganador */
+.ganador-efecto-brillo {
+    animation: brillo-ganador 2s infinite;
+    border-color: #ffd700 !important;
+    box-shadow: 0 0 30px #ffd700 !important;
+}
+
+@keyframes brillo-ganador {
+    0%, 100% {
+        box-shadow: 0 0 20px #ffd700;
+    }
+    50% {
+        box-shadow: 0 0 40px #ffd700, 0 0 60px #ffd700;
+    }
+}
+
+.emoji-resultado {
+    position: absolute;
+    font-size: 30px;
+    top: -20px;
+    right: -20px;
+    animation: bounce 0.5s ease-in-out;
+}
+
+.ganador-emoji {
+    animation: pulso-ganador 1s infinite;
+}
+
+@keyframes pulso-ganador {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Botones */
+.btn, .btn-ataque {
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: rgba(255, 224, 144, 0.9);
+    color: rgba(73, 45, 2, 1);
+    border: 2px solid rgba(73, 45, 2, 1);
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover, .btn-ataque:hover {
+    background-color: rgba(73, 45, 2, 1);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 224, 144, 0.5);
+}
+
+.btn:disabled, .btn-ataque:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.ataques {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* Secciones ocultas */
+#seleccionar-ataque,
+#mensajes,
+#reiniciar {
+    display: none;
+}
+
+/* Mensajes */
+#mensajes p {
+    font-size: 20px;
+    line-height: 1.8;
+    margin: 10px 0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .visual-combate {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .personaje-visual {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .personaje-visual img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .personajes-container {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
+    
+    .ataques {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    h1 {
+        font-size: clamp(20px, 5vw, 35px);
+        padding: 10px;
+    }
+    
+    .game-section {
+        font-size: 20px;
+        padding: 10px;
+    }
+}
+
+.border-left, .border-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #ffd700, #ff6b6b, #4ecdc4, #45b7d1);
+}
+
+.border-left {
+    left: 0;
+}
+
+.border-right {
+    right: 0;
+}
