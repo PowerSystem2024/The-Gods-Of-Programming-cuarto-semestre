@@ -13,14 +13,14 @@ dotenv.config();
 import connectDB from './config/database.config.js';
 
 // Importar configuración de Passport
-import './config/auth.config.js';
+import configureGoogleStrategy from './config/passport.config.js';
 
 // Importar modelos para registrarlos
 import './models/user.model.js';
 import './models/product.model.js';
 
 // Importar rutas
-import authRoutes from './routes/auth.routes.js';
+import authRoutes from './routes/auth-new.routes.js';
 import productRoutes from './routes/product.routes.js';
 import cartRoutes from './routes/cart.routes.js';
 
@@ -58,6 +58,10 @@ app.use(session({
 
 // Inicializar Passport
 app.use(passport.initialize());
+app.use(passport.session());
+
+// Configurar estrategia de Google OAuth
+configureGoogleStrategy(passport);
 app.use(passport.session());
 
 // Rutas básicas

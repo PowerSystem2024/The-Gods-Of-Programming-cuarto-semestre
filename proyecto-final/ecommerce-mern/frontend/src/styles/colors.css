@@ -1,0 +1,28 @@
+/* 🎨 Paleta Premium para E-Commerce de Postres - MERN Stack */
+:root {
+  /* Fondos y Neutros */
+  --cream-light: #FFF8F0;        /* Fondo principal - Blanco roto cálido */
+  --beige-100: #F5EAE0;          /* Fondo secundario - Beige muy claro */
+  --beige-200: #E8D5C4;          /* Bordes suaves */
+  
+  /* Marrones Principales */
+  --brown-primary: #8B5A3C;      /* Primario - Marrón caramelo medio */
+  --brown-dark: #5D3A1A;         /* Texto principal - Marrón oscuro */
+  --brown-darker: #3E2723;       /* Headers/Footer - Marrón muy oscuro */
+  
+  /* Interactivos y Acentos */
+  --caramel: #C4915F;            /* Botones secundarios - Caramelo */
+  --gold-accent: #D4AF37;        /* Highlights/Badges - Dorado */
+  --rose-accent: #E8B4A8;        /* Acento suave - Rosa palo */
+  
+  /* Estados */
+  --success: #7CB342;            /* Verde suave para confirmaciones */
+  --error: #D32F2F;              /* Rojo para errores */
+  --warning: #F57C00;            /* Naranja para advertencias */
+  
+  /* Sombras y Transparencias */
+  --shadow-sm: 0 1px 3px rgba(62, 39, 35, 0.12);
+  --shadow-md: 0 4px 8px rgba(62, 39, 35, 0.15);
+  --shadow-lg: 0 8px 16px rgba(62, 39, 35, 0.18);
+  --overlay: rgba(62, 39, 35, 0.6);
+}

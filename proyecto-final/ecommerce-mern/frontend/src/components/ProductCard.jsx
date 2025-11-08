@@ -1,53 +1,116 @@
 import { Link } from 'react-router-dom';
-import './ProductStyles.css';
+import { useCart } from '../context/CartContext';
+
+// 🎨 Helper: Obtener emoji según categoría
+const getCategoryIcon = (category) => {
+  const categoryName = category?.main || category?.name || category || '';
+  const icons = {
+    'laptop': '💻',
+    'gaming': '🎮',
+    'auriculares': '🎧',
+    'headphones': '🎧',
+    'smartwatch': '⌚',
+    'reloj': '⌚',
+    'telefono': '📱',
+    'phone': '📱',
+    'tablet': '📱',
+    'camara': '📷',
+    'camera': '📷',
+    'default': '📦'
+  };
+  
+  const lowerCategory = categoryName.toLowerCase();
+  for (const [key, icon] of Object.entries(icons)) {
+    if (lowerCategory.includes(key)) return icon;
+  }
+  return icons.default;
+};
 
 const ProductCard = ({ product }) => {
+  const { addToCart, isInCart } = useCart();
+  
+  const handleQuickAdd = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (product.stock === 0) return;
+    
+    try {
+      await addToCart(product, 1);
+    } catch (err) {
+      console.error('Error adding to cart:', err);
+    }
+  };
+
+  const productImage = product.images?.[0];
+  const categoryIcon = getCategoryIcon(product.category);
+  const inCart = isInCart(product._id);
+
   return (
     <div className="product-card">
       <Link to={`/product/${product._id}`} className="product-link">
         <div className="product-image">
-          {product.images && product.images.length > 0 && product.images[0] ? (
+          {productImage ? (
             <img 
-              src={product.images[0]} 
+              src={productImage} 
               alt={product.name}
               onError={(e) => {
                 e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
+                e.target.nextElementSibling.style.display = 'flex';
               }}
             />
-          ) : (
-            <div className="placeholder-image">
-              📦
-            </div>
-          )}
+          ) : null}
+          <div 
+            className="placeholder-image" 
+            style={{ display: productImage ? 'none' : 'flex' }}
+          >
+            <span className="placeholder-icon">{categoryIcon}</span>
+          </div>
           {product.stock === 0 && (
             <div className="out-of-stock-overlay">
               <span>Sin Stock</span>
             </div>
           )}
+          {product.featured && (
+            <span className="badge featured-badge">⭐ Destacado</span>
+          )}
         </div>
+        
         <div className="product-info">
           <h3 className="product-name">{product.name}</h3>
           <p className="product-category">
-            {product.category?.main || product.category || 'Sin categoría'}
+            {product.category?.main || product.category?.name || 'Sin categoría'}
+          </p>
+          <p className="product-description">
+            {product.description?.substring(0, 80)}
+            {product.description?.length > 80 ? '...' : ''}
           </p>
           <p className="product-price">
-            ${product.price?.toLocaleString('es-AR')}
+            ${product.price?.toLocaleString('es-AR', { minimumFractionDigits: 2 })}
           </p>
           <div className="product-meta">
-            <span className={`product-stock ${product.stock === 0 ? 'out-of-stock' : ''}`}>
-              {product.stock > 0 ? `Stock: ${product.stock}` : 'Sin stock'}
+            <span className={`stock-badge ${product.stock === 0 ? 'out' : product.stock < 10 ? 'low' : 'available'}`}>
+              {product.stock === 0 ? '❌ Sin stock' : 
+               product.stock < 10 ? `⚠️ Últimas ${product.stock}` :
+               `✅ Stock: ${product.stock}`}
             </span>
-            {product.rating && product.rating > 0 && (
-              <span className="product-rating">
-                ⭐ {product.rating.toFixed(1)}
-              </span>
-            )}
           </div>
         </div>
       </Link>
       
       <div className="product-actions">
+        {product.stock > 0 && !inCart && (
+          <button 
+            onClick={handleQuickAdd}
+            className="btn btn-secondary quick-add"
+            title="Agregar al carrito"
+          >
+            🛒 Agregar
+          </button>
+        )}
+        {inCart && (
+          <span className="in-cart-badge">✅ En carrito</span>
+        )}
         <Link 
           to={`/product/${product._id}`} 
           className="btn btn-primary"

@@ -83,12 +83,14 @@ const Home = () => {
     <div className="home-page">
       {/* Hero Section */}
       <section className="hero-section">
-        <div className="hero-content">
-          <h1>Bienvenido a Nuestro E-commerce</h1>
-          <p>Descubre los mejores productos con la mejor calidad y precios</p>
-          <Link to="/products" className="cta-button">
-            Ver Todos los Productos
-          </Link>
+        <div className="container">
+          <div className="hero-content">
+            <h1>Bienvenido a Nuestro E-commerce</h1>
+            <p>Descubre los mejores productos con la mejor calidad y precios</p>
+            <Link to="/products" className="btn btn-primary">
+              Ver Todos los Productos
+            </Link>
+          </div>
         </div>
       </section>
 

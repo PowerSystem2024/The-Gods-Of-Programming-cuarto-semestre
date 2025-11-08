@@ -1,4 +1,4 @@
-import './ProductStyles.css';
+import '../styles/product.css';
 
 const SearchFilters = ({ 
   searchTerm, 

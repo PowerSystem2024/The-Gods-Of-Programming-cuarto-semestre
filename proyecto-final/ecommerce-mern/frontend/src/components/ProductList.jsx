@@ -1,5 +1,5 @@
 import ProductCard from './ProductCard';
-import './ProductStyles.css';
+import '../styles/product.css';
 
 const ProductList = ({ products, loading, error, onRetry }) => {
   if (loading) {

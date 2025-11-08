@@ -1,6 +1,7 @@
 /* Product Card Styles */
 .product-card {
   background: white;
+  @import url("../styles/colors.css");
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -16,12 +17,9 @@
 .product-link {
   text-decoration: none;
   color: inherit;
-  display: block;
-}
-
-.product-image {
-  position: relative;
-  width: 100%;
+  
+  
+  
   height: 200px;
   overflow: hidden;
 }
@@ -29,46 +27,7 @@
 .product-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.product-card:hover .product-image img {
-  transform: scale(1.05);
-}
-
-.out-of-stock-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-}
-
-.product-info {
-  padding: 16px;
-}
-
-.product-name {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0 0 8px 0;
-  color: #333;
-  line-height: 1.4;
-}
-
-.product-category {
-  font-size: 0.9rem;
-  color: #666;
-  margin: 0 0 8px 0;
-}
-
+/* Empty file to avoid conflicts */
 .product-price {
   font-size: 1.2rem;
   font-weight: 700;

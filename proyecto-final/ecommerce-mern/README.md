@@ -1,52 +1,131 @@
-# 🛒 E-Commerce MERN Stack# 🛒 E-Commerce MERN Stack
+# 🍰 E-Commerce MERN - Tienda de Postres
 
+> **Proyecto Académico** - Tecnicatura en Desarrollo de Software (4to Semestre)
 
+Una aplicación de comercio electrónico completa y profesional para venta de postres, desarrollada con el stack MERN (MongoDB, Express, React, Node.js). Diseño **premium, accesible y responsivo** con paleta de colores cálidos.
 
-Una aplicación de comercio electrónico completa desarrollada con el stack MERN (MongoDB, Express, React, Node.js) como proyecto final del cuarto semestre de Tecnicatura.Una aplicación de comercio electrónico completa desarrollada con el stack MERN (MongoDB, Express, React, Node.js) como proyecto final del cuarto semestre de Tecnicatura.
+---
 
+## ✨ Características Principales
 
+### 🎨 Diseño y UX
+- ✅ **Paleta Premium**: Colores marrones, beige y dorados diseñados para tienda de postres
+- ✅ **Accesibilidad WCAG AA**: Contraste mínimo 4.5:1, foco visible, labels semánticos
+- ✅ **Responsive Design**: Mobile-first, optimizado para todas las pantallas
+- ✅ **Animaciones Suaves**: Transiciones y hover effects profesionales
 
-## ✨ Características## ✨ Características
+### 🛍️ Funcionalidades E-Commerce
+- ✅ **Catálogo de Productos**: Grid responsivo con tarjetas premium
+- ✅ **Búsqueda y Filtros**: Por categoría, precio, y búsqueda por texto
+- ✅ **Carrito de Compras**: Context API para estado global persistente
+- ✅ **Detalle de Producto**: Vista completa con imágenes, descripción y stock
+- ✅ **Sistema de Stock**: Control visual de disponibilidad (En stock, Pocas unidades, Agotado)
 
+### 🔐 Autenticación y Seguridad
+- ✅ **Registro y Login**: JWT + bcrypt para autenticación segura
+- ✅ **Rutas Protegidas**: Middleware de autenticación en backend y frontend
+- ✅ **Validación de Datos**: express-validator + Mongoose validation
+- ✅ **Sanitización**: Protección contra XSS e inyección
 
+### 📊 Panel de Administración
+- ✅ **Gestión de Productos**: CRUD completo (Crear, Leer, Actualizar, Eliminar)
+- ✅ **Control de Stock**: Actualización en tiempo real
+- ✅ **Estadísticas**: Visualización de ventas y productos (próximamente)
 
-- **🔐 Autenticación de usuarios**: Registro, login y logout- **🔐 Autenticación de usuarios**: Registro, login y logout
+---
 
-- **📱 Gestión de productos**: Catálogo completo con búsqueda y filtros- **� Gestión de productos**: Catálogo completo con búsqueda y filtros
+## 🚀 Tecnologías Utilizadas
 
-- **🛍️ Carrito de compras**: Funcionalidad completa con Context API- **�️ Carrito de compras**: Funcionalidad completa con Context API
+### Frontend
+| Tecnología | Versión | Propósito |
+|------------|---------|-----------|
+| **React** | 18.2.0 | Librería UI con Hooks |
+| **React Router** | 6.8.1 | Navegación SPA |
+| **Context API** | - | Estado global del carrito |
+| **Vite** | 4.x | Build tool rápido |
+| **CSS3 Modular** | - | Estilos con variables CSS |
+| **Axios** | 1.3.4 | Cliente HTTP |
 
-- **💳 Sistema de pedidos**: Gestión completa del flujo de compra- **� Sistema de pedidos**: Gestión completa del flujo de compra
+### Backend
+| Tecnología | Versión | Propósito |
+|------------|---------|-----------|
+| **Node.js** | 18+ | Runtime JavaScript |
+| **Express** | 4.18.2 | Framework web |
+| **MongoDB** | 6.0+ | Base de datos NoSQL |
+| **Mongoose** | 7.0.1 | ODM para MongoDB |
+| **JWT** | 9.0.0 | Autenticación con tokens |
+| **bcrypt** | 5.1.0 | Hash de contraseñas |
+| **express-validator** | 6.14.3 | Validación de datos |
+| **cors** | 2.8.5 | CORS para API |
+| **dotenv** | 16.0.3 | Variables de entorno |
 
-- **📊 Dashboard de administrador**: Panel para gestionar productos y pedidos- **� Dashboard de administrador**: Panel para gestionar productos y pedidos
+---
 
-- **🎨 Diseño responsivo**: Optimizado para desktop y móviles- **🎨 Diseño responsivo**: Optimizado para desktop y móviles
+## 📁 Estructura del Proyecto
 
-- **⚡ Estado global**: Manejo del estado con React Context API- **⚡ Estado global**: Manejo del estado con React Context API
+```
+ecommerce-mern/
+├── frontend/                 # Aplicación React
+│   ├── src/
+│   │   ├── components/      # Componentes reutilizables
+│   │   │   ├── Layout.jsx
+│   │   │   ├── ProductCard.jsx
+│   │   │   ├── ProductList.jsx
+│   │   │   ├── SearchFilters.jsx
+│   │   │   └── ProtectedRoute.jsx
+│   │   ├── pages/           # Páginas principales
+│   │   │   ├── Home.jsx
+│   │   │   ├── Products.jsx
+│   │   │   ├── ProductDetail.jsx
+│   │   │   ├── Cart.jsx
+│   │   │   ├── Login.jsx
+│   │   │   └── Register.jsx
+│   │   ├── context/         # Estado global
+│   │   │   └── CartContext.jsx
+│   │   ├── services/        # Servicios API
+│   │   │   └── api.js
+│   │   ├── styles/          # Estilos modulares
+│   │   │   ├── colors.css
+│   │   │   ├── global.css
+│   │   │   ├── layout.css
+│   │   │   └── product.css
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── package.json
+│   └── vite.config.js
+│
+├── backend/                  # API Node.js + Express
+│   ├── config/              # Configuración
+│   │   ├── database.config.js
+│   │   └── auth.config.js
+│   ├── models/              # Modelos Mongoose
+│   │   ├── user.model.js
+│   │   └── product.model.js
+│   ├── controllers/         # Lógica de negocio
+│   │   ├── auth.controller.js
+│   │   ├── product.controller.js
+│   │   └── cart.controller.js
+│   ├── routes/              # Rutas de la API
+│   │   ├── auth.routes.js
+│   │   ├── product.routes.js
+│   │   └── cart.routes.js
+│   ├── middleware/          # Middleware personalizado
+│   │   ├── auth.middleware.js
+│   │   ├── validation.middleware.js
+│   │   ├── product.validation.js
+│   │   └── cart.validation.js
+│   ├── scripts/             # Scripts de utilidad
+│   │   └── seed.js
+│   ├── .env.example
+│   ├── package.json
+│   └── server.js
+│
+├── ARQUITECTURA.md          # Documentación técnica completa
+├── README.md                # Este archivo
+└── package.json             # Scripts de ejecución raíz
+```
 
-
-
-## 🚀 Tecnologías Utilizadas## 🚀 Tecnologías Utilizadas
-
-
-
-### Frontend### Frontend
-
-- **React 18.2.0** - Librería para interfaces de usuario- **React 18.2.0** - Librería para interfaces de usuario
-
-- **React Router 6.8.1** - Navegación entre páginas- **React Router 6.8.1** - Navegación entre páginas
-
-- **React Context API** - Manejo del estado global- **React Context API** - Manejo del estado global
-
-- **CSS3** - Estilos responsivos y modernos- **CSS3** - Estilos responsivos y modernos
-
-- **Vite** - Herramienta de build y desarrollo- **Vite** - Herramienta de build y desarrollo
-
-
-
-### Backend### Backend
-
-- **Node.js** - Entorno de ejecución- **Node.js** - Entorno de ejecución
+---
 
 - **Express.js** - Framework web- **Express.js** - Framework web
 

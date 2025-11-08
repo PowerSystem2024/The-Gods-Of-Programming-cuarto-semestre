@@ -1,0 +1,148 @@
+@import url('./colors.css');
+
+/* 🏠 Página de Inicio */
+.home-page {
+  min-height: calc(100vh - 200px);
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, var(--brown-darker) 0%, var(--brown-dark) 100%);
+  color: white;
+  padding: 4rem 0;
+  margin-bottom: 3rem;
+  border-radius: 0 0 20px 20px;
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.hero-content h1 {
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 900;
+}
+
+.hero-content p {
+  color: var(--beige-100);
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+/* Sección de Búsqueda */
+.search-section {
+  margin-bottom: 2rem;
+}
+
+/* Sección de Productos */
+.products-section {
+  margin-bottom: 3rem;
+}
+
+.products-section h2 {
+  color: var(--brown-darker);
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Estados de Carga */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1rem;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--beige-200);
+  border-top: 4px solid var(--brown-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-container p {
+  color: var(--brown-dark);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Mensaje de Error */
+.error-container {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #FFEBEE;
+  border: 2px solid var(--error);
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.error-container h3 {
+  color: var(--error);
+  margin-bottom: 1rem;
+}
+
+.error-container p {
+  color: #C62828;
+  margin-bottom: 1.5rem;
+}
+
+/* Sin Productos */
+.no-products {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--brown-dark);
+}
+
+.no-products h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.no-products p {
+  font-size: 1.1rem;
+  color: var(--caramel);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 3rem 0;
+  }
+  
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  
+  .hero-content p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 2rem 0;
+  }
+  
+  .hero-content {
+    padding: 1rem;
+  }
+  
+  .hero-content h1 {
+    font-size: 1.75rem;
+  }
+}

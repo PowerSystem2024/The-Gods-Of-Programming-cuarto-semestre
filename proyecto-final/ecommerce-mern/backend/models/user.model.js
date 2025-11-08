@@ -2,15 +2,18 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    trim: true,
+    maxlength: [100, 'El nombre no puede tener más de 100 caracteres']
+  },
   firstName: {
     type: String,
-    required: [true, 'El nombre es obligatorio'],
     trim: true,
     maxlength: [50, 'El nombre no puede tener más de 50 caracteres']
   },
   lastName: {
     type: String,
-    required: [true, 'El apellido es obligatorio'],
     trim: true,
     maxlength: [50, 'El apellido no puede tener más de 50 caracteres']
   },
@@ -24,9 +27,27 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'La contraseña es obligatoria'],
+    required: function() {
+      // Password solo requerido si no usa OAuth
+      return !this.googleId;
+    },
     minlength: [6, 'La contraseña debe tener al menos 6 caracteres'],
     select: false // No incluir en las consultas por defecto
+  },
+  // Google OAuth
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true // Permite nulls pero unique cuando existe
+  },
+  authProvider: {
+    type: String,
+    enum: ['local', 'google'],
+    default: 'local'
+  },
+  isEmailVerified: {
+    type: Boolean,
+    default: false
   },
   phone: {
     type: String,
@@ -58,8 +79,8 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
+    enum: ['customer', 'admin'],
+    default: 'customer'
   },
   isActive: {
     type: Boolean,
