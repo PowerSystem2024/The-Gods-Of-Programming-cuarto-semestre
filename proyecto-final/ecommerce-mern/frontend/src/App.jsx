@@ -9,6 +9,8 @@ import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AuthCallback from './pages/AuthCallback';
+import Checkout from './pages/Checkout';
+import OrderConfirmation from './pages/OrderConfirmation';
 
 
 function App() {
@@ -51,6 +53,22 @@ function App() {
             <ProtectedRoute>
               <Layout>
                 <Cart />
+              </Layout>
+            </ProtectedRoute>
+          } />
+
+          <Route path="/checkout" element={
+            <ProtectedRoute>
+              <Layout>
+                <Checkout />
+              </Layout>
+            </ProtectedRoute>
+          } />
+
+          <Route path="/order-confirmation" element={
+            <ProtectedRoute>
+              <Layout>
+                <OrderConfirmation />
               </Layout>
             </ProtectedRoute>
           } />

@@ -91,9 +91,14 @@ const Cart = () => {
       return;
     }
     
-    // Redirigir a checkout (implementar después)
-    alert('Funcionalidad de checkout en desarrollo');
-    // navigate('/checkout');
+    // Verificar que hay productos en el carrito
+    if (items.length === 0) {
+      alert('Tu carrito está vacío');
+      return;
+    }
+    
+    // Redirigir a checkout
+    navigate('/checkout');
   };
 
   // Loading State

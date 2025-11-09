@@ -18,11 +18,13 @@ import configureGoogleStrategy from './config/passport.config.js';
 // Importar modelos para registrarlos
 import './models/user.model.js';
 import './models/product.model.js';
+import './models/order.model.js';
 
 // Importar rutas
 import authRoutes from './routes/auth-new.routes.js';
 import productRoutes from './routes/product.routes.js';
 import cartRoutes from './routes/cart.routes.js';
+import orderRoutes from './routes/order.routes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -77,6 +79,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Ruta de prueba para verificar la conexión a la base de datos
 app.get('/api/health', async (req, res) => {

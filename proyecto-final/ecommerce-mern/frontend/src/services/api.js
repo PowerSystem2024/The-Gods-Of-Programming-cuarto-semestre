@@ -92,6 +92,21 @@ export const cartAPI = {
   getSummary: () => API.get('/api/cart/summary'),
 };
 
+// Servicios de órdenes
+export const orderAPI = {
+  create: (orderData) => API.post('/api/orders', orderData),
+  getAll: (params = {}) => API.get('/api/orders', { params }),
+  getById: (id) => API.get(`/api/orders/${id}`),
+  cancel: (id, reason) => API.put(`/api/orders/${id}/cancel`, { reason }),
+  uploadPaymentProof: (id, formData) => 
+    API.put(`/api/orders/${id}/payment-proof`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    }),
+  // Admin
+  getAllAdmin: (params = {}) => API.get('/api/orders/admin/all', { params }),
+  updateStatus: (id, statusData) => API.put(`/api/orders/admin/${id}/status`, statusData),
+};
+
 // Servicio para verificar la salud del servidor
 export const healthAPI = {
   check: () => API.get('/api/health'),
