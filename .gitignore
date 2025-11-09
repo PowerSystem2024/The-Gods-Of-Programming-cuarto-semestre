@@ -2,3 +2,4 @@
 /proyecto-final/ecommerce-mern/backend/node_modules
 *.ini
 /Python/Proyecto-Pygame/__pycache__
+proyecto-final/ecommerce-mern/backend/.env

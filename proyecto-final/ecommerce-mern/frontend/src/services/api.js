@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Configuración base de Axios
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -56,45 +56,45 @@ API.interceptors.response.use(
 
 // Servicios de autenticación
 export const authAPI = {
-  register: (userData) => API.post('/auth/register', userData),
-  login: (credentials) => API.post('/auth/login', credentials),
-  logout: () => API.post('/auth/logout'),
-  getProfile: () => API.get('/auth/profile'),
-  updateProfile: (userData) => API.put('/auth/profile', userData),
-  changePassword: (passwordData) => API.put('/auth/change-password', passwordData),
-  requestPasswordReset: (email) => API.post('/auth/forgot-password', { email }),
-  resetPassword: (token, newPassword) => API.post('/auth/reset-password', { token, password: newPassword }),
+  register: (userData) => API.post('/api/auth/register', userData),
+  login: (credentials) => API.post('/api/auth/login', credentials),
+  logout: () => API.post('/api/auth/logout'),
+  getProfile: () => API.get('/api/auth/profile'),
+  updateProfile: (userData) => API.put('/api/auth/profile', userData),
+  changePassword: (passwordData) => API.put('/api/auth/change-password', passwordData),
+  requestPasswordReset: (email) => API.post('/api/auth/forgot-password', { email }),
+  resetPassword: (token, newPassword) => API.post('/api/auth/reset-password', { token, password: newPassword }),
 };
 
 // Servicios de productos
 export const productAPI = {
-  getAll: (params = {}) => API.get('/products', { params }),
-  getById: (id) => API.get(`/products/${id}`),
-  getRelated: (id, limit = 4) => API.get(`/products/${id}/related`, { params: { limit } }),
-  create: (productData) => API.post('/products', productData),
-  update: (id, productData) => API.put(`/products/${id}`, productData),
-  delete: (id) => API.delete(`/products/${id}`),
-  search: (query, filters = {}) => API.get('/products', { 
+  getAll: (params = {}) => API.get('/api/products', { params }),
+  getById: (id) => API.get(`/api/products/${id}`),
+  getRelated: (id, limit = 4) => API.get(`/api/products/${id}/related`, { params: { limit } }),
+  create: (productData) => API.post('/api/products', productData),
+  update: (id, productData) => API.put(`/api/products/${id}`, productData),
+  delete: (id) => API.delete(`/api/products/${id}`),
+  search: (query, filters = {}) => API.get('/api/products', { 
     params: { search: query, ...filters } 
   }),
 };
 
 // Servicios del carrito
 export const cartAPI = {
-  get: () => API.get('/cart'),
+  get: () => API.get('/api/cart'),
   add: (productId, quantity = 1, variantId = null) => 
-    API.post('/cart/add', { productId, quantity, variantId }),
+    API.post('/api/cart/add', { productId, quantity, variantId }),
   update: (productId, quantity, variantId = null) => 
-    API.post('/cart/update', { productId, quantity, variantId }),
+    API.post('/api/cart/update', { productId, quantity, variantId }),
   remove: (productId, variantId = null) => 
-    API.delete('/cart/remove', { data: { productId, variantId } }),
-  clear: () => API.delete('/cart/clear'),
-  getSummary: () => API.get('/cart/summary'),
+    API.delete('/api/cart/remove', { data: { productId, variantId } }),
+  clear: () => API.delete('/api/cart/clear'),
+  getSummary: () => API.get('/api/cart/summary'),
 };
 
 // Servicio para verificar la salud del servidor
 export const healthAPI = {
-  check: () => API.get('/health'),
+  check: () => API.get('/api/health'),
 };
 
 // Utilidades
