@@ -1,21 +1,21 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { authAPI } from '../services/api';
-import '../styles/auth-new.css';
+import '../styles/auth.css';
 
-const Register = () => {
+const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
     password: '',
-    confirmPassword: '',
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [acceptTerms, setAcceptTerms] = useState(false);
+
+  // Ruta a la que redirigir después del login
+  const from = location.state?.from || '/';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,13 +36,6 @@ const Register = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    // Validar nombre
-    if (!formData.name) {
-      newErrors.name = 'El nombre es requerido';
-    } else if (formData.name.length < 2) {
-      newErrors.name = 'El nombre debe tener al menos 2 caracteres';
-    }
-
     // Validar email
     if (!formData.email) {
       newErrors.email = 'El email es requerido';
@@ -55,18 +48,6 @@ const Register = () => {
       newErrors.password = 'La contraseña es requerida';
     } else if (formData.password.length < 6) {
       newErrors.password = 'La contraseña debe tener al menos 6 caracteres';
-    }
-
-    // Validar confirmación de contraseña
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Confirma tu contraseña';
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Las contraseñas no coinciden';
-    }
-
-    // Validar términos y condiciones
-    if (!acceptTerms) {
-      newErrors.terms = 'Debes aceptar los términos y condiciones';
     }
 
     return newErrors;
@@ -86,17 +67,14 @@ const Register = () => {
       setLoading(true);
       setErrors({});
 
-      // eslint-disable-next-line no-unused-vars
-      const { confirmPassword, ...registerData } = formData;
-
-      const response = await authAPI.register(registerData);
+      const response = await authAPI.login(formData);
       
       // Guardar token y datos del usuario
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
       
       // Redirigir al usuario
-      navigate('/', { replace: true });
+      navigate(from, { replace: true });
       
     } catch (err) {
       console.error('Error en login:', err);
@@ -130,9 +108,9 @@ const Register = () => {
         <div className="auth-card">
           {/* Header */}
           <div className="auth-header">
-            <div className="auth-icon">✨</div>
-            <h1>Crear cuenta</h1>
-            <p>Únete y comienza tu experiencia de compra</p>
+            <div className="auth-icon">🔐</div>
+            <h1>Bienvenido de nuevo</h1>
+            <p>Inicia sesión para continuar tu experiencia</p>
           </div>
 
           {/* Error general */}
@@ -145,30 +123,6 @@ const Register = () => {
 
           {/* Formulario */}
           <form onSubmit={handleSubmit} className="auth-form">
-            <div className="form-group">
-              <label htmlFor="name">
-                <span className="label-icon">👤</span>
-                Nombre completo
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className={`form-input ${errors.name ? 'input-error' : ''}`}
-                placeholder="Tu nombre completo"
-                disabled={loading}
-                autoComplete="name"
-              />
-              {errors.name && (
-                <span className="error-message">
-                  <span className="error-icon">⚠</span>
-                  {errors.name}
-                </span>
-              )}
-            </div>
-
             <div className="form-group">
               <label htmlFor="email">
                 <span className="label-icon">📧</span>
@@ -206,9 +160,9 @@ const Register = () => {
                   value={formData.password}
                   onChange={handleChange}
                   className={`form-input ${errors.password ? 'input-error' : ''}`}
-                  placeholder="Crea una contraseña segura"
+                  placeholder="••••••••"
                   disabled={loading}
-                  autoComplete="new-password"
+                  autoComplete="current-password"
                 />
                 <button
                   type="button"
@@ -228,67 +182,15 @@ const Register = () => {
               )}
             </div>
 
-            <div className="form-group">
-              <label htmlFor="confirmPassword">
-                <span className="label-icon">🔐</span>
-                Confirmar contraseña
-              </label>
-              <div className="input-wrapper">
-                <input
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className={`form-input ${errors.confirmPassword ? 'input-error' : ''}`}
-                  placeholder="Confirma tu contraseña"
-                  disabled={loading}
-                  autoComplete="new-password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="toggle-password"
-                  disabled={loading}
-                  aria-label={showConfirmPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-                >
-                  {showConfirmPassword ? '👁️' : '👁️‍🗨️'}
-                </button>
-              </div>
-              {errors.confirmPassword && (
-                <span className="error-message">
-                  <span className="error-icon">⚠</span>
-                  {errors.confirmPassword}
-                </span>
-              )}
-            </div>
-
-            <div className="form-group">
+            <div className="form-options">
               <label className="checkbox-container">
-                <input 
-                  type="checkbox" 
-                  checked={acceptTerms}
-                  onChange={(e) => {
-                    setAcceptTerms(e.target.checked);
-                    if (errors.terms) {
-                      setErrors(prev => ({ ...prev, terms: '' }));
-                    }
-                  }}
-                />
+                <input type="checkbox" />
                 <span className="checkmark"></span>
-                <span className="checkbox-label">
-                  Acepto los{' '}
-                  <Link to="/terms" className="link-primary">
-                    términos y condiciones
-                  </Link>
-                </span>
+                <span className="checkbox-label">Recordarme</span>
               </label>
-              {errors.terms && (
-                <span className="error-message">
-                  <span className="error-icon">⚠</span>
-                  {errors.terms}
-                </span>
-              )}
+              <Link to="/forgot-password" className="link-primary">
+                ¿Olvidaste tu contraseña?
+              </Link>
             </div>
 
             <button
@@ -299,12 +201,12 @@ const Register = () => {
               {loading ? (
                 <>
                   <span className="spinner"></span>
-                  Creando cuenta...
+                  Iniciando sesión...
                 </>
               ) : (
                 <>
                   <span>🚀</span>
-                  Crear cuenta
+                  Iniciar Sesión
                 </>
               )}
             </button>
@@ -312,7 +214,7 @@ const Register = () => {
 
           {/* Divider */}
           <div className="divider">
-            <span>O regístrate con</span>
+            <span>O continúa con</span>
           </div>
 
           {/* Social Login */}
@@ -336,9 +238,9 @@ const Register = () => {
           {/* Footer */}
           <div className="auth-footer">
             <p>
-              ¿Ya tienes cuenta?{' '}
-              <Link to="/login" className="link-primary link-bold">
-                Inicia sesión
+              ¿No tienes cuenta?{' '}
+              <Link to="/register" className="link-primary link-bold">
+                Regístrate gratis
               </Link>
             </p>
           </div>
@@ -346,34 +248,34 @@ const Register = () => {
 
         {/* Benefits Sidebar */}
         <div className="auth-benefits">
-          <h3>Beneficios de registrarte</h3>
+          <h3>¿Por qué crear una cuenta?</h3>
           <div className="benefits-list">
             <div className="benefit-item">
-              <div className="benefit-icon">🎯</div>
+              <div className="benefit-icon">🛒</div>
               <div className="benefit-content">
-                <h4>Proceso rápido</h4>
-                <p>Registro en menos de 1 minuto</p>
+                <h4>Carrito guardado</h4>
+                <p>Tus productos se mantienen seguros</p>
               </div>
             </div>
             <div className="benefit-item">
-              <div className="benefit-icon">�</div>
+              <div className="benefit-icon">📦</div>
               <div className="benefit-content">
-                <h4>Datos seguros</h4>
-                <p>Protección de tu información</p>
+                <h4>Historial de pedidos</h4>
+                <p>Revisa tus compras anteriores</p>
               </div>
             </div>
             <div className="benefit-item">
-              <div className="benefit-icon">💎</div>
+              <div className="benefit-icon">⚡</div>
+              <div className="benefit-content">
+                <h4>Compra rápida</h4>
+                <p>Checkout en un solo clic</p>
+              </div>
+            </div>
+            <div className="benefit-item">
+              <div className="benefit-icon">🎁</div>
               <div className="benefit-content">
                 <h4>Ofertas exclusivas</h4>
-                <p>Acceso a descuentos especiales</p>
-              </div>
-            </div>
-            <div className="benefit-item">
-              <div className="benefit-icon">📱</div>
-              <div className="benefit-content">
-                <h4>Compra desde cualquier lugar</h4>
-                <p>Accede desde todos tus dispositivos</p>
+                <p>Descuentos solo para miembros</p>
               </div>
             </div>
           </div>
@@ -383,4 +285,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

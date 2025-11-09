@@ -8,6 +8,7 @@ import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AuthCallback from './pages/AuthCallback';
 
 
 function App() {
@@ -41,6 +42,9 @@ function App() {
               <Register />
             </ProtectedRoute>
           } />
+
+          {/* Callback de autenticación OAuth */}
+          <Route path="/auth/callback" element={<AuthCallback />} />
 
           {/* Rutas protegidas (requieren autenticación) */}
           <Route path="/cart" element={
