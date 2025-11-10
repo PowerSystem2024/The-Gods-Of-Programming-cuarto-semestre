@@ -1,6 +1,6 @@
 [build]
   # Directorio donde está el código fuente del frontend
-  base = "frontend"
+  base = "proyecto-final/ecommerce-mern/frontend"
   
   # Comando para hacer build
   command = "npm run build"
