@@ -206,6 +206,36 @@
   font-weight: 700;
 }
 
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-profile {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--gold-accent);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.btn-profile:hover {
+  background: var(--gold-accent);
+  color: var(--brown-darker);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .auth-links {
   display: flex;
   align-items: center;

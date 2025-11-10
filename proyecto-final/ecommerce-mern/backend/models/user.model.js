@@ -104,6 +104,14 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: null
   },
+  resetPasswordToken: {
+    type: String,
+    select: false
+  },
+  resetPasswordExpires: {
+    type: Date,
+    select: false
+  },
   cart: [{
     product: {
       type: mongoose.Schema.Types.ObjectId,

@@ -15,6 +15,9 @@ import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
 import MyProducts from './pages/MyProducts';
 import ProductForm from './pages/ProductForm';
+import Profile from './pages/Profile';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 
 function App() {
@@ -56,10 +59,30 @@ function App() {
               </ProtectedRoute>
             } />
 
+            <Route path="/forgot-password" element={
+              <ProtectedRoute requireAuth={false}>
+                <ForgotPassword />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/reset-password/:token" element={
+              <ProtectedRoute requireAuth={false}>
+                <ResetPassword />
+              </ProtectedRoute>
+            } />
+
             {/* Callback de autenticación OAuth */}
             <Route path="/auth/callback" element={<AuthCallback />} />
 
             {/* Rutas protegidas (requieren autenticación) */}
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Layout>
+                  <Profile />
+                </Layout>
+              </ProtectedRoute>
+            } />
+
             <Route path="/cart" element={
               <ProtectedRoute>
                 <Layout>

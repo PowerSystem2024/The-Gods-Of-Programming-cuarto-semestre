@@ -6,7 +6,9 @@ import {
   getProfile,
   updateProfile,
   changePassword,
-  verifyToken
+  verifyToken,
+  forgotPassword,
+  resetPassword
 } from '../controllers/auth.controller.js';
 
 import {
@@ -31,6 +33,8 @@ router.use(sanitizeInput);
 // Rutas públicas de autenticación
 router.post('/register', validateRegistration, register);
 router.post('/login', validateLogin, login);
+router.post('/forgot-password', forgotPassword);
+router.post('/reset-password/:token', resetPassword);
 
 // Rutas protegidas (requieren autenticación)
 router.use(verifyJWT); // Aplicar verificación JWT a todas las rutas siguientes

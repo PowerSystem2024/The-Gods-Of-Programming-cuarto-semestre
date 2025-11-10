@@ -73,7 +73,12 @@ const Layout = ({ children }) => {
             </Link>
 
             {user ? (
-              <button onClick={handleLogout} className="btn-auth">Salir</button>
+              <div className="user-menu">
+                <Link to="/profile" className="btn-profile">
+                  👤 Mi Perfil
+                </Link>
+                <button onClick={handleLogout} className="btn-auth">Salir</button>
+              </div>
             ) : (
               <div className="auth-links">
                 <Link to="/login" className="btn-auth">Iniciar Sesión</Link>
