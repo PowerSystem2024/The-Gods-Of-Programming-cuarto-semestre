@@ -1,0 +1,35 @@
+[build]
+  # Directorio donde está el código fuente del frontend
+  base = "frontend"
+  
+  # Comando para hacer build
+  command = "npm run build"
+  
+  # Directorio donde se generan los archivos estáticos
+  publish = "dist"
+
+# Redirecciones para SPA (Single Page Application)
+# Esto es CRÍTICO para que React Router funcione en Netlify
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers de seguridad
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache para assets estáticos
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Variables de entorno de build (opcionales, también se pueden configurar en el dashboard)
+# [build.environment]
+#   NODE_VERSION = "20"

@@ -124,9 +124,12 @@ app.use('*', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+// Escuchar en 0.0.0.0 para permitir conexiones externas (Render, Railway, etc.)
+const HOST = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
+
+app.listen(PORT, HOST, () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
-  console.log(`🌐 URL: http://localhost:${PORT}`);
+  console.log(`🌐 URL: http://${HOST}:${PORT}`);
   console.log(`📊 Entorno: ${process.env.NODE_ENV || 'development'}`);
 });
 
