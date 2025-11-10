@@ -4,20 +4,29 @@ import { useCart } from '../context/CartContext';
 
 // Helper: Obtener emoji según categoría
 const getCategoryIcon = (category) => {
-  const categoryName = category?.main || category?.name || category || '';
+  const categoryName = category?.main || category?.subcategory || category?.name || category || '';
   const icons = {
-    'laptop': '💻',
-    'gaming': '🎮',
-    'auriculares': '🎧',
-    'headphones': '🎧',
-    'smartwatch': '⌚',
-    'reloj': '⌚',
-    'telefono': '📱',
-    'phone': '📱',
-    'tablet': '📱',
-    'camara': '📷',
-    'camera': '📷',
-    'default': '📦'
+    'torta': '🎂',
+    'tortas': '🎂',
+    'cake': '�',
+    'alfajor': '🥮',
+    'alfajores': '🥮',
+    'cookie': '🍪',
+    'cookies': '�',
+    'galleta': '🍪',
+    'cupcake': '🧁',
+    'cupcakes': '🧁',
+    'brownie': '🍫',
+    'brownies': '🍫',
+    'chocolate': '🍫',
+    'trufa': '🍬',
+    'trufas': '🍬',
+    'medialuna': '🥐',
+    'medialunas': '🥐',
+    'factura': '🥐',
+    'facturas': '🥐',
+    'pastelería': '🧁',
+    'default': '🍰'
   };
   
   const lowerCategory = categoryName.toLowerCase();

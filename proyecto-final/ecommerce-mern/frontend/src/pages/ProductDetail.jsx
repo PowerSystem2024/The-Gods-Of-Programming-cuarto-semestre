@@ -6,20 +6,29 @@ import ProductCard from '../components/ProductCard';
 
 // Helper: Obtener emoji según categoría
 const getCategoryIcon = (category) => {
-  const categoryName = category?.main || category?.name || category || '';
+  const categoryName = category?.main || category?.subcategory || category?.name || category || '';
   const icons = {
-    'laptop': '💻',
-    'gaming': '🎮',
-    'auriculares': '🎧',
-    'headphones': '🎧',
-    'smartwatch': '⌚',
-    'reloj': '⌚',
-    'telefono': '📱',
-    'phone': '📱',
-    'tablet': '📱',
-    'camara': '📷',
-    'camera': '📷',
-    'default': '📦'
+    'torta': '🎂',
+    'tortas': '🎂',
+    'cake': '�',
+    'alfajor': '🥮',
+    'alfajores': '🥮',
+    'cookie': '🍪',
+    'cookies': '�',
+    'galleta': '🍪',
+    'cupcake': '🧁',
+    'cupcakes': '🧁',
+    'brownie': '🍫',
+    'brownies': '🍫',
+    'chocolate': '🍫',
+    'trufa': '🍬',
+    'trufas': '🍬',
+    'medialuna': '🥐',
+    'medialunas': '🥐',
+    'factura': '🥐',
+    'facturas': '🥐',
+    'pastelería': '🧁',
+    'default': '🍰'
   };
   
   const lowerCategory = categoryName.toLowerCase();
@@ -148,8 +157,8 @@ const ProductDetail = () => {
             <div className="main-image-container">
               {productImages.length > 0 ? (
                 <img 
-                  src={productImages[selectedImage]} 
-                  alt={product.name}
+                  src={productImages[selectedImage]?.url || productImages[selectedImage]} 
+                  alt={productImages[selectedImage]?.alt || product.name}
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextElementSibling.style.display = 'flex';
@@ -172,7 +181,7 @@ const ProductDetail = () => {
                     className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
                     onClick={() => setSelectedImage(index)}
                   >
-                    <img src={img} alt={`${product.name} - ${index + 1}`} />
+                    <img src={img?.url || img} alt={img?.alt || `${product.name} - ${index + 1}`} />
                   </div>
                 ))}
               </div>
