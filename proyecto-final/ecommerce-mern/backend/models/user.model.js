@@ -142,6 +142,9 @@ userSchema.virtual('fullName').get(function() {
 
 // Virtual para calcular el total de items en el carrito
 userSchema.virtual('cartItemsCount').get(function() {
+  if (!this.cart || !Array.isArray(this.cart)) {
+    return 0;
+  }
   return this.cart.reduce((total, item) => total + item.quantity, 0);
 });
 

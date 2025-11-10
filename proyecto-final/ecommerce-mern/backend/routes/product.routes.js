@@ -13,6 +13,14 @@ import { validateCreateProduct, validateUpdateProduct } from '../middleware/prod
 
 const router = express.Router();
 
+// Rutas protegidas - Vendedores y administradores (DEBEN IR PRIMERO)
+/**
+ * @route   GET /api/products/seller/my-products
+ * @desc    Obtener mis productos (vendedor autenticado)
+ * @access  Private (Seller/Admin)
+ */
+router.get('/seller/my-products', verifyJWT, getMyProducts);
+
 // Rutas públicas
 /**
  * @route   GET /api/products
@@ -22,26 +30,18 @@ const router = express.Router();
 router.get('/', getAllProducts);
 
 /**
- * @route   GET /api/products/:id
- * @desc    Obtener un producto específico por ID
- * @access  Public
- */
-router.get('/:id', getProductById);
-
-/**
  * @route   GET /api/products/:id/related
  * @desc    Obtener productos relacionados
  * @access  Public
  */
 router.get('/:id/related', getRelatedProducts);
 
-// Rutas protegidas - Vendedores y administradores
 /**
- * @route   GET /api/products/seller/my-products
- * @desc    Obtener mis productos (vendedor autenticado)
- * @access  Private (Seller/Admin)
+ * @route   GET /api/products/:id
+ * @desc    Obtener un producto específico por ID
+ * @access  Public
  */
-router.get('/seller/my-products', verifyJWT, getMyProducts);
+router.get('/:id', getProductById);
 
 /**
  * @route   POST /api/products

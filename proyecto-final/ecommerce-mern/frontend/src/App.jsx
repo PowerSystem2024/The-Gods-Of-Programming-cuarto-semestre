@@ -1,5 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
+import { AuthProvider } from './context/AuthContext';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
@@ -17,228 +18,230 @@ import ProductForm from './pages/ProductForm';
 
 function App() {
   return (
-    <CartProvider>
-      <Router>
-        <div className="App">
-          <Routes>
-          {/* Rutas públicas con layout */}
-          <Route path="/" element={
-            <Layout>
-              <Home />
-            </Layout>
-          } />
-          
-          <Route path="/product/:id" element={
-            <Layout>
-              <ProductDetail />
-            </Layout>
-          } />
-
-          {/* Rutas de autenticación (sin layout) */}
-          <Route path="/login" element={
-            <ProtectedRoute requireAuth={false}>
-              <Login />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/register" element={
-            <ProtectedRoute requireAuth={false}>
-              <Register />
-            </ProtectedRoute>
-          } />
-
-          {/* Callback de autenticación OAuth */}
-          <Route path="/auth/callback" element={<AuthCallback />} />
-
-          {/* Rutas protegidas (requieren autenticación) */}
-          <Route path="/cart" element={
-            <ProtectedRoute>
+    <Router>
+      <AuthProvider>
+        <CartProvider>
+          <div className="App">
+            <Routes>
+            {/* Rutas públicas con layout */}
+            <Route path="/" element={
               <Layout>
-                <Cart />
+                <Home />
               </Layout>
-            </ProtectedRoute>
-          } />
-
-          <Route path="/checkout" element={
-            <ProtectedRoute>
+            } />
+            
+            <Route path="/product/:id" element={
               <Layout>
-                <Checkout />
+                <ProductDetail />
               </Layout>
-            </ProtectedRoute>
-          } />
+            } />
 
-          <Route path="/order-confirmation" element={
-            <ProtectedRoute>
+            {/* Rutas de autenticación (sin layout) */}
+            <Route path="/login" element={
+              <ProtectedRoute requireAuth={false}>
+                <Login />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/register" element={
+              <ProtectedRoute requireAuth={false}>
+                <Register />
+              </ProtectedRoute>
+            } />
+
+            {/* Callback de autenticación OAuth */}
+            <Route path="/auth/callback" element={<AuthCallback />} />
+
+            {/* Rutas protegidas (requieren autenticación) */}
+            <Route path="/cart" element={
+              <ProtectedRoute>
+                <Layout>
+                  <Cart />
+                </Layout>
+              </ProtectedRoute>
+            } />
+
+            <Route path="/checkout" element={
+              <ProtectedRoute>
+                <Layout>
+                  <Checkout />
+                </Layout>
+              </ProtectedRoute>
+            } />
+
+            <Route path="/order-confirmation" element={
+              <ProtectedRoute>
+                <Layout>
+                  <OrderConfirmation />
+                </Layout>
+              </ProtectedRoute>
+            } />
+
+            {/* Página de productos */}
+            <Route path="/products" element={
               <Layout>
-                <OrderConfirmation />
+                <Products />
               </Layout>
-            </ProtectedRoute>
-          } />
+            } />
 
-          {/* Página de productos */}
-          <Route path="/products" element={
-            <Layout>
-              <Products />
-            </Layout>
-          } />
+            {/* Rutas de vendedor (protegidas) */}
+            <Route path="/seller/products" element={
+              <ProtectedRoute>
+                <Layout>
+                  <MyProducts />
+                </Layout>
+              </ProtectedRoute>
+            } />
 
-          {/* Rutas de vendedor (protegidas) */}
-          <Route path="/seller/products" element={
-            <ProtectedRoute>
-              <Layout>
-                <MyProducts />
-              </Layout>
-            </ProtectedRoute>
-          } />
+            <Route path="/seller/products/new" element={
+              <ProtectedRoute>
+                <Layout>
+                  <ProductForm />
+                </Layout>
+              </ProtectedRoute>
+            } />
 
-          <Route path="/seller/products/new" element={
-            <ProtectedRoute>
-              <Layout>
-                <ProductForm />
-              </Layout>
-            </ProtectedRoute>
-          } />
+            <Route path="/seller/products/edit/:id" element={
+              <ProtectedRoute>
+                <Layout>
+                  <ProductForm />
+                </Layout>
+              </ProtectedRoute>
+            } />
 
-          <Route path="/seller/products/edit/:id" element={
-            <ProtectedRoute>
-              <Layout>
-                <ProductForm />
-              </Layout>
-            </ProtectedRoute>
-          } />
-
-          <Route path="/categories" element={
-            <Layout>
-              <div className="container">
-                <h1>Categorías</h1>
-                <p>Página en construcción...</p>
-              </div>
-            </Layout>
-          } />
-
-          <Route path="/offers" element={
-            <Layout>
-              <div className="container">
-                <h1>Ofertas Especiales</h1>
-                <p>Página en construcción...</p>
-              </div>
-            </Layout>
-          } />
-
-          <Route path="/profile" element={
-            <ProtectedRoute>
+            <Route path="/categories" element={
               <Layout>
                 <div className="container">
-                  <h1>Mi Perfil</h1>
+                  <h1>Categorías</h1>
                   <p>Página en construcción...</p>
                 </div>
               </Layout>
-            </ProtectedRoute>
-          } />
+            } />
 
-          <Route path="/orders" element={
-            <ProtectedRoute>
+            <Route path="/offers" element={
               <Layout>
                 <div className="container">
-                  <h1>Mis Pedidos</h1>
+                  <h1>Ofertas Especiales</h1>
                   <p>Página en construcción...</p>
                 </div>
               </Layout>
-            </ProtectedRoute>
-          } />
+            } />
 
-          <Route path="/wishlist" element={
-            <ProtectedRoute>
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Layout>
+                  <div className="container">
+                    <h1>Mi Perfil</h1>
+                    <p>Página en construcción...</p>
+                  </div>
+                </Layout>
+              </ProtectedRoute>
+            } />
+
+            <Route path="/orders" element={
+              <ProtectedRoute>
+                <Layout>
+                  <div className="container">
+                    <h1>Mis Pedidos</h1>
+                    <p>Página en construcción...</p>
+                  </div>
+                </Layout>
+              </ProtectedRoute>
+            } />
+
+            <Route path="/wishlist" element={
+              <ProtectedRoute>
+                <Layout>
+                  <div className="container">
+                    <h1>Lista de Deseos</h1>
+                    <p>Página en construcción...</p>
+                  </div>
+                </Layout>
+              </ProtectedRoute>
+            } />
+
+            {/* Páginas de información */}
+            <Route path="/contact" element={
               <Layout>
                 <div className="container">
-                  <h1>Lista de Deseos</h1>
+                  <h1>Contacto</h1>
                   <p>Página en construcción...</p>
                 </div>
               </Layout>
-            </ProtectedRoute>
-          } />
+            } />
 
-          {/* Páginas de información */}
-          <Route path="/contact" element={
-            <Layout>
-              <div className="container">
-                <h1>Contacto</h1>
-                <p>Página en construcción...</p>
-              </div>
-            </Layout>
-          } />
-
-          <Route path="/help" element={
-            <Layout>
-              <div className="container">
-                <h1>Centro de Ayuda</h1>
-                <p>Página en construcción...</p>
-              </div>
-            </Layout>
-          } />
-
-          <Route path="/shipping" element={
-            <Layout>
-              <div className="container">
-                <h1>Información de Envíos</h1>
-                <p>Página en construcción...</p>
-              </div>
-            </Layout>
-          } />
-
-          <Route path="/returns" element={
-            <Layout>
-              <div className="container">
-                <h1>Política de Devoluciones</h1>
-                <p>Página en construcción...</p>
-              </div>
-            </Layout>
-          } />
-
-          <Route path="/terms" element={
-            <Layout>
-              <div className="container">
-                <h1>Términos y Condiciones</h1>
-                <p>Página en construcción...</p>
-              </div>
-            </Layout>
-          } />
-
-          <Route path="/privacy" element={
-            <Layout>
-              <div className="container">
-                <h1>Política de Privacidad</h1>
-                <p>Página en construcción...</p>
-              </div>
-            </Layout>
-          } />
-
-          <Route path="/about" element={
-            <Layout>
-              <div className="container">
-                <h1>Acerca de Nosotros</h1>
-                <p>Página en construcción...</p>
-              </div>
-            </Layout>
-          } />
-
-          {/* Página 404 */}
-          <Route path="*" element={
-            <Layout>
-              <div className="container">
-                <div className="not-found">
-                  <h1>404</h1>
-                  <h2>Página no encontrada</h2>
-                  <p>Lo sentimos, la página que buscas no existe.</p>
-                  <a href="/">Volver al inicio</a>
+            <Route path="/help" element={
+              <Layout>
+                <div className="container">
+                  <h1>Centro de Ayuda</h1>
+                  <p>Página en construcción...</p>
                 </div>
-              </div>
-            </Layout>
-          } />
-        </Routes>
-        </div>
-      </Router>
-    </CartProvider>
+              </Layout>
+            } />
+
+            <Route path="/shipping" element={
+              <Layout>
+                <div className="container">
+                  <h1>Información de Envíos</h1>
+                  <p>Página en construcción...</p>
+                </div>
+              </Layout>
+            } />
+
+            <Route path="/returns" element={
+              <Layout>
+                <div className="container">
+                  <h1>Política de Devoluciones</h1>
+                  <p>Página en construcción...</p>
+                </div>
+              </Layout>
+            } />
+
+            <Route path="/terms" element={
+              <Layout>
+                <div className="container">
+                  <h1>Términos y Condiciones</h1>
+                  <p>Página en construcción...</p>
+                </div>
+              </Layout>
+            } />
+
+            <Route path="/privacy" element={
+              <Layout>
+                <div className="container">
+                  <h1>Política de Privacidad</h1>
+                  <p>Página en construcción...</p>
+                </div>
+              </Layout>
+            } />
+
+            <Route path="/about" element={
+              <Layout>
+                <div className="container">
+                  <h1>Acerca de Nosotros</h1>
+                  <p>Página en construcción...</p>
+                </div>
+              </Layout>
+            } />
+
+            {/* Página 404 */}
+            <Route path="*" element={
+              <Layout>
+                <div className="container">
+                  <div className="not-found">
+                    <h1>404</h1>
+                    <h2>Página no encontrada</h2>
+                    <p>Lo sentimos, la página que buscas no existe.</p>
+                    <Link to="/">Volver al inicio</Link>
+                  </div>
+                </div>
+              </Layout>
+            } />
+            </Routes>
+          </div>
+        </CartProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

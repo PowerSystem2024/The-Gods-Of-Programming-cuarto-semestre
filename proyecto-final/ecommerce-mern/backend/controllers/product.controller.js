@@ -383,7 +383,7 @@ export const getRelatedProducts = async (req, res) => {
  */
 export const getMyProducts = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user._id;
 
     // Buscar todos los productos del vendedor
     const products = await Product.find({ seller: userId })

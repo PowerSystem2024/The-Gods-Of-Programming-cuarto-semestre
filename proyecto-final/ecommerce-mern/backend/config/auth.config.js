@@ -110,8 +110,9 @@ const jwtOptions = {
 
 passport.use('jwt', new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
-    // Buscar usuario por ID del payload
-    const user = await User.findById(payload.id);
+    // Buscar usuario por ID del payload (puede ser payload.id o payload.userId)
+    const userId = payload.userId || payload.id;
+    const user = await User.findById(userId);
     
     if (user && user.isActive) {
       return done(null, user);

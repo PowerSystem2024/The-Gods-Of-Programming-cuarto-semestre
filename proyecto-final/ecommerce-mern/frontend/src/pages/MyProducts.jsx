@@ -1,36 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { productAPI } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import '../styles/seller.css';
 
 const MyProducts = () => {
+  console.log('🎯 MyProducts component mounting...');
+  
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [user, setUser] = useState(null);
   const [deleteModal, setDeleteModal] = useState({ show: false, product: null });
 
-  useEffect(() => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      const parsedUser = JSON.parse(userData);
-      setUser(parsedUser);
-      
-      // Verificar que sea vendedor
-      if (parsedUser.role !== 'seller' && parsedUser.role !== 'admin') {
-        navigate('/');
-        return;
-      }
-    } else {
-      navigate('/login');
-      return;
-    }
-
-    loadProducts();
-  }, [navigate]);
-
-  const loadProducts = async () => {
+  const loadProducts = useCallback(async () => {
     try {
       setLoading(true);
       const response = await productAPI.getMyProducts();
@@ -42,7 +26,40 @@ const MyProducts = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []); // No dependencies needed
+
+  useEffect(() => {
+    console.log('🔄 MyProducts useEffect ejecutándose...');
+    console.log('👤 User del contexto:', user);
+    console.log('⏳ Auth loading:', authLoading);
+    console.log('📊 Estado completo:', { user, authLoading, hasUser: !!user });
+    
+    // Esperar a que termine de cargar la autenticación
+    if (authLoading) {
+      console.log('⏳ BLOQUEADO: Esperando que termine de cargar auth...');
+      return;
+    }
+    
+    console.log('✅ Auth terminó de cargar, verificando usuario...');
+    
+    if (!user) {
+      console.log('❌ No hay usuario después de cargar, redirigiendo a login');
+      navigate('/login');
+      return;
+    }
+    
+    console.log('✅ Usuario encontrado:', user.email, 'Role:', user.role);
+    
+    // Verificar que sea vendedor
+    if (user.role !== 'seller' && user.role !== 'admin') {
+      console.log('❌ Usuario no es vendedor/admin, redirigiendo a home');
+      navigate('/');
+      return;
+    }
+
+    console.log('✅ Usuario vendedor/admin verificado, cargando productos...');
+    loadProducts();
+  }, [user, authLoading, navigate, loadProducts]);
 
   const handleDelete = async (productId) => {
     try {
@@ -69,6 +86,18 @@ const MyProducts = () => {
       currency: 'ARS',
     }).format(price);
   };
+
+  // Mostrar loading mientras se carga la autenticación
+  if (authLoading) {
+    return (
+      <div className="seller-container">
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Verificando autenticación...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (

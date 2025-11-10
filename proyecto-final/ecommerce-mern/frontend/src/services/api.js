@@ -13,8 +13,11 @@ const API = axios.create({
 API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
+    console.log('📤 API Request:', config.url);
+    console.log('🔑 Token encontrado:', token ? 'SÍ' : 'NO');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      console.log('✅ Header Authorization agregado');
     }
     return config;
   },
@@ -34,12 +37,11 @@ API.interceptors.response.use(
     console.error('Error Response:', error.response);
     console.error('Error Request:', error.request);
     
-    // Manejar errores de autenticación
+    // NO borrar localStorage aquí - dejar que AuthContext y ProtectedRoute manejen la autenticación
     if (error.response?.status === 401) {
-      // Token expirado o inválido
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+      console.warn('⚠️ Error 401 - No autorizado');
+      console.warn('⚠️ URL:', error.config?.url);
+      console.warn('⚠️ El componente ProtectedRoute manejará la redirección');
     }
 
     // Manejar otros errores
@@ -84,6 +86,7 @@ export const productAPI = {
 // Servicios del carrito
 export const cartAPI = {
   get: () => API.get('/api/cart'),
+  getCart: () => API.get('/api/cart'), // Alias para compatibilidad
   add: (productId, quantity = 1, variantId = null) => 
     API.post('/api/cart/add', { productId, quantity, variantId }),
   update: (productId, quantity, variantId = null) => 

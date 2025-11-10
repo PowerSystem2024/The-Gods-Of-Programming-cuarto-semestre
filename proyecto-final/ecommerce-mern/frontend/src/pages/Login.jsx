@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { authAPI } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import '../styles/auth-new.css';
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -74,9 +76,8 @@ const Login = () => {
       const response = await authAPI.login(formData);
       console.log('✅ Respuesta recibida:', response);
       
-      // Guardar token y datos del usuario
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+      // Guardar token y datos del usuario usando el contexto
+      login(response.data.user, response.data.token);
       
       console.log('✅ Token guardado, redirigiendo...');
       // Redirigir al usuario

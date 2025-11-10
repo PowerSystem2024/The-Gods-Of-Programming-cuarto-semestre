@@ -1,26 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import '../styles/layout.css';
 
 const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const { totalItems } = useCart();
+  const { user, isAuthenticated, isSeller, logout } = useAuth();
 
-  useEffect(() => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      setUser(JSON.parse(userData));
-    }
-  }, []);
+  console.log('📄 Layout renderizado:', { user, isAuthenticated, isSeller });
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setUser(null);
+    logout();
     navigate('/', { replace: true });
   };
 
@@ -33,7 +27,6 @@ const Layout = ({ children }) => {
   };
 
   const isActive = (path) => location.pathname === path;
-  const isSeller = user?.role === 'seller' || user?.role === 'admin';
 
   return (
     <div className="layout">
