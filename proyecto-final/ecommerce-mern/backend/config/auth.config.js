@@ -10,10 +10,15 @@ passport.use('local-login', new LocalStrategy({
   passReqToCallback: true
 }, async (req, email, password, done) => {
   try {
+    console.log('🔍 Intentando login con:', email);
+    
     // Buscar usuario por email incluyendo la contraseña
     const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
     
+    console.log('👤 Usuario encontrado:', user ? 'SÍ' : 'NO');
+    
     if (!user) {
+      console.log('❌ No existe usuario con email:', email);
       return done(null, false, { 
         message: 'No existe un usuario con este email.' 
       });
@@ -21,21 +26,27 @@ passport.use('local-login', new LocalStrategy({
 
     // Verificar si el usuario está activo
     if (!user.isActive) {
+      console.log('❌ Usuario inactivo:', email);
       return done(null, false, { 
         message: 'Esta cuenta ha sido desactivada. Contacta al administrador.' 
       });
     }
 
+    console.log('🔐 Verificando contraseña...');
     // Verificar contraseña
     const isPasswordValid = await user.comparePassword(password);
     
+    console.log('🔐 Contraseña válida:', isPasswordValid ? 'SÍ' : 'NO');
+    
     if (!isPasswordValid) {
+      console.log('❌ Contraseña incorrecta para:', email);
       return done(null, false, { 
         message: 'Contraseña incorrecta.' 
       });
     }
 
     // Login exitoso
+    console.log('✅ Login exitoso para:', email);
     return done(null, user);
   } catch (error) {
     console.error('Error en estrategia local de login:', error);

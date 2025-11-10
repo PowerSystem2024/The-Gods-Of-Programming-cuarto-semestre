@@ -5,7 +5,8 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
-  getRelatedProducts
+  getRelatedProducts,
+  getMyProducts
 } from '../controllers/product.controller.js';
 import { verifyJWT, isAdmin } from '../middleware/auth.middleware.js';
 import { validateCreateProduct, validateUpdateProduct } from '../middleware/product.validation.js';
@@ -34,26 +35,33 @@ router.get('/:id', getProductById);
  */
 router.get('/:id/related', getRelatedProducts);
 
-// Rutas protegidas - Solo administradores
+// Rutas protegidas - Vendedores y administradores
+/**
+ * @route   GET /api/products/seller/my-products
+ * @desc    Obtener mis productos (vendedor autenticado)
+ * @access  Private (Seller/Admin)
+ */
+router.get('/seller/my-products', verifyJWT, getMyProducts);
+
 /**
  * @route   POST /api/products
  * @desc    Crear un nuevo producto
- * @access  Private (Admin only)
+ * @access  Private (Seller/Admin)
  */
-router.post('/', verifyJWT, isAdmin, validateCreateProduct, createProduct);
+router.post('/', verifyJWT, validateCreateProduct, createProduct);
 
 /**
  * @route   PUT /api/products/:id
  * @desc    Actualizar un producto existente
- * @access  Private (Admin only)
+ * @access  Private (Seller/Admin - solo propietario o admin)
  */
-router.put('/:id', verifyJWT, isAdmin, validateUpdateProduct, updateProduct);
+router.put('/:id', verifyJWT, validateUpdateProduct, updateProduct);
 
 /**
  * @route   DELETE /api/products/:id
  * @desc    Eliminar un producto (soft delete)
- * @access  Private (Admin only)
+ * @access  Private (Seller/Admin - solo propietario o admin)
  */
-router.delete('/:id', verifyJWT, isAdmin, deleteProduct);
+router.delete('/:id', verifyJWT, deleteProduct);
 
 export default router;

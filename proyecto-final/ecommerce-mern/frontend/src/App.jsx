@@ -11,6 +11,8 @@ import Register from './pages/Register';
 import AuthCallback from './pages/AuthCallback';
 import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
+import MyProducts from './pages/MyProducts';
+import ProductForm from './pages/ProductForm';
 
 
 function App() {
@@ -78,6 +80,31 @@ function App() {
             <Layout>
               <Products />
             </Layout>
+          } />
+
+          {/* Rutas de vendedor (protegidas) */}
+          <Route path="/seller/products" element={
+            <ProtectedRoute>
+              <Layout>
+                <MyProducts />
+              </Layout>
+            </ProtectedRoute>
+          } />
+
+          <Route path="/seller/products/new" element={
+            <ProtectedRoute>
+              <Layout>
+                <ProductForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+
+          <Route path="/seller/products/edit/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <ProductForm />
+              </Layout>
+            </ProtectedRoute>
           } />
 
           <Route path="/categories" element={

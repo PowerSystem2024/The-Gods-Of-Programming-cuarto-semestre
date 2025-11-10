@@ -77,6 +77,8 @@ export const productAPI = {
   search: (query, filters = {}) => API.get('/api/products', { 
     params: { search: query, ...filters } 
   }),
+  // Servicios para vendedores
+  getMyProducts: () => API.get('/api/products/seller/my-products'),
 };
 
 // Servicios del carrito

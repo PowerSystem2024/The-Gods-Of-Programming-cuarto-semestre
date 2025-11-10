@@ -80,19 +80,28 @@ router.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
+        console.log('❌ Errores de validación:', errors.array());
         return res.status(400).json({ errors: errors.array() });
       }
 
       const { email, password } = req.body;
+      console.log('🔍 Intentando login con email:', email);
 
       // Buscar usuario (incluir password)
       const user = await User.findOne({ email }).select('+password');
+      console.log('👤 Usuario encontrado:', user ? 'SÍ' : 'NO');
+      
       if (!user) {
+        console.log('❌ No existe usuario con email:', email);
         return res.status(401).json({ message: 'Credenciales inválidas' });
       }
 
+      console.log('📋 authProvider del usuario:', user.authProvider);
+      console.log('🔑 Usuario tiene password:', user.password ? 'SÍ' : 'NO');
+
       // Verificar que sea usuario local (no Google)
       if (user.authProvider === 'google') {
+        console.log('❌ Usuario intenta login con Google account');
         return res.status(400).json({ 
           message: 'Esta cuenta usa Google. Por favor inicia sesión con Google.',
           useGoogle: true
@@ -100,8 +109,12 @@ router.post(
       }
 
       // Verificar password
+      console.log('🔐 Verificando password...');
       const isValidPassword = await bcrypt.compare(password, user.password);
+      console.log('🔐 Password válida:', isValidPassword ? 'SÍ' : 'NO');
+      
       if (!isValidPassword) {
+        console.log('❌ Contraseña incorrecta para:', email);
         return res.status(401).json({ message: 'Credenciales inválidas' });
       }
 
@@ -116,15 +129,20 @@ router.post(
         { expiresIn: process.env.JWT_EXPIRE || '7d' }
       );
 
+      console.log('✅ Login exitoso, generando token...');
+
       res.json({
+        success: true,
         message: 'Login exitoso',
-        token,
-        user: {
-          id: user._id,
-          email: user.email,
-          name: user.name || `${user.firstName} ${user.lastName}`,
-          role: user.role,
-          avatar: user.avatar
+        data: {
+          token,
+          user: {
+            id: user._id,
+            email: user.email,
+            name: user.name || `${user.firstName} ${user.lastName}`,
+            role: user.role,
+            avatar: user.avatar
+          }
         }
       });
     } catch (error) {

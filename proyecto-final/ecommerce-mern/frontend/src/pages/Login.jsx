@@ -56,9 +56,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    console.log('🔍 Iniciando login con:', formData);
+    
     // Validar formulario
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
+      console.log('❌ Errores de validación:', newErrors);
       setErrors(newErrors);
       return;
     }
@@ -67,17 +70,21 @@ const Login = () => {
       setLoading(true);
       setErrors({});
 
+      console.log('📤 Enviando request de login...');
       const response = await authAPI.login(formData);
+      console.log('✅ Respuesta recibida:', response);
       
       // Guardar token y datos del usuario
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
       
+      console.log('✅ Token guardado, redirigiendo...');
       // Redirigir al usuario
       navigate(from, { replace: true });
       
     } catch (err) {
-      console.error('Error en login:', err);
+      console.error('❌ Error en login:', err);
+      console.error('❌ Error completo:', JSON.stringify(err, null, 2));
       
       if (err.errors && Array.isArray(err.errors)) {
         // Errores de validación del servidor

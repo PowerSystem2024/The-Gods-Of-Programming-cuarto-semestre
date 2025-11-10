@@ -79,8 +79,18 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['customer', 'admin'],
+    enum: ['customer', 'seller', 'admin'],
     default: 'customer'
+  },
+  // Campos específicos para vendedores
+  storeName: {
+    type: String,
+    trim: true
+  },
+  storeDescription: {
+    type: String,
+    trim: true,
+    maxlength: [500, 'La descripción de la tienda no puede tener más de 500 caracteres']
   },
   isActive: {
     type: Boolean,

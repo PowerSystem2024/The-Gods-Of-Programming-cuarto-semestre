@@ -13,6 +13,7 @@ dotenv.config();
 import connectDB from './config/database.config.js';
 
 // Importar configuración de Passport
+import './config/auth.config.js'; // Estrategias locales (login/register)
 import configureGoogleStrategy from './config/passport.config.js';
 
 // Importar modelos para registrarlos

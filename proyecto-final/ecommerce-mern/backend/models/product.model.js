@@ -26,6 +26,12 @@ const reviewSchema = new mongoose.Schema({
 });
 
 const productSchema = new mongoose.Schema({
+  // Usuario vendedor que publicó el producto
+  seller: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'El vendedor es obligatorio']
+  },
   name: {
     type: String,
     required: [true, 'El nombre del producto es obligatorio'],

@@ -124,10 +124,12 @@ export const getProductById = async (req, res) => {
 /**
  * @desc    Crear un nuevo producto
  * @route   POST /api/products
- * @access  Private (Admin)
+ * @access  Private (Seller/Admin)
  */
 export const createProduct = async (req, res) => {
   try {
+    const userId = req.user._id;
+
     const {
       name,
       description,
@@ -141,20 +143,24 @@ export const createProduct = async (req, res) => {
       stock,
       dimensions,
       weight,
-      tags
+      tags,
+      sku
     } = req.body;
 
-    // Verificar si el producto ya existe
-    const existingProduct = await Product.findOne({ name });
-    if (existingProduct) {
-      return res.status(400).json({
-        success: false,
-        message: 'Ya existe un producto con este nombre'
-      });
+    // Verificar si el SKU ya existe
+    if (sku) {
+      const existingSku = await Product.findOne({ sku });
+      if (existingSku) {
+        return res.status(400).json({
+          success: false,
+          message: 'El SKU ya existe'
+        });
+      }
     }
 
-    // Crear nuevo producto
+    // Crear nuevo producto con el seller
     const product = new Product({
+      seller: userId,
       name,
       description,
       price,
@@ -168,10 +174,12 @@ export const createProduct = async (req, res) => {
       dimensions: dimensions || {},
       weight,
       tags: tags || [],
+      sku: sku || `SKU-${Date.now()}`,
       createdBy: req.user._id
     });
 
     const savedProduct = await product.save();
+    await savedProduct.populate('seller', 'name email storeName');
 
     res.status(201).json({
       success: true,
@@ -207,11 +215,13 @@ export const createProduct = async (req, res) => {
 /**
  * @desc    Actualizar un producto existente
  * @route   PUT /api/products/:id
- * @access  Private (Admin)
+ * @access  Private (Seller/Admin - solo propietario o admin)
  */
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
+    const userId = req.user._id;
+    const userRole = req.user.role;
 
     // Validar ObjectId
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -229,11 +239,20 @@ export const updateProduct = async (req, res) => {
       });
     }
 
-    // Actualizar campos permitidos
+    // Verificar que el usuario sea el vendedor del producto o admin
+    if (userRole !== 'admin' && product.seller.toString() !== userId.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: 'No tienes permiso para editar este producto'
+      });
+    }
+
+    // Actualizar campos permitidos (no permitir cambiar seller)
     const allowedUpdates = [
       'name', 'description', 'price', 'category', 'subcategory',
       'brand', 'images', 'specifications', 'variants', 'stock',
-      'dimensions', 'weight', 'tags', 'isActive'
+      'dimensions', 'weight', 'tags', 'isActive', 'sku', 'status',
+      'unit', 'shortDescription', 'featured'
     ];
 
     allowedUpdates.forEach(field => {
@@ -263,11 +282,13 @@ export const updateProduct = async (req, res) => {
 /**
  * @desc    Eliminar un producto (soft delete)
  * @route   DELETE /api/products/:id
- * @access  Private (Admin)
+ * @access  Private (Seller/Admin - solo propietario o admin)
  */
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
+    const userId = req.user._id;
+    const userRole = req.user.role;
 
     // Validar ObjectId
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -285,7 +306,16 @@ export const deleteProduct = async (req, res) => {
       });
     }
 
+    // Verificar que el usuario sea el vendedor del producto o admin
+    if (userRole !== 'admin' && product.seller.toString() !== userId.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: 'No tienes permiso para eliminar este producto'
+      });
+    }
+
     // Soft delete - marcar como inactivo
+    product.status = 'inactive';
     product.isActive = false;
     product.updatedAt = Date.now();
     await product.save();
@@ -338,6 +368,35 @@ export const getRelatedProducts = async (req, res) => {
     });
   } catch (error) {
     console.error('Error obteniendo productos relacionados:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error interno del servidor',
+      error: error.message
+    });
+  }
+};
+
+/**
+ * @desc    Obtener productos del vendedor autenticado
+ * @route   GET /api/products/seller/my-products
+ * @access  Private (Seller/Admin)
+ */
+export const getMyProducts = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    // Buscar todos los productos del vendedor
+    const products = await Product.find({ seller: userId })
+      .sort('-createdAt')
+      .populate('seller', 'firstName lastName email storeName storeDescription');
+
+    res.status(200).json({
+      success: true,
+      message: 'Productos obtenidos exitosamente',
+      data: products
+    });
+  } catch (error) {
+    console.error('Error obteniendo productos del vendedor:', error);
     res.status(500).json({
       success: false,
       message: 'Error interno del servidor',

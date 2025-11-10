@@ -33,6 +33,7 @@ const Layout = ({ children }) => {
   };
 
   const isActive = (path) => location.pathname === path;
+  const isSeller = user?.role === 'seller' || user?.role === 'admin';
 
   return (
     <div className="layout">
@@ -62,6 +63,11 @@ const Layout = ({ children }) => {
               <Link to="/products" className={`nav-link ${isActive('/products') ? 'active' : ''}`}>
                 Productos
               </Link>
+              {isSeller && (
+                <Link to="/seller/products" className={`nav-link ${location.pathname.startsWith('/seller') ? 'active' : ''}`}>
+                  Mis Productos
+                </Link>
+              )}
             </nav>
 
             <Link to="/cart" className="cart-button">
