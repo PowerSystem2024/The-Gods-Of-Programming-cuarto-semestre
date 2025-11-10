@@ -37,7 +37,7 @@ export const validateAddToCart = [
     .withMessage('La cantidad debe ser un número entero entre 1 y 100'),
 
   body('variantId')
-    .optional()
+    .optional({ nullable: true, checkFalsy: true })
     .isString()
     .isLength({ min: 1, max: 50 })
     .withMessage('El ID de variante debe ser una cadena válida'),
@@ -60,7 +60,7 @@ export const validateUpdateCartItem = [
     .withMessage('La cantidad debe ser un número entero entre 1 y 100'),
 
   body('variantId')
-    .optional()
+    .optional({ nullable: true, checkFalsy: true })
     .isString()
     .isLength({ min: 1, max: 50 })
     .withMessage('El ID de variante debe ser una cadena válida'),
@@ -79,7 +79,7 @@ export const validateRemoveFromCart = [
     .withMessage('El ID del producto debe ser un ObjectId válido'),
 
   body('variantId')
-    .optional()
+    .optional({ nullable: true, checkFalsy: true })
     .isString()
     .isLength({ min: 1, max: 50 })
     .withMessage('El ID de variante debe ser una cadena válida'),

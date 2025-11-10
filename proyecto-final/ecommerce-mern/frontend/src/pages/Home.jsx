@@ -123,20 +123,21 @@ const Home = () => {
       {/* Features Section */}
       <section className="features-section">
         <div className="container">
-          <h2>¿Por qué Rincón de Pasteleros?</h2>
+          <h2 className="section-title">¿Por qué Rincón de Pasteleros?</h2>
+          <p className="section-subtitle">Más que un marketplace, somos una comunidad que impulsa el talento artesanal</p>
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">�‍🍳</div>
+              <div className="feature-icon">👩‍🍳</div>
               <h3>Apoya lo Local</h3>
               <p>Conecta con pasteleras independientes y emprendedoras de tu comunidad</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">�</div>
+              <div className="feature-icon">💰</div>
               <h3>Compara Precios</h3>
               <p>Encuentra las mejores ofertas comparando entre múltiples vendedoras</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">�</div>
+              <div className="feature-icon">🎂</div>
               <h3>Productos Únicos</h3>
               <p>Descubre recetas artesanales y postres hechos con amor</p>
             </div>

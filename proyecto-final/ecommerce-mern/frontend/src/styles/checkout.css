@@ -60,7 +60,7 @@
   height: 50px;
   border-radius: 50%;
   background: #e0e0e0;
-  color: #999;
+  color: #666;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,7 +72,7 @@
 
 .step.active .step-number {
   background: var(--color-caramel);
-  color: white;
+  color: #2c1810;
   box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
@@ -284,7 +284,7 @@
   right: 1.5rem;
   background: transparent;
   border: 1px solid var(--color-brown);
-  color: var(--color-brown);
+  color: var(--color-brown) !important;
   padding: 0.5rem 1rem;
   border-radius: 6px;
   font-size: 0.85rem;
@@ -295,7 +295,7 @@
 
 .summary-section .btn-edit:hover {
   background: var(--color-brown);
-  color: white;
+  color: white !important;
 }
 
 .payment-selected {
@@ -409,6 +409,34 @@
   margin-top: 1.5rem;
 }
 
+/* Forzar estilos de botones del checkout con máxima especificidad */
+.checkout-container .sidebar-actions .btn-next,
+.checkout-container .sidebar-actions .btn-submit {
+  background: linear-gradient(135deg, #8b5a3c 0%, #6d4228 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(139, 90, 60, 0.3) !important;
+}
+
+.checkout-container .sidebar-actions .btn-next:hover:not(:disabled),
+.checkout-container .sidebar-actions .btn-submit:hover:not(:disabled) {
+  background: linear-gradient(135deg, #6d4228 0%, #8b5a3c 100%) !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(139, 90, 60, 0.4) !important;
+}
+
+.checkout-container .sidebar-actions .btn-back {
+  background: transparent !important;
+  border: 2px solid #8b5a3c !important;
+  color: #8b5a3c !important;
+}
+
+.checkout-container .sidebar-actions .btn-back:hover {
+  background: #faf8f3 !important;
+  color: #8b5a3c !important;
+}
+
 .btn-next,
 .btn-submit,
 .btn-back {
@@ -423,34 +451,37 @@
   font-family: inherit;
 }
 
-.btn-next,
-.btn-submit {
-  background: linear-gradient(135deg, var(--color-brown) 0%, #6d4228 100%);
-  color: white;
-  box-shadow: 0 4px 12px rgba(139, 90, 60, 0.3);
+.checkout-container .btn-next,
+.checkout-container .btn-submit {
+  background: linear-gradient(135deg, var(--color-brown) 0%, #6d4228 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(139, 90, 60, 0.3) !important;
 }
 
-.btn-next:hover,
-.btn-submit:hover {
+.checkout-container .btn-next:hover,
+.checkout-container .btn-submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(139, 90, 60, 0.4);
+  box-shadow: 0 6px 16px rgba(139, 90, 60, 0.4) !important;
+  background: linear-gradient(135deg, #6d4228 0%, var(--color-brown) 100%) !important;
 }
 
-.btn-next:disabled,
-.btn-submit:disabled {
+.checkout-container .btn-next:disabled,
+.checkout-container .btn-submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
+  background: #999 !important;
 }
 
-.btn-back {
-  background: transparent;
-  border: 2px solid var(--color-brown);
-  color: var(--color-brown);
+.checkout-container .btn-back {
+  background: transparent !important;
+  border: 2px solid var(--color-brown) !important;
+  color: var(--color-brown) !important;
 }
 
-.btn-back:hover {
-  background: var(--color-cream);
+.checkout-container .btn-back:hover {
+  background: var(--color-cream) !important;
+  color: var(--color-brown) !important;
 }
 
 .security-badges {

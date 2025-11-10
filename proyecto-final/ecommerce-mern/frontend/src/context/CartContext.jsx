@@ -185,7 +185,8 @@ export const CartProvider = ({ children }) => {
     try {
       dispatch({ type: CART_ACTIONS.SET_LOADING, payload: true });
       const response = await cartAPI.getCart();
-      dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
+      // El interceptor ya retorna response.data, así que response.data es el objeto { success, data: { cart } }
+      dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data?.cart || [] });
     } catch (error) {
       console.error('Error cargando carrito:', error);
       dispatch({ type: CART_ACTIONS.SET_ERROR, payload: 'Error al cargar el carrito' });
@@ -207,12 +208,20 @@ export const CartProvider = ({ children }) => {
   // Función para agregar un producto al carrito
   const addToCart = useCallback(async (product, quantity = 1) => {
     try {
+      console.log('🛒 addToCart llamado con:', { productId: product._id, quantity });
+      
       // Sincronizar con servidor
       const token = localStorage.getItem('token');
       if (token) {
+        console.log('📡 Llamando a cartAPI.add...');
         const response = await cartAPI.add(product._id, quantity);
-        // Actualizar con la respuesta del servidor
-        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
+        console.log('📦 Respuesta de cartAPI.add:', response);
+        
+        // El interceptor ya retorna response.data, así que response ES { success, data: { cart } }
+        const cart = response.data?.cart || response.cart || [];
+        console.log('🛍️ Cart extraído:', cart);
+        
+        dispatch({ type: CART_ACTIONS.SET_CART, payload: cart });
       } else {
         // Actualizar estado local inmediatamente para mejor UX
         dispatch({ 
@@ -235,7 +244,7 @@ export const CartProvider = ({ children }) => {
 
       return true;
     } catch (error) {
-      console.error('Error agregando al carrito:', error);
+      console.error('❌ Error agregando al carrito:', error);
       dispatch({ type: CART_ACTIONS.SET_ERROR, payload: 'Error al agregar producto al carrito' });
       return false;
     }
@@ -252,7 +261,8 @@ export const CartProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         const response = await cartAPI.update(productId, quantity);
-        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
+        // El interceptor ya retorna response.data
+        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data?.cart || [] });
       } else {
         // Actualizar estado local
         dispatch({ 
@@ -283,7 +293,8 @@ export const CartProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         const response = await cartAPI.update(productId, currentItem.quantity + 1);
-        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
+        // El interceptor ya retorna response.data
+        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data?.cart || [] });
       } else {
         dispatch({ type: CART_ACTIONS.INCREMENT_ITEM, payload: productId });
         // Actualizar localStorage
@@ -309,7 +320,8 @@ export const CartProvider = ({ children }) => {
         const token = localStorage.getItem('token');
         if (token) {
           const response = await cartAPI.remove(productId);
-          dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
+          // El interceptor ya retorna response.data
+          dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data?.cart || [] });
         } else {
           dispatch({ type: CART_ACTIONS.REMOVE_ITEM, payload: productId });
           const localCart = cartState.items.filter(item => item.product._id !== productId);
@@ -321,7 +333,8 @@ export const CartProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token && currentItem) {
         const response = await cartAPI.update(productId, currentItem.quantity - 1);
-        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
+        // El interceptor ya retorna response.data
+        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data?.cart || [] });
       } else {
         dispatch({ type: CART_ACTIONS.DECREMENT_ITEM, payload: productId });
       }
@@ -340,7 +353,8 @@ export const CartProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         const response = await cartAPI.remove(productId);
-        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
+        // El interceptor ya retorna response.data
+        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data?.cart || [] });
       } else {
         // Actualizar estado local
         dispatch({ type: CART_ACTIONS.REMOVE_ITEM, payload: productId });

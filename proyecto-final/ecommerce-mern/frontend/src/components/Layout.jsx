@@ -91,7 +91,47 @@ const Layout = ({ children }) => {
       <footer className="footer">
         <div className="container">
           <div className="footer-content">
+            <div className="footer-section">
+              <div className="footer-brand">
+                <span className="footer-logo">🧁</span>
+                <h3>Rincón de Pasteleros</h3>
+                <p>Conectando el dulce talento artesanal con quienes lo valoran</p>
+              </div>
+            </div>
+            
+            <div className="footer-section">
+              <h4>Navegación</h4>
+              <ul>
+                <li><Link to="/">Inicio</Link></li>
+                <li><Link to="/products">Productos</Link></li>
+                <li><Link to="/about">Acerca de</Link></li>
+                <li><Link to="/cart">Carrito</Link></li>
+              </ul>
+            </div>
+            
+            <div className="footer-section">
+              <h4>Para Vendedoras</h4>
+              <ul>
+                <li><Link to="/register">Registrarse</Link></li>
+                <li><Link to="/seller/products">Mis Productos</Link></li>
+              </ul>
+            </div>
+            
+            <div className="footer-section">
+              <h4>Contacto</h4>
+              <p>📧 contacto@rinconpasteleros.com</p>
+              <p>📍 Argentina</p>
+              <div className="social-links">
+                <a href="#" aria-label="Facebook">📘</a>
+                <a href="#" aria-label="Instagram">📸</a>
+                <a href="#" aria-label="WhatsApp">💬</a>
+              </div>
+            </div>
+          </div>
+          
+          <div className="footer-bottom">
             <p>&copy; 2025 Rincón de Pasteleros - Apoyando a Pasteleras Independientes</p>
+            <p className="footer-love">Hecho con 💜 para impulsar emprendedoras</p>
           </div>
         </div>
       </footer>

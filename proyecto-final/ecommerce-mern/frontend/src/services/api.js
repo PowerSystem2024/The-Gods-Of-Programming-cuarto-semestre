@@ -29,13 +29,14 @@ API.interceptors.request.use(
 // Interceptor para manejar respuestas y errores
 API.interceptors.response.use(
   (response) => {
-    console.log('API Response:', response.data); // Debug
+    console.log('✅ API Response SUCCESS:', response.config.url, response.data);
     return response.data;
   },
   (error) => {
-    console.error('API Error:', error);
-    console.error('Error Response:', error.response);
-    console.error('Error Request:', error.request);
+    console.error('❌ API Error:', error);
+    console.error('❌ Error Response:', error.response?.data);
+    console.error('❌ Error Status:', error.response?.status);
+    console.error('❌ Error Request:', error.request);
     
     // NO borrar localStorage aquí - dejar que AuthContext y ProtectedRoute manejen la autenticación
     if (error.response?.status === 401) {

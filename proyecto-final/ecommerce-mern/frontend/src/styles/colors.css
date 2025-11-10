@@ -20,6 +20,11 @@
   --error: #D32F2F;              /* Rojo para errores */
   --warning: #F57C00;            /* Naranja para advertencias */
   
+  /* Colores del tema pastelería */
+  --pastel-pink: #FFB6C1;        /* Rosa pastel */
+  --pastel-purple: #C8A2D0;      /* Morado pastel */
+  --dark-purple: #6B4E71;        /* Morado oscuro */
+  
   /* Sombras y Transparencias */
   --shadow-sm: 0 1px 3px rgba(62, 39, 35, 0.12);
   --shadow-md: 0 4px 8px rgba(62, 39, 35, 0.15);

@@ -249,21 +249,131 @@
 }
 
 .footer {
-  background: var(--brown-darker);
+  background: linear-gradient(135deg, var(--brown-darker) 0%, #2c1810 100%);
   color: white;
-  padding: 2rem 0;
+  padding: 3rem 0 1.5rem;
   margin-top: auto;
-  border-top: 3px solid var(--gold-accent);
+  border-top: 4px solid var(--gold-accent);
 }
 
 .footer-content {
-  text-align: center;
-  color: rgba(255, 255, 255, 0.8);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+  text-align: left;
 }
 
-.footer-content p {
-  margin: 0;
+.footer-section h3,
+.footer-section h4 {
+  color: var(--gold-accent);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.footer-brand {
+  max-width: 280px;
+}
+
+.footer-logo {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.footer-brand p {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin-top: 0.75rem;
   font-size: 0.95rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-section ul li a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  display: inline-block;
+}
+
+.footer-section ul li a:hover {
+  color: var(--gold-accent);
+  transform: translateX(5px);
+}
+
+.footer-section p {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.social-links a {
+  font-size: 1.8rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.social-links a:hover {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 1.5rem;
+  text-align: center;
+}
+
+.footer-bottom p {
+  margin: 0.5rem 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.footer-love {
+  color: var(--gold-accent);
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem 0 1rem;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  .footer-brand {
+    max-width: 100%;
+  }
+  
+  .footer-section ul li a:hover {
+    transform: none;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 1200px) {

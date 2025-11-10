@@ -10,7 +10,9 @@ const Product = mongoose.model('Product');
 export const addToCart = async (req, res) => {
   try {
     const { productId, quantity = 1, variantId } = req.body;
-    const userId = req.user._id;
+    const userId = req.user && req.user._id;
+
+    console.log('addToCart called', { userId: userId?.toString(), productId, quantity, variantId });
 
     // Validar ObjectId del producto
     if (!mongoose.Types.ObjectId.isValid(productId)) {
@@ -29,19 +31,23 @@ export const addToCart = async (req, res) => {
       });
     }
 
-    // Verificar que el producto está activo
-    if (!product.isActive) {
+    // Verificar que el producto está activo (usar status en lugar de isActive)
+    if (product.status !== 'active') {
       return res.status(400).json({
         success: false,
         message: 'Este producto no está disponible'
       });
     }
 
-    // Verificar stock disponible
-    if (product.stock < quantity) {
+    // Verificar stock disponible usando inventory.quantity
+    const availableStock = product.inventory && typeof product.inventory.quantity === 'number'
+      ? product.inventory.quantity
+      : 0;
+
+    if (availableStock < quantity) {
       return res.status(400).json({
         success: false,
-        message: `Stock insuficiente. Solo hay ${product.stock} unidades disponibles`
+        message: `Stock insuficiente. Solo hay ${availableStock} unidades disponibles`
       });
     }
 
@@ -59,10 +65,10 @@ export const addToCart = async (req, res) => {
       const newQuantity = user.cart[existingItemIndex].quantity + quantity;
       
       // Verificar stock para la nueva cantidad
-      if (product.stock < newQuantity) {
+      if (availableStock < newQuantity) {
         return res.status(400).json({
           success: false,
-          message: `No se puede agregar más cantidad. Stock máximo disponible: ${product.stock}`
+          message: `No se puede agregar más cantidad. Stock máximo disponible: ${availableStock}`
         });
       }
 
@@ -80,24 +86,33 @@ export const addToCart = async (req, res) => {
       user.cart.push(cartItem);
     }
 
-    await user.save();
+  await user.save();
 
     // Poblar datos del carrito para la respuesta
     await user.populate({
       path: 'cart.product',
-      select: 'name price images category stock'
+      select: 'name price images category inventory'
     });
+
+    // Mapear para incluir stock
+    const cartWithStock = user.cart.map(item => ({
+      ...item.toObject(),
+      product: {
+        ...item.product.toObject(),
+        stock: item.product.inventory ? item.product.inventory.quantity : 0
+      }
+    }));
 
     res.status(200).json({
       success: true,
       message: 'Producto agregado al carrito exitosamente',
       data: {
-        cart: user.cart,
+        cart: cartWithStock,
         itemsCount: user.cart.length
       }
     });
   } catch (error) {
-    console.error('Error agregando al carrito:', error);
+    console.error('Error agregando al carrito:', error && error.stack ? error.stack : error);
     res.status(500).json({
       success: false,
       message: 'Error interno del servidor',
@@ -118,8 +133,8 @@ export const getCart = async (req, res) => {
     const user = await User.findById(userId)
       .populate({
         path: 'cart.product',
-        select: 'name price images category stock isActive',
-        match: { isActive: true }
+        select: 'name price images category inventory status',
+        match: { status: 'active' }
       });
 
     if (!user) {
@@ -134,11 +149,20 @@ export const getCart = async (req, res) => {
 
     await user.save();
 
+    // Mapear para incluir stock
+    const cartWithStock = user.cart.map(item => ({
+      ...item.toObject(),
+      product: {
+        ...item.product.toObject(),
+        stock: item.product.inventory ? item.product.inventory.quantity : 0
+      }
+    }));
+
     res.status(200).json({
       success: true,
       message: 'Carrito obtenido exitosamente',
       data: {
-        cart: user.cart,
+        cart: cartWithStock,
         itemsCount: user.cart.length
       }
     });
@@ -219,14 +243,23 @@ export const updateCartItem = async (req, res) => {
     // Poblar datos del carrito
     await user.populate({
       path: 'cart.product',
-      select: 'name price images category stock'
+      select: 'name price images category inventory'
     });
+
+    // Mapear para incluir stock
+    const cartWithStock = user.cart.map(item => ({
+      ...item.toObject(),
+      product: {
+        ...item.product.toObject(),
+        stock: item.product.inventory ? item.product.inventory.quantity : 0
+      }
+    }));
 
     res.status(200).json({
       success: true,
       message: 'Carrito actualizado exitosamente',
       data: {
-        cart: user.cart,
+        cart: cartWithStock,
         itemsCount: user.cart.length
       }
     });
@@ -282,14 +315,23 @@ export const removeFromCart = async (req, res) => {
     // Poblar datos del carrito
     await user.populate({
       path: 'cart.product',
-      select: 'name price images category stock'
+      select: 'name price images category inventory'
     });
+
+    // Mapear para incluir stock
+    const cartWithStock = user.cart.map(item => ({
+      ...item.toObject(),
+      product: {
+        ...item.product.toObject(),
+        stock: item.product.inventory ? item.product.inventory.quantity : 0
+      }
+    }));
 
     res.status(200).json({
       success: true,
       message: 'Producto eliminado del carrito exitosamente',
       data: {
-        cart: user.cart,
+        cart: cartWithStock,
         itemsCount: user.cart.length
       }
     });
@@ -350,7 +392,7 @@ export const getCartSummary = async (req, res) => {
     const user = await User.findById(userId)
       .populate({
         path: 'cart.product',
-        select: 'name price images category stock isActive'
+        select: 'name price images category inventory status'
       });
 
     // Verificar disponibilidad de productos
@@ -358,15 +400,17 @@ export const getCartSummary = async (req, res) => {
     const availableItems = [];
 
     user.cart.forEach(item => {
-      if (!item.product || !item.product.isActive) {
+      const stock = item.product?.inventory ? item.product.inventory.quantity : 0;
+      
+      if (!item.product || item.product.status !== 'active') {
         unavailableItems.push({
           name: item.product?.name || 'Producto eliminado',
           reason: 'Producto no disponible'
         });
-      } else if (item.product.stock < item.quantity) {
+      } else if (stock < item.quantity) {
         unavailableItems.push({
           name: item.product.name,
-          reason: `Stock insuficiente (disponible: ${item.product.stock})`
+          reason: `Stock insuficiente (disponible: ${stock})`
         });
       } else {
         availableItems.push(item);
