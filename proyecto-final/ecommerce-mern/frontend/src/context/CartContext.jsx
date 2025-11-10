@@ -185,7 +185,7 @@ export const CartProvider = ({ children }) => {
     try {
       dispatch({ type: CART_ACTIONS.SET_LOADING, payload: true });
       const response = await cartAPI.getCart();
-      dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.items || [] });
+      dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
     } catch (error) {
       console.error('Error cargando carrito:', error);
       dispatch({ type: CART_ACTIONS.SET_ERROR, payload: 'Error al cargar el carrito' });
@@ -207,17 +207,19 @@ export const CartProvider = ({ children }) => {
   // Función para agregar un producto al carrito
   const addToCart = useCallback(async (product, quantity = 1) => {
     try {
-      // Actualizar estado local inmediatamente para mejor UX
-      dispatch({ 
-        type: CART_ACTIONS.ADD_ITEM, 
-        payload: { product, quantity } 
-      });
-
-      // Sincronizar con servidor en background
+      // Sincronizar con servidor
       const token = localStorage.getItem('token');
       if (token) {
-        await cartAPI.addToCart({ productId: product._id, quantity });
+        const response = await cartAPI.add(product._id, quantity);
+        // Actualizar con la respuesta del servidor
+        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
       } else {
+        // Actualizar estado local inmediatamente para mejor UX
+        dispatch({ 
+          type: CART_ACTIONS.ADD_ITEM, 
+          payload: { product, quantity } 
+        });
+        
         // Guardar en localStorage si no hay usuario logueado
         const newItems = [...cartState.items];
         const existingIndex = newItems.findIndex(item => item.product._id === product._id);
@@ -246,17 +248,17 @@ export const CartProvider = ({ children }) => {
     }
 
     try {
-      // Actualizar estado local inmediatamente
-      dispatch({ 
-        type: CART_ACTIONS.UPDATE_ITEM, 
-        payload: { productId, quantity } 
-      });
-
       // Sincronizar con servidor
       const token = localStorage.getItem('token');
       if (token) {
-        await cartAPI.updateCartItem(productId, { quantity });
+        const response = await cartAPI.update(productId, quantity);
+        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
       } else {
+        // Actualizar estado local
+        dispatch({ 
+          type: CART_ACTIONS.UPDATE_ITEM, 
+          payload: { productId, quantity } 
+        });
         // Actualizar localStorage
         const localCart = cartState.items.map(item =>
           item.product._id === productId ? { ...item, quantity } : item
@@ -278,12 +280,12 @@ export const CartProvider = ({ children }) => {
       const currentItem = cartState.items.find(item => item.product._id === productId);
       if (!currentItem) return false;
 
-      dispatch({ type: CART_ACTIONS.INCREMENT_ITEM, payload: productId });
-      
       const token = localStorage.getItem('token');
       if (token) {
-        await cartAPI.updateCartItem(productId, { quantity: currentItem.quantity + 1 });
+        const response = await cartAPI.update(productId, currentItem.quantity + 1);
+        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
       } else {
+        dispatch({ type: CART_ACTIONS.INCREMENT_ITEM, payload: productId });
         // Actualizar localStorage
         const localCart = cartState.items.map(item =>
           item.product._id === productId ? { ...item, quantity: item.quantity + 1 } : item
@@ -304,23 +306,24 @@ export const CartProvider = ({ children }) => {
       const currentItem = cartState.items.find(item => item.product._id === productId);
       if (currentItem && currentItem.quantity <= 1) {
         // Eliminar directamente si la cantidad es 1
-        dispatch({ type: CART_ACTIONS.REMOVE_ITEM, payload: productId });
-        
         const token = localStorage.getItem('token');
         if (token) {
-          await cartAPI.removeFromCart(productId);
+          const response = await cartAPI.remove(productId);
+          dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
         } else {
+          dispatch({ type: CART_ACTIONS.REMOVE_ITEM, payload: productId });
           const localCart = cartState.items.filter(item => item.product._id !== productId);
           localStorage.setItem('cart', JSON.stringify(localCart));
         }
         return true;
       }
 
-      dispatch({ type: CART_ACTIONS.DECREMENT_ITEM, payload: productId });
-      
       const token = localStorage.getItem('token');
       if (token && currentItem) {
-        await cartAPI.updateCartItem(productId, { quantity: currentItem.quantity - 1 });
+        const response = await cartAPI.update(productId, currentItem.quantity - 1);
+        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
+      } else {
+        dispatch({ type: CART_ACTIONS.DECREMENT_ITEM, payload: productId });
       }
       
       return true;
@@ -333,14 +336,14 @@ export const CartProvider = ({ children }) => {
   // Función para eliminar un producto del carrito
   const removeFromCart = useCallback(async (productId) => {
     try {
-      // Actualizar estado local inmediatamente
-      dispatch({ type: CART_ACTIONS.REMOVE_ITEM, payload: productId });
-
       // Sincronizar con servidor
       const token = localStorage.getItem('token');
       if (token) {
-        await cartAPI.removeFromCart(productId);
+        const response = await cartAPI.remove(productId);
+        dispatch({ type: CART_ACTIONS.SET_CART, payload: response.data.cart || [] });
       } else {
+        // Actualizar estado local
+        dispatch({ type: CART_ACTIONS.REMOVE_ITEM, payload: productId });
         // Actualizar localStorage
         const localCart = cartState.items.filter(item => item.product._id !== productId);
         localStorage.setItem('cart', JSON.stringify(localCart));
@@ -362,7 +365,7 @@ export const CartProvider = ({ children }) => {
       // Limpiar servidor y localStorage
       const token = localStorage.getItem('token');
       if (token) {
-        await cartAPI.clearCart();
+        await cartAPI.clear();
       }
       localStorage.removeItem('cart');
 

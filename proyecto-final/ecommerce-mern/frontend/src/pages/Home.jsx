@@ -85,10 +85,10 @@ const Home = () => {
       <section className="hero-section">
         <div className="container">
           <div className="hero-content">
-            <h1>Bienvenido a Nuestro E-commerce</h1>
-            <p>Descubre los mejores productos con la mejor calidad y precios</p>
+            <h1>¡Bienvenido a Rincón de Pasteleros! 🧁</h1>
+            <p>El marketplace donde pasteleras independientes comparten su talento. Descubre deliciosos postres artesanales, compara precios y apoya a emprendedoras locales que están creciendo.</p>
             <Link to="/products" className="btn btn-primary">
-              Ver Todos los Productos
+              Explorar Delicias
             </Link>
           </div>
         </div>
@@ -110,7 +110,7 @@ const Home = () => {
       {/* Products Grid */}
       <section className="products-section">
         <div className="container">
-          <h2>Productos Destacados</h2>
+          <h2>✨ Delicias Artesanales Destacadas</h2>
           <ProductList 
             products={products}
             loading={loading}
@@ -123,27 +123,27 @@ const Home = () => {
       {/* Features Section */}
       <section className="features-section">
         <div className="container">
-          <h2>¿Por qué elegirnos?</h2>
+          <h2>¿Por qué Rincón de Pasteleros?</h2>
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">🚚</div>
-              <h3>Envío Gratis</h3>
-              <p>Envío gratuito en compras superiores a $10,000</p>
+              <div className="feature-icon">�‍🍳</div>
+              <h3>Apoya lo Local</h3>
+              <p>Conecta con pasteleras independientes y emprendedoras de tu comunidad</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🔒</div>
-              <h3>Compra Segura</h3>
-              <p>Tus datos están protegidos con encriptación SSL</p>
+              <div className="feature-icon">�</div>
+              <h3>Compara Precios</h3>
+              <p>Encuentra las mejores ofertas comparando entre múltiples vendedoras</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🎧</div>
-              <h3>Soporte 24/7</h3>
-              <p>Atención al cliente disponible las 24 horas</p>
+              <div className="feature-icon">�</div>
+              <h3>Productos Únicos</h3>
+              <p>Descubre recetas artesanales y postres hechos con amor</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">↩️</div>
-              <h3>Devolución Fácil</h3>
-              <p>30 días para devolver tu producto sin preguntas</p>
+              <div className="feature-icon">📈</div>
+              <h3>Impulsa Negocios</h3>
+              <p>Ayuda a pasteleras en crecimiento a darse a conocer y expandirse</p>
             </div>
           </div>
         </div>

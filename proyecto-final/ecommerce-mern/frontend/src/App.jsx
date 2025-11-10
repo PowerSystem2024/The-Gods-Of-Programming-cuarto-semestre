@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
+import About from './pages/About';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
@@ -27,6 +28,12 @@ function App() {
             <Route path="/" element={
               <Layout>
                 <Home />
+              </Layout>
+            } />
+            
+            <Route path="/about" element={
+              <Layout>
+                <About />
               </Layout>
             } />
             

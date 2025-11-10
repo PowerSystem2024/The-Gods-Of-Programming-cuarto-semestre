@@ -34,8 +34,8 @@ const Layout = ({ children }) => {
         <div className="container">
           <div className="header-content">
             <Link to="/" className="logo">
-              <span className="logo-icon">🛍️</span>
-              <span className="logo-text">MiTienda</span>
+              <span className="logo-icon">🧁</span>
+              <span className="logo-text">Rincón de Pasteleros</span>
             </Link>
 
             <form onSubmit={handleSearch} className="search-form">
@@ -52,6 +52,9 @@ const Layout = ({ children }) => {
             <nav className="nav">
               <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
                 Inicio
+              </Link>
+              <Link to="/about" className={`nav-link ${isActive('/about') ? 'active' : ''}`}>
+                Acerca de
               </Link>
               <Link to="/products" className={`nav-link ${isActive('/products') ? 'active' : ''}`}>
                 Productos
@@ -88,7 +91,7 @@ const Layout = ({ children }) => {
       <footer className="footer">
         <div className="container">
           <div className="footer-content">
-            <p>&copy; 2025 MiTienda - E-Commerce de Postres</p>
+            <p>&copy; 2025 Rincón de Pasteleros - Apoyando a Pasteleras Independientes</p>
           </div>
         </div>
       </footer>

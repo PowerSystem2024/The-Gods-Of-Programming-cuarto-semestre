@@ -52,11 +52,18 @@ export const getAllProducts = async (req, res) => {
     // Contar total de documentos
     const total = await Product.countDocuments(filter);
 
+    // Mapear productos para incluir `stock` (compatibilidad frontend)
+    const productsWithStock = products.map(p => {
+      const obj = p.toObject({ virtuals: true });
+      obj.stock = p.inventory ? p.inventory.quantity : 0;
+      return obj;
+    });
+
     res.status(200).json({
       success: true,
       message: 'Productos obtenidos exitosamente',
       data: {
-        products,
+        products: productsWithStock,
         pagination: {
           current: Number(page),
           pages: Math.ceil(total / limit),
@@ -106,10 +113,13 @@ export const getProductById = async (req, res) => {
     // Incrementar vistas del producto
     await Product.findByIdAndUpdate(id, { $inc: { views: 1 } });
 
+    const productObj = product.toObject({ virtuals: true });
+    productObj.stock = product.inventory ? product.inventory.quantity : 0;
+
     res.status(200).json({
       success: true,
       message: 'Producto obtenido exitosamente',
-      data: { product }
+      data: { product: productObj }
     });
   } catch (error) {
     console.error('Error obteniendo producto:', error);
@@ -170,7 +180,8 @@ export const createProduct = async (req, res) => {
       images: images || [],
       specifications: specifications || {},
       variants: variants || [],
-      stock: stock || 0,
+      // Mapear el campo `stock` recibido del frontend a `inventory.quantity`
+      inventory: { quantity: stock || 0 },
       dimensions: dimensions || {},
       weight,
       tags: tags || [],
@@ -181,10 +192,14 @@ export const createProduct = async (req, res) => {
     const savedProduct = await product.save();
     await savedProduct.populate('seller', 'name email storeName');
 
+    // Añadir un campo `stock` para compatibilidad con el frontend
+    const savedObj = savedProduct.toObject({ virtuals: true });
+    savedObj.stock = savedProduct.inventory ? savedProduct.inventory.quantity : 0;
+
     res.status(201).json({
       success: true,
       message: 'Producto creado exitosamente',
-      data: { product: savedProduct }
+      data: { product: savedObj }
     });
   } catch (error) {
     console.error('Error creando producto:', error);
@@ -250,7 +265,7 @@ export const updateProduct = async (req, res) => {
     // Actualizar campos permitidos (no permitir cambiar seller)
     const allowedUpdates = [
       'name', 'description', 'price', 'category', 'subcategory',
-      'brand', 'images', 'specifications', 'variants', 'stock',
+      'brand', 'images', 'specifications', 'variants',
       'dimensions', 'weight', 'tags', 'isActive', 'sku', 'status',
       'unit', 'shortDescription', 'featured'
     ];
@@ -261,13 +276,22 @@ export const updateProduct = async (req, res) => {
       }
     });
 
+    // Manejar campo legacy `stock` (mapear a inventory.quantity)
+    if (req.body.stock !== undefined) {
+      if (!product.inventory) product.inventory = { quantity: 0 };
+      product.inventory.quantity = Number(req.body.stock);
+    }
+
     product.updatedAt = Date.now();
     const updatedProduct = await product.save();
+
+    const updatedObj = updatedProduct.toObject({ virtuals: true });
+    updatedObj.stock = updatedProduct.inventory ? updatedProduct.inventory.quantity : 0;
 
     res.status(200).json({
       success: true,
       message: 'Producto actualizado exitosamente',
-      data: { product: updatedProduct }
+      data: { product: updatedObj }
     });
   } catch (error) {
     console.error('Error actualizando producto:', error);
@@ -361,10 +385,16 @@ export const getRelatedProducts = async (req, res) => {
       .limit(Number(limit))
       .sort('-rating');
 
+    const relatedWithStock = relatedProducts.map(p => {
+      const obj = p.toObject({ virtuals: true });
+      obj.stock = p.inventory ? p.inventory.quantity : 0;
+      return obj;
+    });
+
     res.status(200).json({
       success: true,
       message: 'Productos relacionados obtenidos exitosamente',
-      data: { products: relatedProducts }
+      data: { products: relatedWithStock }
     });
   } catch (error) {
     console.error('Error obteniendo productos relacionados:', error);
@@ -390,10 +420,16 @@ export const getMyProducts = async (req, res) => {
       .sort('-createdAt')
       .populate('seller', 'firstName lastName email storeName storeDescription');
 
+    const productsMapped = products.map(p => {
+      const obj = p.toObject({ virtuals: true });
+      obj.stock = p.inventory ? p.inventory.quantity : 0;
+      return obj;
+    });
+
     res.status(200).json({
       success: true,
       message: 'Productos obtenidos exitosamente',
-      data: products
+      data: productsMapped
     });
   } catch (error) {
     console.error('Error obteniendo productos del vendedor:', error);
