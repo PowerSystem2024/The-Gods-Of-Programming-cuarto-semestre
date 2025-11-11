@@ -8,7 +8,11 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "build": "echo 'Backend build completed - No build step required for Node.js'",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
+    "test:unit": "cross-env NODE_ENV=test jest --testPathPattern=unit --detectOpenHandles --forceExit",
+    "test:integration": "cross-env NODE_ENV=test jest --testPathPattern=integration --detectOpenHandles --forceExit",
+    "test:watch": "cross-env NODE_ENV=test jest --watch",
+    "test:coverage": "cross-env NODE_ENV=test jest --coverage --detectOpenHandles --forceExit",
     "serve": "npm start",
     "prod": "NODE_ENV=production node server.js",
     "clean": "rm -rf node_modules uploads/*.jpg uploads/*.png uploads/*.jpeg",
@@ -43,6 +47,11 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "@types/jest": "^29.5.12",
+    "cross-env": "^7.0.3",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4",
+    "mongodb-memory-server": "^9.1.6"
   }
 }
