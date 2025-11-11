@@ -15,7 +15,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class Libro {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer idLibro;
@@ -23,6 +22,4 @@ public class Libro {
     String autor;
     Double precio;
     Integer existencias;
-
-
 }
