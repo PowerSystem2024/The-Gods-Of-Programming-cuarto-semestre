@@ -1,556 +1,236 @@
-# 🍰 E-Commerce MERN - Tienda de Postres
+﻿#  E-Commerce MERN - Tienda de Postres
 
-> **Proyecto Académico** - Tecnicatura en Desarrollo de Software (4to Semestre)
+> **Proyecto Académico** - Tecnicatura en Desarrollo de Software (4to Semestre)  
+> **Equipo:** The Gods of Programming
 
-Una aplicación de comercio electrónico completa y profesional para venta de postres, desarrollada con el stack MERN (MongoDB, Express, React, Node.js). Diseño **premium, accesible y responsivo** con paleta de colores cálidos.
+[![Netlify Status](https://img.shields.io/badge/netlify-deployed-success)](https://thegodsofprogrammingfrontend.netlify.app)
+[![Node](https://img.shields.io/badge/node-v20-green)](https://nodejs.org)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
----
-
-## ✨ Características Principales
-
-### 🎨 Diseño y UX
-- ✅ **Paleta Premium**: Colores marrones, beige y dorados diseñados para tienda de postres
-- ✅ **Accesibilidad WCAG AA**: Contraste mínimo 4.5:1, foco visible, labels semánticos
-- ✅ **Responsive Design**: Mobile-first, optimizado para todas las pantallas
-- ✅ **Animaciones Suaves**: Transiciones y hover effects profesionales
-
-### 🛍️ Funcionalidades E-Commerce
-- ✅ **Catálogo de Productos**: Grid responsivo con tarjetas premium
-- ✅ **Búsqueda y Filtros**: Por categoría, precio, y búsqueda por texto
-- ✅ **Carrito de Compras**: Context API para estado global persistente
-- ✅ **Detalle de Producto**: Vista completa con imágenes, descripción y stock
-- ✅ **Sistema de Stock**: Control visual de disponibilidad (En stock, Pocas unidades, Agotado)
-
-### 🔐 Autenticación y Seguridad
-- ✅ **Registro y Login**: JWT + bcrypt para autenticación segura
-- ✅ **Rutas Protegidas**: Middleware de autenticación en backend y frontend
-- ✅ **Validación de Datos**: express-validator + Mongoose validation
-- ✅ **Sanitización**: Protección contra XSS e inyección
-
-### 📊 Panel de Administración
-- ✅ **Gestión de Productos**: CRUD completo (Crear, Leer, Actualizar, Eliminar)
-- ✅ **Control de Stock**: Actualización en tiempo real
-- ✅ **Estadísticas**: Visualización de ventas y productos (próximamente)
+Una aplicación de comercio electrónico completa para venta de postres artesanales, desarrollada con el stack MERN (MongoDB, Express, React, Node.js).
 
 ---
 
-## 🚀 Tecnologías Utilizadas
+##  Demo en Vivo
 
-### Frontend
-| Tecnología | Versión | Propósito |
-|------------|---------|-----------|
-| **React** | 18.2.0 | Librería UI con Hooks |
-| **React Router** | 6.8.1 | Navegación SPA |
-| **Context API** | - | Estado global del carrito |
-| **Vite** | 4.x | Build tool rápido |
-| **CSS3 Modular** | - | Estilos con variables CSS |
-| **Axios** | 1.3.4 | Cliente HTTP |
-
-### Backend
-| Tecnología | Versión | Propósito |
-|------------|---------|-----------|
-| **Node.js** | 18+ | Runtime JavaScript |
-| **Express** | 4.18.2 | Framework web |
-| **MongoDB** | 6.0+ | Base de datos NoSQL |
-| **Mongoose** | 7.0.1 | ODM para MongoDB |
-| **JWT** | 9.0.0 | Autenticación con tokens |
-| **bcrypt** | 5.1.0 | Hash de contraseñas |
-| **express-validator** | 6.14.3 | Validación de datos |
-| **cors** | 2.8.5 | CORS para API |
-| **dotenv** | 16.0.3 | Variables de entorno |
+- ** Frontend:** [https://thegodsofprogrammingfrontend.netlify.app](https://thegodsofprogrammingfrontend.netlify.app)
+- ** Backend API:** [https://ecommerce-backend-a4a0.onrender.com/api](https://ecommerce-backend-a4a0.onrender.com/api)
 
 ---
 
-## 📁 Estructura del Proyecto
+##  Documentación
 
-```
-ecommerce-mern/
-├── frontend/                 # Aplicación React
-│   ├── src/
-│   │   ├── components/      # Componentes reutilizables
-│   │   │   ├── Layout.jsx
-│   │   │   ├── ProductCard.jsx
-│   │   │   ├── ProductList.jsx
-│   │   │   ├── SearchFilters.jsx
-│   │   │   └── ProtectedRoute.jsx
-│   │   ├── pages/           # Páginas principales
-│   │   │   ├── Home.jsx
-│   │   │   ├── Products.jsx
-│   │   │   ├── ProductDetail.jsx
-│   │   │   ├── Cart.jsx
-│   │   │   ├── Login.jsx
-│   │   │   └── Register.jsx
-│   │   ├── context/         # Estado global
-│   │   │   └── CartContext.jsx
-│   │   ├── services/        # Servicios API
-│   │   │   └── api.js
-│   │   ├── styles/          # Estilos modulares
-│   │   │   ├── colors.css
-│   │   │   ├── global.css
-│   │   │   ├── layout.css
-│   │   │   └── product.css
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── package.json
-│   └── vite.config.js
-│
-├── backend/                  # API Node.js + Express
-│   ├── config/              # Configuración
-│   │   ├── database.config.js
-│   │   └── auth.config.js
-│   ├── models/              # Modelos Mongoose
-│   │   ├── user.model.js
-│   │   └── product.model.js
-│   ├── controllers/         # Lógica de negocio
-│   │   ├── auth.controller.js
-│   │   ├── product.controller.js
-│   │   └── cart.controller.js
-│   ├── routes/              # Rutas de la API
-│   │   ├── auth.routes.js
-│   │   ├── product.routes.js
-│   │   └── cart.routes.js
-│   ├── middleware/          # Middleware personalizado
-│   │   ├── auth.middleware.js
-│   │   ├── validation.middleware.js
-│   │   ├── product.validation.js
-│   │   └── cart.validation.js
-│   ├── scripts/             # Scripts de utilidad
-│   │   └── seed.js
-│   ├── .env.example
-│   ├── package.json
-│   └── server.js
-│
-├── ARQUITECTURA.md          # Documentación técnica completa
-├── README.md                # Este archivo
-└── package.json             # Scripts de ejecución raíz
-```
+###  Inicio Rápido
+
+| Documento | Descripción | Audiencia |
+|-----------|-------------|-----------|
+| **[ Índice de Documentación](./INDICE-DOCUMENTACION.md)** | Navegación centralizada | Todos |
+| **[ Manual de Usuario](./MANUAL-USUARIO.md)** | Guía completa de uso | Usuarios finales |
+| **[ Deployment Quick Start](./DEPLOYMENT-QUICK-START.md)** | Setup en 5 minutos | Desarrolladores |
+| **[ Docker & Make](./README-DOCKER.md)** | Containerización | Desarrolladores |
+
+###  Documentación Completa
+
+- **[ Arquitectura](./ARCHITECTURE.md)** - Diseño técnico del sistema
+- **[ Brief del Proyecto](./BRIEF.md)** - Contexto y objetivos
+- **[ Google OAuth Setup](./documentacion/GOOGLE-OAUTH-SETUP.md)** - Configurar login con Google
+- **[ Password Recovery](./documentacion/PASSWORD-RECOVERY-SETUP.md)** - Sistema de recuperación
+- **[ Guion del Video](./GUION-VIDEO.md)** - Script presentación final
 
 ---
 
-- **Express.js** - Framework web- **Express.js** - Framework web
+##  Características Destacadas
 
-- **MongoDB** - Base de datos NoSQL- **MongoDB** - Base de datos NoSQL
+###  E-Commerce Completo
+-  Catálogo de productos con búsqueda y filtros avanzados
+-  Carrito de compras con persistencia local
+-  Sistema de stock en tiempo real
+-  Proceso de checkout simplificado
 
-- **Mongoose** - ODM para MongoDB- **Mongoose** - ODM para MongoDB
+###  Autenticación Robusta
+-  Registro/Login con JWT + bcrypt
+-  OAuth 2.0 con Google
+-  Recuperación de contraseña por email
+-  Rutas protegidas (frontend + backend)
 
-- **JWT** - Autenticación con tokens- **Passport.js** - Autenticación
+###  Diseño Premium
+-  Paleta de colores cálidos (marrón, beige, dorado)
+-  Responsive design (móvil, tablet, escritorio)
+-  Accesibilidad WCAG AA
+-  Animaciones suaves y profesionales
 
-- **bcryptjs** - Encriptación de contraseñas- **bcryptjs** - Encriptación de contraseñas
+###  Gestión de Usuario
+-  Perfil personalizado
+-  Historial de pedidos
+-  Lista de favoritos
 
-- **multer** - Manejo de archivos- **JSON Web Tokens** - Tokens de autenticación
+---
 
-- **ES6 Modules** - Sintaxis moderna import/export
+##  Stack Tecnológico
 
-## 📋 Prerrequisitos
+**Frontend:** React 19  Vite 6  React Router 7.1  Context API  Axios  
+**Backend:** Node.js 20  Express 4.21  MongoDB 8  Mongoose 8.8  JWT  Passport.js  
+**DevOps:** Docker  Docker Compose  Makefile  Netlify  Render  MongoDB Atlas
 
-## Instalación
+---
 
-Antes de comenzar, asegúrate de tener instalado:
+##  Inicio Rápido
 
-1. Clonar el repositorio
-
-- [Node.js](https://nodejs.org/) (versión 16 o superior)\`\`\`bash
-
-- [MongoDB](https://www.mongodb.com/) (local o Atlas)git clone <url-del-repositorio>
-
-- [Git](https://git-scm.com/)cd ecommerce-backend
-
-- Un editor de código (recomendado: VS Code)\`\`\`
-
-
-
-## ⚙️ Instalación2. Instalar dependencias
-
-\`\`\`bash
-
-### 1. Clonar el repositorionpm install
-
-\`\`\`
+### Opción 1: Docker (Recomendado)
 
 ```bash
+# Clonar repositorio
+git clone https://github.com/PowerSystem2024/The-Gods-Of-Programming-cuarto-semestre.git
+cd proyecto-final/ecommerce-mern
 
-git clone https://github.com/PowerSystem2024/The-Gods-Of-Programming-cuarto-semestre.git3. Configurar variables de entorno
+# Construir y levantar servicios
+make build && make up
 
-cd The-Gods-Of-Programming-cuarto-semestre/proyecto-final/ecommerce-mern\`\`\`bash
-
-```cp .env.example .env
-
-# Editar .env con tus configuraciones
-
-### 2. Configurar el Backend\`\`\`
-
-
-
-```bash4. Ejecutar en modo desarrollo
-
-# Navegar al directorio del backend\`\`\`bash
-
-cd backendnpm run dev
-
-\`\`\`
-
-# Instalar dependencias
-
-npm install## Estructura del Proyecto
-
-
-
-# Crear archivo de variables de entorno\`\`\`
-
-cp .env.example .envbackend/
-
-```├── config/
-
-│   └── database.config.js   # Configuración de MongoDB
-
-Editar el archivo `.env` con tus configuraciones:├── models/
-
-│   ├── user.model.js       # Modelo de usuario
-
-```env│   └── product.model.js    # Modelo de producto
-
-# Puerto del servidor├── routes/                 # Rutas de la API
-
-PORT=5000├── middleware/             # Middlewares personalizados
-
-├── uploads/               # Archivos subidos
-
-# URL de MongoDB├── .env.example           # Ejemplo de variables de entorno
-
-MONGODB_URI=mongodb://localhost:27017/ecommerce├── .gitignore            # Archivos ignorados por Git
-
-# O para MongoDB Atlas:├── server.js             # Punto de entrada del servidor
-
-# MONGODB_URI=mongodb+srv://usuario:password@cluster.mongodb.net/ecommerce└── package.json          # Dependencias y scripts (con ES6 modules)
-
-\`\`\`
-
-# Clave secreta para JWT
-
-JWT_SECRET=tu_clave_secreta_super_segura_aqui## Modelos de Datos
-
-
-
-# Configuración de archivos### Usuario (User)
-
-UPLOAD_PATH=uploads/- Información personal (nombre, email, teléfono)
-
-- Dirección de envío
-
-# Configuración de CORS (opcional)- Carrito de compras
-
-CLIENT_URL=http://localhost:3000- Lista de deseos
-
-```- Historial de pedidos
-
-- Rol (usuario/administrador)
-
-### 3. Configurar el Frontend
-
-### Producto (Product)
-
-```bash- Información básica (nombre, descripción, precio)
-
-# Abrir nueva terminal y navegar al frontend- Inventario y variantes
-
-cd ../frontend- Imágenes y SEO
-
-- Reseñas y calificaciones
-
-# Instalar dependencias- Categorías y etiquetas
-
-npm install
-
-```## Scripts Disponibles
-
-
-
-Crear archivo `.env` en el frontend:- \`npm start\` - Ejecutar en producción
-
-- \`npm run dev\` - Ejecutar en desarrollo con nodemon
-
-```env- \`npm test\` - Ejecutar tests (pendiente)
-
-# URL del backend
-
-VITE_API_URL=http://localhost:5000/api## Variables de Entorno
-
+# Acceder:
+# Frontend:  http://localhost:3000
+# Backend:   http://localhost:5000/api
+# MongoDB:   mongodb://localhost:27017
 ```
 
-Ver \`.env.example\` para la lista completa de variables necesarias.
+### Opción 2: Desarrollo Local
 
-## 🚀 Ejecución
-
-## Estado del Desarrollo
-
-### Desarrollo
-
-### ✅ Commit 1 - Configuración inicial (ACTUALIZADO A ES6)
-
-#### Opción 1: Ejecutar ambos servidores por separado- [x] Configuración del servidor Express con ES6 modules
-
-- [x] Conexión a MongoDB (database.config.js)
-
-**Terminal 1 - Backend:**- [x] Modelos con nomenclatura nueva (user.model.js, product.model.js)
-
-```bash- [x] Estructura básica del proyecto
-
-cd backend- [x] Migración completa a sintaxis ES6 import/export
-
+```bash
+# Backend
+cd backend
+npm install
+cp .env.example .env  # Editar con tus configuraciones
 npm run dev
 
-```### ✅ Commit 2 - Sistema de autenticación (COMPLETADO)
-
-- [x] Configuración completa de Passport.js (auth.config.js)
-
-**Terminal 2 - Frontend:**- [x] Estrategias de autenticación: Local y JWT
-
-```bash- [x] Controlador de autenticación (auth.controller.js)
-
-cd frontend- [x] Rutas de registro y login (/api/auth/*)
-
-npm run dev- [x] Middlewares de autenticación y validación
-
-```- [x] Encriptación de contraseñas con bcryptjs
-
-- [x] Manejo de sesiones y tokens JWT
-
-#### Opción 2: Ejecutar desde la raíz (si está configurado)
-
-```bash### 📋 Próximos Commits
-
-# Desde la raíz del proyecto- [ ] Commit 3: CRUD de productos
-
-npm run dev- [ ] Commit 4: Sistema de carrito
-
-```- [ ] Commit 5: Frontend con React
-
-
-
-### Producción## Contribución
-
-
-
-#### BackendEste proyecto está siendo desarrollado como parte de un ejercicio académico siguiendo la metodología de desarrollo incremental por commits.
-
-```bash
-
-cd backend## Licencia
-
-npm run build
-
-npm startMIT
-```
-
-#### Frontend
-```bash
+# Frontend (nueva terminal)
 cd frontend
-npm run build
-npm run preview
+npm install
+cp .env.example .env  # VITE_API_URL=http://localhost:5000/api
+npm run dev
 ```
 
-## 📁 Estructura del Proyecto
-
-```
-ecommerce-mern/
-├── backend/
-│   ├── config/
-│   │   └── database.js
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── productController.js
-│   │   ├── cartController.js
-│   │   └── orderController.js
-│   ├── middleware/
-│   │   ├── auth.js
-│   │   └── upload.js
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── Product.js
-│   │   ├── Cart.js
-│   │   └── Order.js
-│   ├── routes/
-│   │   ├── auth.js
-│   │   ├── products.js
-│   │   ├── cart.js
-│   │   └── orders.js
-│   ├── uploads/
-│   ├── .env
-│   ├── package.json
-│   └── server.js
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Layout.jsx
-│   │   │   └── Layout.css
-│   │   ├── context/
-│   │   │   └── CartContext.js
-│   │   ├── pages/
-│   │   │   ├── Home.jsx
-│   │   │   ├── Login.jsx
-│   │   │   ├── Register.jsx
-│   │   │   ├── Products.jsx
-│   │   │   ├── ProductDetail.jsx
-│   │   │   ├── Cart.jsx
-│   │   │   └── Orders.jsx
-│   │   ├── services/
-│   │   │   └── api.js
-│   │   ├── App.jsx
-│   │   ├── App.css
-│   │   ├── index.css
-│   │   └── main.jsx
-│   ├── .env
-│   ├── package.json
-│   └── vite.config.js
-└── README.md
-```
-
-## 🔧 Funcionalidades Principales
-
-### Usuarios
-- **Registro**: Crear cuenta nueva
-- **Login**: Iniciar sesión
-- **Perfil**: Ver y editar información personal
-- **Historial**: Ver pedidos realizados
-
-### Productos
-- **Catálogo**: Ver todos los productos disponibles
-- **Detalles**: Información completa de cada producto
-- **Búsqueda**: Encontrar productos específicos
-- **Categorías**: Filtrar por tipo de producto
-
-### Carrito
-- **Agregar productos**: Añadir items al carrito
-- **Gestión**: Modificar cantidades y eliminar productos
-- **Persistencia**: El carrito se mantiene entre sesiones
-- **Estado global**: Sincronización en toda la aplicación
-
-### Pedidos
-- **Crear pedidos**: Finalizar compras
-- **Seguimiento**: Ver estado de los pedidos
-- **Historial**: Acceso a compras anteriores
-
-## 🎨 Características de UI/UX
-
-- **Diseño Responsivo**: Adaptable a todos los dispositivos
-- **Navegación Intuitiva**: Menús claros y accesibles
-- **Feedback Visual**: Indicadores de estado y notificaciones
-- **Carga Rápida**: Optimizada para rendimiento
-- **Accesibilidad**: Cumple estándares de accesibilidad web
-
-## 🧪 Scripts Disponibles
-
-### Backend
-```json
-{
-  "dev": "nodemon server.js",
-  "start": "node server.js",
-  "build": "echo 'Backend build completed'",
-  "test": "jest"
-}
-```
-
-### Frontend
-```json
-{
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview",
-  "lint": "eslint src --ext .js,.jsx"
-}
-```
-
-## 🐛 Solución de Problemas
-
-### Errores Comunes
-
-1. **Error de conexión a MongoDB**
-   ```
-   MongoNetworkError: failed to connect to server
-   ```
-   - Verifica que MongoDB esté ejecutándose
-   - Revisa la URL de conexión en `.env`
-   - Asegúrate de tener permisos de acceso
-
-2. **Error CORS**
-   ```
-   Access to fetch blocked by CORS policy
-   ```
-   - Verifica la configuración de CORS en el backend
-   - Asegúrate de que la URL del cliente esté permitida
-
-3. **Error de dependencias**
-   ```
-   Module not found
-   ```
-   - Ejecuta `npm install` en el directorio correspondiente
-   - Elimina `node_modules` y `package-lock.json`, luego reinstala
-
-4. **Error de variables de entorno**
-   ```
-   undefined environment variable
-   ```
-   - Verifica que los archivos `.env` existan y tengan las variables correctas
-   - Reinicia el servidor después de cambios en `.env`
-
-## 📚 API Endpoints
-
-### Autenticación
-- `POST /api/auth/register` - Registro de usuario
-- `POST /api/auth/login` - Iniciar sesión
-- `GET /api/auth/profile` - Obtener perfil del usuario
-
-### Productos
-- `GET /api/products` - Listar productos
-- `GET /api/products/:id` - Obtener producto por ID
-- `POST /api/products` - Crear producto (admin)
-- `PUT /api/products/:id` - Actualizar producto (admin)
-- `DELETE /api/products/:id` - Eliminar producto (admin)
-
-### Carrito
-- `GET /api/cart` - Obtener carrito del usuario
-- `POST /api/cart/add` - Agregar producto al carrito
-- `PUT /api/cart/update` - Actualizar cantidad de producto
-- `DELETE /api/cart/remove/:productId` - Eliminar producto del carrito
-- `DELETE /api/cart/clear` - Vaciar carrito
-
-### Pedidos
-- `GET /api/orders` - Listar pedidos del usuario
-- `POST /api/orders` - Crear nuevo pedido
-- `GET /api/orders/:id` - Obtener pedido por ID
-
-## 🤝 Contribución
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT - mira el archivo [LICENSE.md](LICENSE.md) para detalles.
-
-## 👥 Autores
-
-- **Los Dioses de la Programación** - *Desarrollo inicial* - [PowerSystem2024](https://github.com/PowerSystem2024)
-
-## 🙏 Agradecimientos
-
-- Profesores y compañeros de la Tecnicatura
-- Comunidad de desarrolladores MERN
-- Documentación oficial de React, Node.js y MongoDB
-- Recursos educativos y tutoriales consultados
-
-## 📞 Soporte
-
-Si tienes alguna pregunta o necesitas ayuda, puedes:
-
-- Abrir un [issue](https://github.com/PowerSystem2024/The-Gods-Of-Programming-cuarto-semestre/issues)
-- Contactar al equipo de desarrollo
-- Revisar la documentación técnica
+** Guía detallada:** [DEPLOYMENT-QUICK-START.md](./DEPLOYMENT-QUICK-START.md)
 
 ---
 
-⭐ ¡No olvides dar una estrella al proyecto si te resultó útil!
+##  Estructura del Proyecto
+
+```
+ecommerce-mern/
+ backend/                 # API Node.js + Express
+    config/             # DB, Auth, Passport
+    controllers/        # Lógica de negocio
+    models/             # Modelos Mongoose
+    routes/             # Rutas API
+    middleware/         # Validación, Auth
+    Makefile           # Comandos backend
+    Dockerfile         # Imagen Docker
+
+ frontend/               # App React + Vite
+    src/
+       components/    # Componentes reutilizables
+       pages/         # Páginas principales
+       context/       # Estado global
+       services/      # API calls
+       styles/        # CSS modular
+    Makefile          # Comandos frontend
+    Dockerfile        # Imagen Docker
+
+ documentacion/         # Docs técnicas
+ docker-compose.yml    # Orquestación
+ Makefile              # Comandos principales
+ README.md             # Este archivo
+```
+
+---
+
+##  Comandos Make Útiles
+
+```bash
+# Docker
+make help          # Ver todos los comandos
+make build         # Construir imágenes
+make up            # Levantar servicios
+make down          # Detener servicios
+make logs          # Ver logs
+
+# Desarrollo local
+make install       # Instalar deps (backend + frontend)
+make dev-backend   # Iniciar backend
+make dev-frontend  # Iniciar frontend
+
+# Base de datos
+make seed          # Poblar datos de ejemplo
+make db-shell      # MongoDB shell
+
+# Comandos delegados
+make backend-dev   # = cd backend && make dev
+make frontend-build # = cd frontend && make build
+```
+
+** Más comandos:** [README-DOCKER.md](./README-DOCKER.md)
+
+---
+
+##  Equipo
+
+**The Gods of Programming** - Tecnicatura UTN FRRe (2024)
+
+| Integrante | Rol | Responsabilidad |
+|------------|-----|-----------------|
+| Santiago Ortigoza | Líder Técnico | Arquitectura, Deployment |
+| Martín Ramírez | Backend Dev | API, Base de Datos |
+| Lucía González | Frontend Dev | UI, Componentes |
+| Carlos Fernández | Full Stack | Integración |
+| Ana Rodríguez | UI/UX | Diseño, Accesibilidad |
+
+---
+
+##  Estado del Proyecto
+
+###  Completado
+- [x] Sistema de autenticación completo (JWT + OAuth)
+- [x] Catálogo de productos con filtros
+- [x] Carrito de compras funcional
+- [x] Recuperación de contraseña
+- [x] Panel de usuario
+- [x] Dockerización
+- [x] Deploy en producción
+
+###  En Progreso
+- [ ] Sistema de pagos (Stripe/MercadoPago)
+- [ ] Panel de administración
+- [ ] Notificaciones push
+
+###  Roadmap Futuro
+- [ ] App móvil (React Native)
+- [ ] Sistema de reseñas
+- [ ] Chat de soporte
+- [ ] Analytics y reportes
+
+---
+
+##  Soporte
+
+### Documentación
+1. [Manual de Usuario](./MANUAL-USUARIO.md) - Para usuarios finales
+2. [Índice de Documentación](./INDICE-DOCUMENTACION.md) - Navegación completa
+3. [Troubleshooting](./README-DOCKER.md#-troubleshooting) - Solución de problemas
+
+### Contacto
+-  **Email:** soporte@thegodsofprogramming.com
+-  **GitHub:** [PowerSystem2024](https://github.com/PowerSystem2024/The-Gods-Of-Programming-cuarto-semestre)
+-  **LinkedIn:** [The Gods of Programming](https://linkedin.com/company/thegodsofprogramming)
+
+---
+
+##  Licencia
+
+Este proyecto es de código abierto bajo licencia MIT.
+
+---
+
+<p align="center">
+  <strong> Postres Artesanales con Tecnología de Punta</strong><br>
+  Hecho con  por <strong>The Gods of Programming</strong><br>
+  UTN FRRe - 2024
+</p>
