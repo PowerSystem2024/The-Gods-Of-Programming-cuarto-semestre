@@ -38,6 +38,7 @@
 Proyectos y ejercicios prácticos de la materia Javascript del cuarto semestre.
 
 **Proyectos incluidos:**
+- **Proyecto Bomba** - Juego interactivo con efectos 3D y cronómetro [🎮 Jugar](https://powersystem2024.github.io/The-Gods-Of-Programming-cuarto-semestre/Javascript/proyecto_bomba/)
 - **E-commerce 2022** - Primer proyecto de tienda online (Client/Server)
 - **STACK-PERN** - Aplicación con PostgreSQL, Express, React y Node.js
 
