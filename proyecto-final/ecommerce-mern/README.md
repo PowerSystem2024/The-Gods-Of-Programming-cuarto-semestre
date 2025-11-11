@@ -15,6 +15,7 @@ Una aplicación de comercio electrónico completa para venta de postres artesana
 
 - ** Frontend:** [https://thegodsofprogrammingfrontend.netlify.app](https://thegodsofprogrammingfrontend.netlify.app)
 - ** Backend API:** [https://ecommerce-backend-a4a0.onrender.com/api](https://ecommerce-backend-a4a0.onrender.com/api)
+- ** API Docs (Swagger):** [https://ecommerce-backend-a4a0.onrender.com/api-docs](https://ecommerce-backend-a4a0.onrender.com/api-docs) (cuando ejecutas localmente)
 
 ---
 
@@ -35,6 +36,7 @@ Una aplicación de comercio electrónico completa para venta de postres artesana
 - **[ Brief del Proyecto](./BRIEF.md)** - Contexto y objetivos
 - **[ Google OAuth Setup](./documentacion/GOOGLE-OAUTH-SETUP.md)** - Configurar login con Google
 - **[ Password Recovery](./documentacion/PASSWORD-RECOVERY-SETUP.md)** - Sistema de recuperación
+- **[ API Documentation (Swagger)](./backend/docs/swagger/README.md)** - Documentación interactiva de la API
 - **[ Guion del Video](./GUION-VIDEO.md)** - Script presentación final
 
 ---
@@ -109,6 +111,44 @@ npm run dev
 ```
 
 ** Guía detallada:** [DEPLOYMENT-QUICK-START.md](./DEPLOYMENT-QUICK-START.md)
+
+---
+
+##  API Documentation (Swagger/OpenAPI)
+
+Hemos implementado documentación interactiva completa de la API usando **Swagger UI** y **OpenAPI 3.0**.
+
+### Acceder a la Documentación
+
+1. Inicia el servidor backend:
+   ```bash
+   cd backend
+   npm start
+   ```
+
+2. Abre tu navegador en:
+   - **Interfaz interactiva:** http://localhost:5000/api-docs
+   - **Especificación JSON:** http://localhost:5000/api-docs.json
+
+### Características
+
+-  **39 endpoints documentados** organizados en 4 categorías
+-  **Autenticación JWT integrada** - Prueba endpoints protegidos directamente
+-  **Ejemplos realistas** de requests y responses
+-  **Filtros y paginación** completamente documentados
+-  **Esquemas de validación** para todos los datos
+-  **Try it out** - Prueba la API sin Postman/Insomnia
+
+### Endpoints Documentados
+
+| Categoría | Endpoints | Descripción |
+|-----------|-----------|-------------|
+| **Auth** | 11 | Registro, login, OAuth, recuperación de contraseña |
+| **Products** | 9 | CRUD de productos, búsqueda, filtros, categorías |
+| **Cart** | 10 | Gestión del carrito, sincronización, validación |
+| **Orders** | 9 | Crear órdenes, tracking, estadísticas admin |
+
+**Documentación completa:** [backend/docs/swagger/README.md](./backend/docs/swagger/README.md)
 
 ---
 

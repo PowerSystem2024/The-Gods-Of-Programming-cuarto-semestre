@@ -5,6 +5,8 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger.config.js';
 
 // Configurar variables de entorno
 dotenv.config();
@@ -72,8 +74,22 @@ app.get('/', (req, res) => {
   res.json({
     message: 'E-commerce API funcionando correctamente',
     version: '1.0.0',
-    status: 'success'
+    status: 'success',
+    documentation: '/api-docs'
   });
+});
+
+// Documentación Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'E-commerce API Documentation',
+  customfavIcon: '/favicon.ico'
+}));
+
+// Ruta para obtener el spec de Swagger en JSON
+app.get('/api-docs.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
 });
 
 // Rutas de la API
