@@ -5,7 +5,7 @@
   # Comando para hacer build
   command = "npm run build"
   
-  # Directorio donde se generan los archivos estáticos
+  # Directorio donde se generan los archivos estáticos (relativo al base)
   publish = "dist"
 
 # Redirecciones para SPA (Single Page Application)
