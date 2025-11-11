@@ -2,95 +2,270 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Portada - Repositorio de Proyectos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gods of Programming - Cuarto Semestre</title>
     <style>
         /* Estilos generales del cuerpo */
         body {
-            background: #121212; /* Fondo muy oscuro */
-            font-family: 'Inter', sans-serif; /* Fuente moderna */
+            background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%);
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
-            color: #e0e0e0; /* Color de texto claro para fondo oscuro */
-            min-height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+            color: #e0e0e0;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Centra verticalmente */
         }
 
         /* Estilos del encabezado */
         header {
-            background: #2a0000; /* Fondo bordo oscuro para el encabezado */
+            background: linear-gradient(135deg, #2a0000 0%, #4a0000 100%);
             color: #fff;
-            padding: 1.5em 0; /* Más padding para un mejor aspecto */
+            padding: 2em 0;
             margin-bottom: 2em;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         header h1 {
-            margin: 0;
-            font-size: 2.5em; /* Fuente más grande para el título principal */
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra de texto para destacar */
-            color: #ffcc00; /* Dorado o amarillo para el título */
+            margin: 0 0 0.3em 0;
+            font-size: 2.8em;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
+            color: #ffcc00;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 0.5em 0 0 0;
+            font-size: 1.2em;
+            color: #ffffff;
+            opacity: 0.9;
+        }
+
+        .subtitle {
+            font-size: 1em;
+            color: #ff9999;
+            margin-top: 0.5em;
+            font-weight: 300;
         }
 
         /* Área de contenido principal */
         .main-content {
-            padding: 40px 24px; /* Padding para el contenido */
-            max-width: 800px; /* Ancho máximo para mejor legibilidad */
-            margin: 0 auto; /* Centra el contenido */
-            background: #1e1e1e; /* Fondo ligeramente más claro para el área de contenido */
-            border-radius: 12px; /* Esquinas redondeadas */
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6); /* Sombra mejorada para profundidad */
-            margin-bottom: 2em; /* Espacio antes del pie de página */
+            padding: 40px 24px;
+            max-width: 900px;
+            margin: 0 auto;
+            background: #1e1e1e;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+            margin-bottom: 2em;
+            flex: 1;
         }
 
-        /* Estilos de enlaces */
-        a {
-            color: #ff9999; /* Tono de bordo más claro para enlaces */
+        .section {
+            margin-bottom: 3em;
+        }
+
+        .section h2 {
+            color: #ffcc00;
+            font-size: 1.8em;
+            margin-bottom: 1em;
+            text-align: left;
+            border-bottom: 2px solid #ff9999;
+            padding-bottom: 0.5em;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5em;
+            margin-top: 1.5em;
+        }
+
+        /* Estilos de enlaces - Cards */
+        .project-card {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 1.5em;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
             text-decoration: none;
-            font-size: 1.4em; /* Enlaces más grandes */
-            font-weight: bold;
-            display: block; /* Hace que los enlaces sean de nivel de bloque para un mejor área de clic */
-            margin: 1em 0; /* Espacio entre enlaces */
-            transition: color 0.3s ease-in-out; /* Transición suave */
+            display: block;
         }
 
-        /* Estado hover de enlaces */
-        a:hover {
-            color: #ffcc00; /* Dorado/amarillo al pasar el ratón */
-            text-decoration: underline;
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffcc00;
+            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.3);
+        }
+
+        .project-card h3 {
+            color: #ff9999;
+            margin: 0 0 0.5em 0;
+            font-size: 1.4em;
+        }
+
+        .project-card p {
+            color: #b0b0b0;
+            margin: 0;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .project-card .badge {
+            display: inline-block;
+            background: #ffcc00;
+            color: #121212;
+            padding: 0.3em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-top: 0.8em;
+        }
+
+        .featured-project {
+            background: linear-gradient(135deg, #2a0000 0%, #3a1010 100%);
+            border: 2px solid #ffcc00;
+            grid-column: 1 / -1;
+        }
+
+        .featured-project h3 {
+            color: #ffcc00;
+            font-size: 1.6em;
+        }
+
+        .links-container {
+            display: flex;
+            gap: 1em;
+            margin-top: 1em;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .links-container a {
+            background: #ffcc00;
+            color: #121212;
+            padding: 0.6em 1.2em;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .links-container a:hover {
+            background: #fff;
+            transform: scale(1.05);
         }
 
         /* Estilos del pie de página */
         footer {
-            background: #2a0000; /* Fondo bordo oscuro para el pie de página */
+            background: linear-gradient(135deg, #2a0000 0%, #4a0000 100%);
             color: #fff;
-            padding: 1em 0;
-            margin-top: 2em;
-            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.4); /* Sombra superior */
+            padding: 1.5em 0;
+            margin-top: auto;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
         }
 
         footer p {
-            margin: 0;
+            margin: 0.3em 0;
             font-size: 1em;
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-project {
+                grid-column: 1;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Portada de Proyectos</h1>
-        <p>Selecciona un proyecto para ver más detalles:</p>
+        <h1>🎓 The Gods of Programming</h1>
+        <p>Tecnicatura en Desarrollo de Software - UTN FRRe</p>
+        <p class="subtitle">Cuarto Semestre - Portafolio de Proyectos 2024/2025</p>
     </header>
 
     <div class="main-content">
-        <a href="gestion-desarrollo-sw/sitio-web-responsive/html/columnas.html">Gestión del Desarrollo de Software - Sitio web responsive</a>
-        <a href="https://the-gods-of-programming-cuarto-semestre.onrender.com/">E-commerce 2025</a>
-        <a href="avatar-game/">Avatar game</a>
+        <!-- Proyecto Destacado -->
+        <div class="section">
+            <h2>🌟 Proyecto Final Destacado</h2>
+            <div class="project-grid">
+                <a href="proyecto-final/ecommerce-mern/" class="project-card featured-project">
+                    <h3>🛒 E-Commerce MERN - Tienda de Postres</h3>
+                    <p>Aplicación completa de comercio electrónico desarrollada con el stack MERN (MongoDB, Express, React, Node.js). Incluye autenticación JWT, OAuth 2.0 con Google, carrito de compras, panel de usuario y diseño responsive premium.</p>
+                    <div class="links-container">
+                        <a href="https://thegodsofprogrammingfrontend.netlify.app" target="_blank">🌐 Ver Demo</a>
+                        <a href="https://ecommerce-backend-a4a0.onrender.com/api" target="_blank">⚙️ API</a>
+                        <a href="https://ecommerce-backend-a4a0.onrender.com/api-docs" target="_blank">📚 Docs</a>
+                    </div>
+                    <span class="badge">Stack: React • Node.js • MongoDB • Express</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Proyectos por Materia -->
+        <div class="section">
+            <h2>📚 Proyectos por Materia</h2>
+            <div class="project-grid">
+                <a href="Javascript/" class="project-card">
+                    <h3>💛 Javascript</h3>
+                    <p>Proyectos y ejercicios de Javascript incluyendo E-commerce 2022 y aplicaciones con el stack PERN.</p>
+                    <span class="badge">Desarrollo Web</span>
+                </a>
+
+                <a href="Python/" class="project-card">
+                    <h3>🐍 Python</h3>
+                    <p>Ejercicios prácticos, POO y desarrollo de juegos con Pygame. Incluye proyecto de Star Wars.</p>
+                    <span class="badge">Programación</span>
+                </a>
+
+                <a href="JAVA/" class="project-card">
+                    <h3>☕ Java</h3>
+                    <p>Desarrollo con Spring Boot, sistemas CRUD y programación orientada a objetos.</p>
+                    <span class="badge">Backend</span>
+                </a>
+
+                <a href="avatar-game/" class="project-card">
+                    <h3>🎮 Avatar Game</h3>
+                    <p>Juego interactivo desarrollado con HTML5, CSS3 y JavaScript vanilla con sistema de personajes.</p>
+                    <span class="badge">Juego Web</span>
+                </a>
+
+                <a href="gestion-desarrollo-sw/sitio-web-responsive/html/columnas.html" class="project-card">
+                    <h3>📊 Gestión del Desarrollo</h3>
+                    <p>Sitio web responsive y ejercicios de metodologías ágiles y documentación de proyectos.</p>
+                    <span class="badge">Gestión</span>
+                </a>
+            </div>
+        </div>
     </div>
 
     <footer>
-        <p>&copy; 2023 Repositorio de Proyectos</p>
+        <p><strong>The Gods of Programming</strong> - Cuarto Semestre</p>
+        <p>UTN Facultad Regional Resistencia • 2024/2025</p>
+        <p>
+            <a href="https://github.com/PowerSystem2024/The-Gods-Of-Programming-cuarto-semestre" target="_blank">
+                📁 Ver en GitHub
+            </a>
+        </p>
     </footer>
 </body>
 </html>
