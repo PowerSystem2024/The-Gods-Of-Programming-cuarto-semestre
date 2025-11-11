@@ -1,25 +1,97 @@
 
 # Repositorio de "The Gods of Programming - Cuarto Semestre"
 
-Repositorio perteneciente al grupo "The Gods of Programming"
+> **Tecnicatura en Desarrollo de Software** - UTN FRRe  
+> Repositorio académico del grupo "The Gods of Programming"
 
-## 📁 Estructura del repositorio
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Active-success)](https://powersystem2024.github.io/The-Gods-Of-Programming-cuarto-semestre/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](#licencia)
 
-- **Javascript/**  
-	Proyectos y ejercicios prácticos de la materia Javascript del cuarto semestre.
+---
 
-- **Python/**  
-	Proyectos, ejercicios y clases de la materia Python del cuarto semestre.
+## 🌐 Página Principal del Repositorio
 
-- **Avatar-game/**  
-	Proyecto de juego interactivo desarrollado en HTML, CSS y JS.
+👉 **[Ver Portafolio Web](https://powersystem2024.github.io/The-Gods-Of-Programming-cuarto-semestre/)** - Accede a todos los proyectos desde una interfaz web
 
-- **Gestion de desarrollo de software/**  
-	Ejercicios y entregas de la materia de gestión de desarrollo.
+---
 
-Cada carpeta incluye los archivos fuente, documentación y recursos necesarios para cada trabajo o clase.
+## 🚀 Proyectos Destacados
 
-## 📋 Tabla de contenido
+### 🛒 E-Commerce MERN - Rincón del pastelero
+**Proyecto Final de la Tecnicatura** - Aplicación completa de comercio electrónico
+
+- **🌐 Frontend (Producción):** [https://thegodsofprogrammingfrontend.netlify.app](https://thegodsofprogrammingfrontend.netlify.app)
+- **⚙️ Backend API:** [https://ecommerce-backend-a4a0.onrender.com/api](https://ecommerce-backend-a4a0.onrender.com/api)
+- **📚 API Docs (Swagger):** [https://ecommerce-backend-a4a0.onrender.com/api-docs](https://ecommerce-backend-a4a0.onrender.com/api-docs)
+- **📁 Repositorio:** [proyecto-final/ecommerce-mern/](./proyecto-final/ecommerce-mern/)
+
+**Stack:** React 19 • Node.js 20 • Express • MongoDB • JWT • OAuth 2.0  
+**Características:** Autenticación completa, carrito de compras, panel de usuario, diseño responsive
+
+---
+
+## 📁 Estructura del Repositorio por Materias
+
+### 💻 [Javascript](./Javascript/)
+Proyectos y ejercicios prácticos de la materia Javascript del cuarto semestre.
+
+**Proyectos incluidos:**
+- **E-commerce 2022** - Primer proyecto de tienda online (Client/Server)
+- **STACK-PERN** - Aplicación con PostgreSQL, Express, React y Node.js
+
+[📂 Ver carpeta Javascript →](./Javascript/)
+
+---
+
+### 🐍 [Python](./Python/)
+Proyectos, ejercicios y clases de la materia Python del cuarto semestre.
+
+**Proyectos incluidos:**
+- **Juego Star Wars** - Juego desarrollado con Pygame
+- **Clases 01-06** - Ejercicios de tipos de datos, strings, funciones y POO
+
+[📂 Ver carpeta Python →](./Python/)
+
+---
+
+### ☕ [JAVA](./JAVA/)
+Proyectos y ejercicios de programación orientada a objetos en Java.
+
+**Proyectos incluidos:**
+- **Tienda de Libros** - Sistema de gestión con Spring Boot
+- **Sistema de Estudiantes** - CRUD con base de datos
+- **Clases 01-06** - Fundamentos de Java y desarrollo de aplicaciones
+
+[📂 Ver carpeta JAVA →](./JAVA/)
+
+---
+
+### 🎮 [Avatar Game](./avatar-game/)
+Juego interactivo desarrollado con HTML5, CSS3 y JavaScript vanilla.
+
+**Características:**
+- Sistema de personajes personalizable
+- Interfaz intuitiva y responsive
+- Animaciones y efectos visuales
+
+[🎮 Jugar ahora →](https://powersystem2024.github.io/The-Gods-Of-Programming-cuarto-semestre/avatar-game/) | [📂 Ver código →](./avatar-game/)
+
+---
+
+### 📊 [Gestión del Desarrollo de Software](./gestion-desarrollo-sw/)
+Ejercicios y entregas de la materia de gestión de desarrollo.
+
+**Contenido:**
+- **Sitio Web Responsive** - Proyecto de diseño adaptativo con HTML/CSS
+- Metodologías ágiles y documentación de proyectos
+
+[🌐 Ver sitio responsive →](https://powersystem2024.github.io/The-Gods-Of-Programming-cuarto-semestre/gestion-desarrollo-sw/sitio-web-responsive/html/columnas.html) | [📂 Ver carpeta →](./gestion-desarrollo-sw/)
+
+---
+
+## 📋 Tabla de Contenido
+- [🚀 Proyectos Destacados](#-proyectos-destacados)
+- [📁 Estructura por Materias](#-estructura-del-repositorio-por-materias)
 - [✨ Contribuidores](#contribuidores)
 - [📄 Licencia](#licencia)
 
@@ -44,11 +116,23 @@ Este proyecto fue realizado gracias a la colaboración de:
 
 ## <a id="licencia"></a> 📄 Licencia
 
-Código y documentación copyright 2025
+Código y documentación copyright 2024-2025 The Gods of Programming.  
+Este proyecto es de código abierto bajo licencia MIT.
 
 ---
 
-Página principal del repositorio:  
-https://powersystem2024.github.io/The-Gods-Of-Programming-cuarto-semestre/
+## 🔗 Enlaces Rápidos
+
+- **🌐 Página Principal:** [https://powersystem2024.github.io/The-Gods-Of-Programming-cuarto-semestre/](https://powersystem2024.github.io/The-Gods-Of-Programming-cuarto-semestre/)
+- **🛒 E-Commerce (Producción):** [https://thegodsofprogrammingfrontend.netlify.app](https://thegodsofprogrammingfrontend.netlify.app)
+- **📁 Repositorio GitHub:** [https://github.com/PowerSystem2024/The-Gods-Of-Programming-cuarto-semestre](https://github.com/PowerSystem2024/The-Gods-Of-Programming-cuarto-semestre)
+
+---
+
+<p align="center">
+  <strong>🎓 Tecnicatura en Desarrollo de Software</strong><br>
+  UTN Facultad Regional Resistencia - 2024/2025<br>
+  Hecho con ❤️ por <strong>The Gods of Programming</strong>
+</p>
 
 
