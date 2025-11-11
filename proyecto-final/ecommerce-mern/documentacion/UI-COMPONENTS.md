@@ -1,3 +1,4 @@
+# {% raw %}
 # 🧩 UI COMPONENTS - Biblioteca de Componentes
 
 > **Catálogo completo de componentes de interfaz**  
@@ -1093,3 +1094,5 @@ Antes de crear un nuevo componente, verifica:
   <br>
   <em>67 componentes y contando... 🎨</em>
 </p>
+
+  {% endraw %}
