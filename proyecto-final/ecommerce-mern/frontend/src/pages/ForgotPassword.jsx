@@ -23,7 +23,12 @@ const ForgotPassword = () => {
         setEmail('');
       }
     } catch (err) {
-      setError(err.message || 'Error enviando el correo de recuperación');
+      // Si es timeout, mostrar mensaje personalizado
+      if (err.code === 'ECONNABORTED' || (err.message && err.message.includes('timeout'))) {
+        setError('El servidor está tardando en responder. Si el email existe, recibirás las instrucciones en unos minutos. Por favor revisa tu bandeja de entrada y spam.');
+      } else {
+        setError(err.message || 'Error enviando el correo de recuperación');
+      }
     } finally {
       setLoading(false);
     }

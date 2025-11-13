@@ -16,6 +16,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -74,33 +75,25 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     // Validar formulario
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-
     try {
       setLoading(true);
       setErrors({});
-
+      setSuccessMessage("");
       // eslint-disable-next-line no-unused-vars
       const { confirmPassword, ...registerData } = formData;
-
-      const response = await authAPI.register(registerData);
-      
-      // Guardar token y datos del usuario
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      
-      // Redirigir al usuario
-      navigate('/', { replace: true });
-      
+      await authAPI.register(registerData);
+      setSuccessMessage("¡Registro exitoso! Ahora puedes iniciar sesión.");
+      setTimeout(() => {
+        navigate('/login', { replace: true });
+      }, 1800);
     } catch (err) {
-      console.error('Error en login:', err);
-      
+      console.error('Error en registro:', err);
       if (err.errors && Array.isArray(err.errors)) {
         // Errores de validación del servidor
         const serverErrors = {};
@@ -110,7 +103,7 @@ const Register = () => {
         setErrors(serverErrors);
       } else {
         // Error general
-        setErrors({ general: err.message || 'Error en el login' });
+        setErrors({ general: err.message || 'Error en el registro' });
       }
     } finally {
       setLoading(false);
@@ -135,6 +128,13 @@ const Register = () => {
             <p>Únete y comienza tu experiencia de compra</p>
           </div>
 
+          {/* Mensaje de éxito */}
+          {successMessage && (
+            <div className="alert alert-success">
+              <span className="alert-icon">✅</span>
+              {successMessage}
+            </div>
+          )}
           {/* Error general */}
           {errors.general && (
             <div className="alert alert-error">
