@@ -46,28 +46,37 @@ function App() {
               </Layout>
             } />
 
-            {/* Rutas de autenticación (sin layout) */}
+
+            {/* Rutas de autenticación (con layout/header) */}
             <Route path="/login" element={
               <ProtectedRoute requireAuth={false}>
-                <Login />
+                <Layout>
+                  <Login />
+                </Layout>
               </ProtectedRoute>
             } />
             
             <Route path="/register" element={
               <ProtectedRoute requireAuth={false}>
-                <Register />
+                <Layout>
+                  <Register />
+                </Layout>
               </ProtectedRoute>
             } />
 
             <Route path="/forgot-password" element={
               <ProtectedRoute requireAuth={false}>
-                <ForgotPassword />
+                <Layout>
+                  <ForgotPassword />
+                </Layout>
               </ProtectedRoute>
             } />
 
             <Route path="/reset-password/:token" element={
               <ProtectedRoute requireAuth={false}>
-                <ResetPassword />
+                <Layout>
+                  <ResetPassword />
+                </Layout>
               </ProtectedRoute>
             } />
 
