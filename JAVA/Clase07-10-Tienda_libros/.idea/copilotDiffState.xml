@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/src/main/java/utn/tienda_libros/TiendaLibrosApplication.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/utn/tienda_libros/TiendaLibrosApplication.java" />
+              <option name="originalContent" value="package utn.tienda_libros;&#10;&#10;import org.springframework.boot.WebApplicationType;&#10;import org.springframework.boot.autoconfigure.SpringBootApplication;&#10;import org.springframework.boot.builder.SpringApplicationBuilder;&#10;import org.springframework.context.ConfigurableApplicationContext;&#10;import utn.tienda_libros.vista.LibroForm;&#10;&#10;import java.awt.EventQueue;&#10;&#10;@SpringBootApplication&#10;public class TiendaLibrosApplication {&#10;&#10;    public static void main(String[] args) {&#10;&#10;        // Start the Spring application context in non-headless mode and without a web environment&#10;        ConfigurableApplicationContext contextoSpring =&#10;                new SpringApplicationBuilder(TiendaLibrosApplication.class)&#10;                        .headless(false)&#10;                        .web(WebApplicationType.NONE)&#10;                        .run(args);&#10;        &#10;        // To display the Swing form, we need to execute the following code on the Event Dispatch Thread (EDT)&#10;        // This ensures the LibroForm UI is loaded and visible after the Spring context is initialized&#10;        EventQueue.invokeLater(() -&gt; {&#10;            LibroForm libroFrom = contextoSpring.getBean(LibroForm.class);&#10;            libroFrom.setVisible(true);&#10;        });&#10;    }&#10;}" />
+              <option name="updatedContent" value="package utn.tienda_libros;&#10;&#10;import org.springframework.boot.WebApplicationType;&#10;import org.springframework.boot.autoconfigure.SpringBootApplication;&#10;import org.springframework.boot.builder.SpringApplicationBuilder;&#10;import org.springframework.context.ConfigurableApplicationContext;&#10;import utn.tienda_libros.vista.LibroForm;&#10;&#10;import java.awt.EventQueue;&#10;&#10;@SpringBootApplication&#10;public class TiendaLibrosApplication {&#10;&#10;    public static void main(String[] args) {&#10;&#10;        // Start the Spring application context in non-headless mode and without a web environment&#10;        ConfigurableApplicationContext contextoSpring =&#10;                new SpringApplicationBuilder(TiendaLibrosApplication.class)&#10;                        .headless(false)&#10;                        .web(WebApplicationType.NONE)&#10;                        .run(args);&#10;        &#10;        // To display the Swing form, we need to execute the following code on the Event Dispatch Thread (EDT)&#10;        // This ensures the LibroForm UI is loaded and visible after the Spring context is initialized&#10;        EventQueue.invokeLater(() -&gt; {&#10;            LibroForm libroFrom = contextoSpring.getBean(LibroForm.class);&#10;            libroFrom.setVisible(true);&#10;        });&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
