@@ -11,7 +11,7 @@
 	<groupId>utn</groupId>
 	<artifactId>tienda_libros</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>tienda_libros_fivecoders</name>
+	<name>tienda_libros_the_gods_of_programming</name>
 	<description>Sistema Tienda de Libros</description>
 	<url/>
 	<licenses>
@@ -34,7 +34,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
@@ -51,7 +50,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
     <build>
         <plugins>
             <plugin>
