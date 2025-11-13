@@ -5,18 +5,10 @@ import User from '../models/user.model.js';
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
-import nodemailer from 'nodemailer';
+import config from '../config/config.js';
+import { transport } from '../config/mail.config.js';
 
 const router = express.Router();
-
-// Configurar transporter de email
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER || 'tu-email@gmail.com',
-    pass: process.env.EMAIL_PASS || 'tu-contraseña-app'
-  }
-});
 
 // Middleware para verificar JWT
 const verifyToken = (req, res, next) => {
@@ -68,13 +60,10 @@ router.post(
         });
       }
 
-      // Hashear password
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      // Crear usuario
+      // Crear usuario (el modelo se encarga de hashear la contraseña automáticamente)
       const user = await User.create({
         email,
-        password: hashedPassword,
+        password: password, // Sin hashear - el pre('save') del modelo lo hará
         name,
         authProvider: 'local',
         role: 'customer'
@@ -119,12 +108,13 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const { email, password } = req.body;
-      console.log('🔍 Intentando login con email:', email);
+  const { email, password } = req.body;
+  const normalizedEmail = email.trim().toLowerCase();
+  console.log('🔍 Intentando login con email:', normalizedEmail);
 
-      // Buscar usuario (incluir password)
-      const user = await User.findOne({ email }).select('+password');
-      console.log('👤 Usuario encontrado:', user ? 'SÍ' : 'NO');
+  // Buscar usuario (incluir password)
+  const user = await User.findOne({ email: normalizedEmail }).select('+password');
+  console.log('👤 Usuario encontrado:', user ? 'SÍ' : 'NO');
       
       if (!user) {
         console.log('❌ No existe usuario con email:', email);
@@ -145,11 +135,12 @@ router.post(
 
       // Verificar password
       console.log('🔐 Verificando password...');
+      console.log('🔑 Password recibido:', password);
+      console.log('🔑 Hash guardado:', user.password);
       const isValidPassword = await bcrypt.compare(password, user.password);
-      console.log('🔐 Password válida:', isValidPassword ? 'SÍ' : 'NO');
-      
+      console.log('🔐 Resultado bcrypt.compare:', isValidPassword);
       if (!isValidPassword) {
-        console.log('❌ Contraseña incorrecta para:', email);
+        console.log('❌ Contraseña incorrecta para:', normalizedEmail);
         return res.status(401).json({ message: 'Credenciales inválidas' });
       }
 
@@ -398,8 +389,8 @@ router.put('/change-password', verifyToken, async (req, res) => {
       });
     }
 
-    // Actualizar contraseña
-    user.password = await bcrypt.hash(newPassword, 10);
+    // Actualizar contraseña (el modelo se encarga de hashear automáticamente)
+    user.password = newPassword;
     await user.save();
 
     res.json({
@@ -468,8 +459,8 @@ router.post('/forgot-password', async (req, res) => {
     `;
 
     try {
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER || 'noreply@ecommerce.com',
+      await transport.sendMail({
+        from: config.mailFrom || 'noreply@ecommerce.com',
         to: user.email,
         subject: 'Recuperación de Contraseña',
         html: message
@@ -529,8 +520,8 @@ router.post('/reset-password/:token', async (req, res) => {
       });
     }
 
-    // Actualizar contraseña
-    user.password = await bcrypt.hash(password, 10);
+    // Actualizar contraseña (el modelo se encarga de hashear automáticamente)
+    user.password = password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
     await user.save();

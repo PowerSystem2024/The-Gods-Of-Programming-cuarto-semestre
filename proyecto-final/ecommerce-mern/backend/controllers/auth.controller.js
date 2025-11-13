@@ -2,16 +2,9 @@ import passport from 'passport';
 import { generateJWT } from '../middleware/auth.middleware.js';
 import User from '../models/user.model.js';
 import crypto from 'crypto';
-import nodemailer from 'nodemailer';
-
-// Configurar transporter de email (esto lo puedes configurar con variables de entorno)
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER || 'tu-email@gmail.com',
-    pass: process.env.EMAIL_PASS || 'tu-contraseña-app'
-  }
-});
+import config from '../config/config.js';
+import __dirname from '../utils.js';
+import { transport } from '../config/mail.config.js';
 
 // Registrar nuevo usuario
 export const register = async (req, res, next) => {
@@ -180,7 +173,7 @@ export const forgotPassword = async (req, res) => {
     await user.save();
 
     // URL de recuperación
-    const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password/${resetToken}`;
+    const resetUrl = `${config.frontEndUrl || 'http://localhost:5173'}/reset-password/${resetToken}`;
 
     // Mensaje del email
     const message = `
@@ -198,8 +191,8 @@ export const forgotPassword = async (req, res) => {
 
     try {
       // Enviar email
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER || 'noreply@ecommerce.com',
+      await transport.sendMail({
+        from: config.mailFrom || 'noreply@ecommerce.com',
         to: user.email,
         subject: 'Recuperación de Contraseña',
         html: message
