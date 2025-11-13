@@ -27,6 +27,17 @@
 
 > **⚠️ Nota Importante:** El backend está desplegado en el plan gratuito de Render. Si no hay actividad durante 15 minutos, el servicio entra en modo inactivo. La primera carga después de la inactividad puede tardar entre 30-60 segundos mientras el servidor se reactiva automáticamente. ¡Ten paciencia en la primera petición! 🕐
 
+
+### 👤 Usuarios de Testeo (Proyecto Final)
+
+Puedes usar los siguientes usuarios para probar la app:
+
+| Usuario                           | Contraseña    |
+|-----------------------------------|--------------|
+| maria@pasteleriadulzura.com       | password123  |
+| carlos@tortasdeliciosas.com       | password123  |
+| ana@chocolateparadise.com         | password123  |
+
 **Stack:** React 19 • Node.js 20 • Express • MongoDB • JWT • OAuth 2.0  
 **Características:** Autenticación completa, carrito de compras, panel de usuario, diseño responsive
 

@@ -42,6 +42,10 @@ const ForgotPassword = () => {
           <p>Ingresa tu email y te enviaremos instrucciones para recuperarla</p>
         </div>
 
+        <div style={{ background: '#fffbe6', color: '#b8860b', border: '1px solid #ffe58f', borderRadius: 6, padding: '10px 16px', marginBottom: 16, fontSize: '0.95rem' }}>
+          <b>Nota:</b> El backend está desplegado en Render, que <b>bloquea el envío de correos por Gmail</b>. Si no recibes el email, es por esta limitación del hosting gratuito. Puedes probar localmente o consultar al administrador.
+        </div>
+
         {error && <div className="error-message">{error}</div>}
         {success && (
           <div className="success-message">

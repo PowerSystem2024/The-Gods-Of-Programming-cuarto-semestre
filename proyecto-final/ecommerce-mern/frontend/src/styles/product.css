@@ -404,4 +404,26 @@
   border-bottom: 2px solid var(--brown-400);
 }
 
-/* ...resto de estilos de producto... */
+/* Botón Reintentar - estilo premium */
+.retry-button {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7em 2.2em;
+  font-size: 1.08rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(205, 133, 63, 0.13);
+  cursor: pointer;
+  margin-top: 1.2em;
+  margin-left: 1.5em;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  display: inline-block;
+  vertical-align: middle;
+  outline: none;
+}
+.retry-button:hover, .retry-button:focus {
+  background: var(--brown-primary);
+  box-shadow: 0 4px 16px rgba(139, 90, 60, 0.18);
+  transform: translateY(-2px) scale(1.05);
+}
